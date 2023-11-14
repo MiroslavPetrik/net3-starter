@@ -3,7 +3,7 @@
 This is Next.js + EdgeDB starter project bootstraped on the [T3 Stack](https://create.t3.gg/)
 
 - [Next.js v14](https://nextjs.org) Fullstack React framework using the **app router**
-- [EdgeDB](https://www.edgedb.com/) Graph-relational database with a custom query language, Auth extension and more
+- [EdgeDB v4](https://www.edgedb.com/) Graph-relational database with a custom query language, Auth extension and more
 - [tRPC](https://trpc.io) typesafe end-2-end API definition & access
 - [Tailwind CSS](https://tailwindcss.com) with [Flowbite React](https://www.flowbite-react.com/) componentss
 - [TypeScript](https://www.typescriptlang.org/) language for JavaScript autocompletion
