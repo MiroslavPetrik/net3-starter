@@ -21,7 +21,7 @@ export function Navbar({ signOutButton }: { signOutButton: ReactNode }) {
     >
       <NavbarBrand href="/">
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-          next-edgedb-typescript starter
+          NET3 Starter
         </span>
       </NavbarBrand>
       <div className="flex md:order-2">
