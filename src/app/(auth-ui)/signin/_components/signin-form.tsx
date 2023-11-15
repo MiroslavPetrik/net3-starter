@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { SubmitButton } from "@/app/_components/submit-button";
 import { Label, TextInput } from "flowbite-react";
 import { Form } from "react-form-action/client";
@@ -50,6 +51,15 @@ export function SignInForm() {
             />
           </div>
           <SubmitButton />
+          <Label>
+            Don&apos;t have an account?&nbsp;
+            <Link
+              href="/signup"
+              className="text-cyan-600 hover:underline dark:text-cyan-500"
+            >
+              Sign up
+            </Link>
+          </Label>
         </div>
       )}
     </Form>

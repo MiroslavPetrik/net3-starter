@@ -116,6 +116,15 @@ export function SignUpForm() {
           <Button type="submit" disabled={isPending} isProcessing={isPending}>
             Register new account
           </Button>
+          <Label>
+            Already have an account?&nbsp;
+            <Link
+              href="/signin"
+              className="text-cyan-600 hover:underline dark:text-cyan-500"
+            >
+              Sign in
+            </Link>
+          </Label>
         </div>
       )}
     </Form>
