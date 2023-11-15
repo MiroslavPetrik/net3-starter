@@ -13,7 +13,7 @@ const signinSchema = z.object({
 
 type SigninDto = (typeof signinSchema)["_output"];
 
-type Error<Dto> = {
+type FormError<Dto> = {
   validation: boolean;
   message?: string;
   messages?: {
@@ -21,7 +21,7 @@ type Error<Dto> = {
   };
 };
 
-export const signin = createFormAction<string, Error<SigninDto>>(
+export const signin = createFormAction<string, FormError<SigninDto>>(
   ({ success, failure }) =>
     async (_, formData) => {
       try {
@@ -38,13 +38,23 @@ export const signin = createFormAction<string, Error<SigninDto>>(
         return success("");
       } catch (error) {
         if (error instanceof ZodError) {
-          const messages = getZodMessages(error);
+          return failure({
+            validation: true,
+            messages: getZodErrorMessages(error),
+          });
+        } else if (error instanceof Error) {
+          const dbError = readDbError(error);
 
-          return failure({ validation: true, messages });
+          return failure({
+            validation: false,
+            message: dbError?.message ?? getErrorMessage(error),
+          });
+        } else {
+          return failure({
+            validation: false,
+            message: "Something went wrong.",
+          });
         }
-
-        // TODO: parsing of error?
-        return failure({ validation: false, message: "Something went wrong" });
       }
     },
 );
@@ -68,7 +78,7 @@ const singupSchema = z
 
 type SignUpDto = (typeof singupSchema)["_output"];
 
-export const signup = createFormAction<string, Error<SignUpDto>>(
+export const signup = createFormAction<string, FormError<SignUpDto>>(
   ({ success, failure }) =>
     async (_, formData) => {
       try {
@@ -91,32 +101,69 @@ export const signup = createFormAction<string, Error<SignUpDto>>(
         return success("Please check you email for a verification link.");
       } catch (error) {
         if (error instanceof ZodError) {
-          const messages = getZodMessages(error);
+          return failure({
+            validation: true,
+            messages: getZodErrorMessages(error),
+          });
+        } else if (error instanceof Error) {
+          const dbError = readDbError(error);
 
-          return failure({ validation: true, messages });
+          return failure({
+            validation: false,
+            message: dbError?.message ?? getErrorMessage(error),
+          });
         } else {
           return failure({
             validation: false,
-            message: getErrorMessage(error),
+            message: "Something went wrong.",
           });
         }
       }
     },
 );
 
-const getZodMessages = (error: ZodError) =>
+const getZodErrorMessages = (error: ZodError) =>
   error.errors.reduce((all, { message, path }) => {
     return { ...all, [path[0]!]: message };
   }, {});
 
-const getErrorMessage = (error: unknown) => {
-  if (error instanceof Error) {
-    if (typeof error.cause === "string") {
-      return error.cause;
-    } else {
-      return `${error.message ?? "Unknown error"}`;
-    }
+const getErrorMessage = (error: Error) => {
+  if (typeof error.cause === "string") {
+    return error.cause;
   }
 
-  return "Unknown error";
+  return `${error.message ?? "Unknown error"}`;
 };
+
+const readDbError = (originalError: Error) => {
+  try {
+    const { error } = stringToDBError.parse(originalError.message);
+    console.log(error);
+    return error;
+  } catch {
+    return null;
+  }
+};
+
+const dbAuthError = z.object({
+  error: z.object({
+    type: z.string(),
+    message: z.string(),
+  }),
+});
+
+const stringToDBError = z
+  .string()
+  .transform((str, ctx): z.infer<typeof dbAuthError> => {
+    try {
+      const err: unknown = JSON.parse(str);
+
+      return dbAuthError.parse(err);
+    } catch {
+      ctx.addIssue({
+        code: "custom",
+        message: "The string does not contain DB auth error",
+      });
+      return z.NEVER;
+    }
+  });
