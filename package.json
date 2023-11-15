@@ -8,7 +8,8 @@
     "lint": "next lint",
     "start": "next start",
     "gen:edgeql-js": "npx @edgedb/generate edgeql-js --out ./src/edgeql-js",
-    "db:restart": "edgedb instance restart -I et3_app"
+    "db:restart": "edgedb instance restart -I net3_starter",
+    "db:credentials": "edgedb instance credentials --json"
   },
   "dependencies": {
     "@edgedb/auth-nextjs": "^0.1.0-alpha.1",
