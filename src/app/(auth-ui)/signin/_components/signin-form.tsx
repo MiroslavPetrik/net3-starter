@@ -4,16 +4,17 @@ import { Label, TextInput } from "flowbite-react";
 import { Form } from "react-form-action/client";
 import { signin } from "@/app/actions/auth";
 import { Alert } from "flowbite-react";
+
 export function SignInForm() {
   return (
     <Form action={signin} initialData="">
       {({ error, isFailure, isSuccess, isPending }) => (
         <div className="flex flex-col gap-4">
-          {isFailure && !error.validation ? (
+          {isFailure && !error.validation && (
             <div>
               <Alert color="failure">{error.message}</Alert>
             </div>
-          ) : undefined}
+          )}
           <div>
             <Label>Email</Label>
             <TextInput
@@ -28,11 +29,7 @@ export function SignInForm() {
               }
               type="text"
               placeholder="hello@net3.app"
-              helperText={
-                isFailure && error.validation
-                  ? error.messages?.email
-                  : undefined
-              }
+              helperText={error?.messages?.email}
             />
           </div>
           <div>
@@ -49,11 +46,7 @@ export function SignInForm() {
               }
               type="password"
               placeholder="Your password"
-              helperText={
-                isFailure && error.validation
-                  ? error.messages?.password
-                  : undefined
-              }
+              helperText={error?.messages?.password}
             />
           </div>
           <SubmitButton />

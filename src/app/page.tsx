@@ -28,7 +28,7 @@ export default async function Home() {
             </Link>
             <Link
               className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
-              href={auth.getBuiltinUISignUpUrl()}
+              href="/signup"
             >
               <h3 className="text-2xl font-bold">Sign Up</h3>
             </Link>

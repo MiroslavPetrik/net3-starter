@@ -1,5 +1,6 @@
 "use server";
 import { auth } from "@/edgedb";
+import { redirect } from "next/navigation";
 import { createFormAction } from "react-form-action";
 import { ZodError, z } from "zod";
 
@@ -37,10 +38,7 @@ export const signin = createFormAction<string, Error<SigninDto>>(
         return success("");
       } catch (error) {
         if (error instanceof ZodError) {
-          // TODO: export?
-          const messages = error.errors.reduce((all, { message, path }) => {
-            return { ...all, [path[0]!]: message };
-          }, {});
+          const messages = getZodMessages(error);
 
           return failure({ validation: true, messages });
         }
@@ -50,3 +48,75 @@ export const signin = createFormAction<string, Error<SigninDto>>(
       }
     },
 );
+
+const singupSchema = z
+  .object({
+    email: z.string().email(),
+    password: z.string().min(1),
+    passwordRepeat: z.string().min(1),
+    tos: z.coerce.boolean().pipe(z.literal(true)),
+  })
+  .refine(
+    ({ password, passwordRepeat }) => {
+      return password === passwordRepeat;
+    },
+    {
+      message: "Passwords must match.",
+      path: ["passwordRepeat"],
+    },
+  );
+
+type SignUpDto = (typeof singupSchema)["_output"];
+
+export const signup = createFormAction<string, Error<SignUpDto>>(
+  ({ success, failure }) =>
+    async (_, formData) => {
+      try {
+        const { email, password } = singupSchema.parse({
+          email: formData.get("email"),
+          password: formData.get("password"),
+          passwordRepeat: formData.get("passwordRepeat"),
+          tos: formData.get("tos"),
+        });
+
+        const tokenData = await actions.emailPasswordSignUp({
+          email,
+          password,
+        });
+
+        if (tokenData) {
+          return redirect("/");
+        }
+
+        return success("Please check you email for a verification link.");
+      } catch (error) {
+        if (error instanceof ZodError) {
+          const messages = getZodMessages(error);
+
+          return failure({ validation: true, messages });
+        } else {
+          return failure({
+            validation: false,
+            message: getErrorMessage(error),
+          });
+        }
+      }
+    },
+);
+
+const getZodMessages = (error: ZodError) =>
+  error.errors.reduce((all, { message, path }) => {
+    return { ...all, [path[0]!]: message };
+  }, {});
+
+const getErrorMessage = (error: unknown) => {
+  if (error instanceof Error) {
+    if (typeof error.cause === "string") {
+      return error.cause;
+    } else {
+      return `${error.message ?? "Unknown error"}`;
+    }
+  }
+
+  return "Unknown error";
+};
