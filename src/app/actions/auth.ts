@@ -122,6 +122,92 @@ export const signup = createFormAction<string, FormError<SignUpDto>>(
     },
 );
 
+const resetPasswordEmailSchema = z.object({
+  email: z.string().email(),
+});
+
+export const resetPasswordEmail = createFormAction<
+  string,
+  FormError<SigninDto>
+>(({ success, failure }) => async (_, formData) => {
+  try {
+    const data = resetPasswordEmailSchema.parse({
+      email: formData.get("email"),
+    });
+
+    console.log(auth.options);
+
+    await actions.emailPasswordSendPasswordResetEmail({
+      ...data,
+      resetUrl: "TODO: never-used",
+    });
+
+    return success(
+      "We've sent you an email with a link to reset your password.",
+    );
+  } catch (error) {
+    if (error instanceof ZodError) {
+      return failure({
+        validation: true,
+        messages: getZodErrorMessages(error),
+      });
+    } else if (error instanceof Error) {
+      const dbError = readDbError(error);
+
+      return failure({
+        validation: false,
+        message: dbError?.message ?? getErrorMessage(error),
+      });
+    } else {
+      return failure({
+        validation: false,
+        message: "Something went wrong.",
+      });
+    }
+  }
+});
+
+const resetPasswordSchema = z.object({
+  password: z.string().min(1),
+});
+
+export const resetPassword = createFormAction<string, FormError<SigninDto>>(
+  ({ success, failure }) =>
+    async (_, formData) => {
+      try {
+        const data = resetPasswordSchema.parse({
+          password: formData.get("password"),
+        });
+
+        await actions.emailPasswordResetPassword({
+          resetToken: "???",
+          ...data,
+        });
+
+        return success("Success. You can now sign in with the new password.");
+      } catch (error) {
+        if (error instanceof ZodError) {
+          return failure({
+            validation: true,
+            messages: getZodErrorMessages(error),
+          });
+        } else if (error instanceof Error) {
+          const dbError = readDbError(error);
+
+          return failure({
+            validation: false,
+            message: dbError?.message ?? getErrorMessage(error),
+          });
+        } else {
+          return failure({
+            validation: false,
+            message: "Something went wrong.",
+          });
+        }
+      }
+    },
+);
+
 const getZodErrorMessages = (error: ZodError) =>
   error.errors.reduce((all, { message, path }) => {
     return { ...all, [path[0]!]: message };

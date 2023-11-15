@@ -3,21 +3,37 @@ import Link from "next/link";
 import { SubmitButton } from "@/app/_components/submit-button";
 import { Label, TextInput } from "flowbite-react";
 import { Form } from "react-form-action/client";
-import { signin } from "@/app/actions/auth";
+import { resetPasswordEmail } from "@/app/actions/auth";
 import { Alert } from "flowbite-react";
 
-export function SignInForm() {
+export function ResetPasswordEmailForm() {
   return (
-    <Form action={signin} initialData="">
-      {({ error, isFailure, isSuccess, isPending }) => (
+    <Form action={resetPasswordEmail} initialData="">
+      {({ error, data, isFailure, isSuccess, isPending }) => (
         <div className="flex flex-col gap-4">
+          {isSuccess && (
+            <div>
+              <Alert color="success">{data}</Alert>
+            </div>
+          )}
           {isFailure && !error.validation && (
             <div>
               <Alert color="failure">{error.message}</Alert>
             </div>
           )}
           <div>
-            <Label htmlFor="email">Email</Label>
+            <Label
+              htmlFor="email"
+              color={
+                isFailure && error.validation && error.messages?.email
+                  ? "failure"
+                  : isSuccess
+                  ? "success"
+                  : undefined
+              }
+            >
+              Email
+            </Label>
             <TextInput
               id="email"
               name="email"
@@ -34,40 +50,14 @@ export function SignInForm() {
               helperText={error?.messages?.email}
             />
           </div>
-          <div>
-            <Label htmlFor="password" className="flex justify-between">
-              <span>Password</span>
-              <Link
-                href="/reset-password"
-                className="text-cyan-600 hover:underline dark:text-cyan-500"
-              >
-                Forgot password?
-              </Link>
-            </Label>
-            <TextInput
-              id="password"
-              name="password"
-              disabled={isPending}
-              color={
-                isFailure && error.validation && error.messages?.password
-                  ? "failure"
-                  : isSuccess
-                  ? "success"
-                  : undefined
-              }
-              type="password"
-              placeholder="Your password"
-              helperText={error?.messages?.password}
-            />
-          </div>
           <SubmitButton />
           <Label>
-            Don&apos;t have an account?&nbsp;
+            Go back to&nbsp;
             <Link
-              href="/signup"
+              href="/signin"
               className="text-cyan-600 hover:underline dark:text-cyan-500"
             >
-              Sign up
+              Sign in
             </Link>
           </Label>
         </div>
