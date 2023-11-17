@@ -1,5 +1,5 @@
 import { type Client } from "edgedb";
-import { type BuiltinOAuthProviderNames } from "../core/consts";
+import { type BuiltinOAuthProviderNames } from "@edgedb/auth-core";
 import { cookies } from "next/headers";
 
 export interface NextAuthOptions {
@@ -16,6 +16,7 @@ export function createNextEdgeAuth(client: Client, options: NextAuthOptions) {
   return new NextEdgeAuth(client, options);
 }
 
+// waitsforfix: temp helper creates 'session' without crypto import
 class NextEdgeAuth {
   /** @internal */
   readonly options: Required<Omit<NextAuthOptions, OptionalOptions>> &
@@ -32,6 +33,7 @@ class NextEdgeAuth {
       authCookieName: options.authCookieName ?? "edgedb-session",
       pkceVerifierCookieName:
         options.pkceVerifierCookieName ?? "edgedb-pkce-verifier",
+      passwordResetUrl: options.passwordResetUrl,
     };
   }
 

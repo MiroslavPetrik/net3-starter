@@ -1,4 +1,4 @@
-import createAuth from "@edgedb/auth-nextjs";
+import createAuth from "@edgedb/auth-nextjs/app";
 import { client } from "./client";
 
 export const auth = createAuth(client, {
