@@ -1,52 +1,43 @@
 "use client";
-import Link from "next/link";
 import { SubmitButton } from "@/app/_components/submit-button";
 import { Label, TextInput } from "flowbite-react";
 import { Form } from "react-form-action/client";
-import { signin } from "@/app/actions/auth";
+import { resetPassword } from "@/app/actions/auth";
 import { Alert } from "flowbite-react";
+import Link from "next/link";
 
-export function SignInForm() {
+export function ResetPasswordForm() {
   return (
-    <Form action={signin} initialData="">
-      {({ error, isFailure, isSuccess, isPending }) => (
+    <Form action={resetPassword} initialData="">
+      {({ error, data, isFailure, isSuccess, isPending }) => (
         <div className="flex flex-col gap-4">
+          {isSuccess && (
+            <div>
+              <Alert color="success">{data}</Alert>
+            </div>
+          )}
           {isFailure && !error.validation && (
             <div>
               <Alert color="failure">{error.message}</Alert>
             </div>
           )}
           <div>
-            <Label htmlFor="email">Email</Label>
-            <TextInput
-              id="email"
-              name="email"
-              disabled={isPending}
+            <Label
+              htmlFor="password"
               color={
-                isFailure && error.validation && error.messages?.email
+                isFailure && error.validation && error.messages?.password
                   ? "failure"
                   : isSuccess
                   ? "success"
                   : undefined
               }
-              type="text"
-              placeholder="hello@net3.app"
-              helperText={error?.messages?.email}
-            />
-          </div>
-          <div>
-            <Label htmlFor="password" className="flex justify-between">
-              <span>Password</span>
-              <Link
-                href="/reset-password"
-                className="text-cyan-600 hover:underline dark:text-cyan-500"
-              >
-                Forgot password?
-              </Link>
+            >
+              New Password
             </Label>
             <TextInput
               id="password"
               name="password"
+              type="password"
               disabled={isPending}
               color={
                 isFailure && error.validation && error.messages?.password
@@ -55,19 +46,17 @@ export function SignInForm() {
                   ? "success"
                   : undefined
               }
-              type="password"
-              placeholder="Your password"
               helperText={error?.messages?.password}
             />
           </div>
           <SubmitButton />
           <Label>
-            Don&apos;t have an account?&nbsp;
+            Link expired?&nbsp;
             <Link
-              href="/signup"
+              href="/reset-password-email"
               className="text-cyan-600 hover:underline dark:text-cyan-500"
             >
-              Sign up
+              Get another.
             </Link>
           </Label>
         </div>
