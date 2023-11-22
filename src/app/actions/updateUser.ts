@@ -2,6 +2,7 @@
 import { ZodError, z } from "zod";
 import { updateCurrentUser } from "@/edgedb/user";
 import { createFormAction } from "react-form-action";
+import { revalidatePath } from "next/cache";
 
 const updateUserSchema = z.object({
   name: z.string().min(3),
@@ -18,6 +19,7 @@ export const updateUser = createFormAction<string>(
         const user = await updateCurrentUser(name);
 
         if (user) {
+          revalidatePath("/settings/profile");
           return success(`Your profile has been updated.`);
         } else {
           return failure(`no user`);

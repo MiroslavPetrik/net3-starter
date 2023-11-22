@@ -21,7 +21,7 @@ const { GET, POST } = auth.createAuthRouteHandlers({
     redirect("/404");
   },
   onSignout() {
-    redirect("/?bye=true");
+    redirect("/");
   },
 });
 

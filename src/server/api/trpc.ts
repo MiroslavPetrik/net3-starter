@@ -6,10 +6,12 @@
  * TL;DR - This is where all the tRPC server stuff is created and plugged in. The pieces you will
  * need to use are documented accordingly near the end.
  */
-import { initTRPC } from "@trpc/server";
-import { type NextRequest } from "next/server";
+import { TRPCError, initTRPC } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
+import { auth } from "@/edgedb";
+import e from "@/edgeql-js";
+import { type NextAuthSession } from "@edgedb/auth-nextjs/app";
 
 /**
  * 1. CONTEXT
@@ -21,6 +23,8 @@ import { ZodError } from "zod";
 
 interface CreateContextOptions {
   headers: Headers;
+  session: NextAuthSession;
+  e: typeof e;
 }
 
 /**
@@ -36,6 +40,8 @@ interface CreateContextOptions {
 export const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
     headers: opts.headers,
+    session: opts.session,
+    e: opts.e,
   };
 };
 
@@ -45,14 +51,17 @@ export const createInnerTRPCContext = (opts: CreateContextOptions) => {
  *
  * @see https://trpc.io/docs/context
  */
-export const createTRPCContext = (opts: { req: NextRequest }) => {
+export const createTRPCContext = async (opts: { headers: Headers }) => {
   // Fetch stuff that depends on the request
 
+  const session = auth.getSession();
+
   return createInnerTRPCContext({
-    headers: opts.req.headers,
+    headers: opts.headers,
+    session,
+    e,
   });
 };
-
 /**
  * 2. INITIALIZATION
  *
@@ -97,3 +106,24 @@ export const createTRPCRouter = t.router;
  * are logged in.
  */
 export const publicProcedure = t.procedure;
+
+/**
+ * Reusable middleware to ensure
+ * users are logged in
+ */
+const isAuthed = t.middleware(async ({ ctx, next }) => {
+  const loggedIn = await ctx.session.isLoggedIn();
+
+  if (!loggedIn) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+
+  return next({
+    ctx, // possibly query user?
+  });
+});
+
+/**
+ * Protected procedure
+ **/
+export const protectedProcedure = t.procedure.use(isAuthed);

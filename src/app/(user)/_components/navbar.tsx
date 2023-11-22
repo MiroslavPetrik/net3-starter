@@ -1,5 +1,7 @@
 "use client";
+import { User } from "@/types";
 import {
+  Avatar,
   Navbar as FlowbiteNavbar,
   NavbarBrand,
   NavbarCollapse,
@@ -10,7 +12,13 @@ import {
 import { usePathname } from "next/navigation";
 import { type ReactNode } from "react";
 
-export function Navbar({ signOutButton }: { signOutButton: ReactNode }) {
+export function Navbar({
+  user,
+  signOutButton,
+}: {
+  user: User;
+  signOutButton: ReactNode;
+}) {
   const pathname = usePathname();
 
   return (
@@ -24,7 +32,13 @@ export function Navbar({ signOutButton }: { signOutButton: ReactNode }) {
           NET3 Starter
         </span>
       </NavbarBrand>
-      <div className="flex md:order-2">
+      <div className="flex space-x-4 md:order-2">
+        <div className="flex items-center space-x-4">
+          <Avatar rounded />
+          <span className="font-semibold text-gray-900 hover:text-gray-900">
+            {user.name}
+          </span>
+        </div>
         {signOutButton}
         <NavbarToggle />
       </div>
