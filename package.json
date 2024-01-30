@@ -10,6 +10,7 @@
     "gen:edgeql-js": "npx @edgedb/generate edgeql-js --out ./src/edgeql-js",
     "db:restart": "edgedb instance restart -I net3_starter",
     "db:credentials": "edgedb instance credentials --json",
+    "db:dsn": "edgedb instance credentials --insecure-dsn",
     "db:ipv4": "edgedb configure set listen_addresses 127.0.0.1 ::1",
     "db:smtp": "edgedb query --file ./smtp.config.edgeql"
   },
