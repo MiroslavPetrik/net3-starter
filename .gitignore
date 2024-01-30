@@ -44,3 +44,7 @@ yarn-error.log*
 
 # Contentlayer
 .contentlayer
+
+
+# EdgeDB query client
+src/edgeql-js
