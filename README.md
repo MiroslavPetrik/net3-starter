@@ -7,6 +7,7 @@ This is Next.js + EdgeDB starter project bootstraped on the [T3 Stack](https://c
 - [tRPC](https://trpc.io) typesafe end-2-end API definition & access
 - [Tailwind CSS](https://tailwindcss.com) with [Flowbite React](https://www.flowbite-react.com/) componentss
 - [TypeScript](https://www.typescriptlang.org/) language for JavaScript autocompletion
+- [i18next](https://www.i18next.com/) localization
 
 > [!NOTE]
 > Project uses unstable apis such as the EdgeDB auth extension
