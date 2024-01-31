@@ -1,18 +1,50 @@
 import { NextResponse } from "next/server";
+import acceptLanguage from "accept-language";
+import { fallbackLng, languages, cookieName } from "@/i18n/options";
 import type { NextRequest } from "next/server";
-import { auth } from "@/edgedb/edge";
+import { cookies, headers } from "next/headers";
 
-export async function middleware(request: NextRequest) {
-  const session = auth.getSession();
-  const loggedIn = await session.isLoggedIn();
-
-  if (!loggedIn) {
-    return NextResponse.redirect(new URL("/", request.url));
-  } else {
-    return NextResponse.next();
-  }
-}
+acceptLanguage.languages(languages);
 
 export const config = {
-  matcher: ["/onboarding", "/dashboard", "/profile/:path*"],
+  matcher: [
+    // Skip all internal paths (_next)
+    "/((?!_next).*)",
+    // "/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js).*)",
+  ],
 };
+
+export function middleware(req: NextRequest) {
+  const cookiesList = cookies();
+  let lng;
+  if (cookiesList.has(cookieName))
+    lng = acceptLanguage.get(cookiesList.get(cookieName)?.value);
+  if (!lng) lng = acceptLanguage.get(headers().get("Accept-Language"));
+  if (!lng) lng = fallbackLng;
+
+  // Redirect if lng in path is not supported
+  if (
+    !languages.some(
+      (loc) =>
+        req.nextUrl.pathname.startsWith(`/${loc}/`) ||
+        req.nextUrl.pathname === `/${loc}`,
+    ) &&
+    !req.nextUrl.pathname.startsWith("/_next")
+  ) {
+    return NextResponse.redirect(
+      new URL(`/${lng}${req.nextUrl.pathname}`, req.url),
+    );
+  }
+
+  if (req.headers.has("referer")) {
+    const refererUrl = new URL(headers().get("referer")!);
+    const lngInReferer = languages.find((locale) =>
+      refererUrl.pathname.startsWith(`/${locale}`),
+    );
+    const response = NextResponse.next();
+    if (lngInReferer) response.cookies.set(cookieName, lngInReferer);
+    return response;
+  }
+
+  return NextResponse.next();
+}

@@ -10,8 +10,10 @@
     "gen:edgeql-js": "npx @edgedb/generate edgeql-js --out ./src/edgeql-js",
     "db:restart": "edgedb instance restart -I net3_starter",
     "db:credentials": "edgedb instance credentials --json",
+    "db:dsn": "edgedb instance credentials --insecure-dsn",
     "db:ipv4": "edgedb configure set listen_addresses 127.0.0.1 ::1",
-    "db:smtp": "edgedb query --file ./smtp.config.edgeql"
+    "db:smtp": "edgedb query --file ./smtp.config.edgeql",
+    "i18n": "i18next"
   },
   "dependencies": {
     "@edgedb/auth-nextjs": "^0.1.0-alpha.1",
@@ -21,12 +23,18 @@
     "@trpc/next": "^10.37.1",
     "@trpc/react-query": "^10.37.1",
     "@trpc/server": "^10.37.1",
+    "accept-language": "^3.0.18",
     "edgedb": "^1.4.0",
     "flowbite-react": "^0.7.0-beta.4",
+    "i18next": "^23.8.1",
+    "i18next-browser-languagedetector": "^7.2.0",
+    "i18next-resources-to-backend": "^1.2.0",
     "next": "^14.0.2",
     "react": "18.2.0",
+    "react-cookie": "^7.0.2",
     "react-dom": "18.2.0",
     "react-form-action": "^0.1.0",
+    "react-i18next": "^14.0.1",
     "superjson": "^1.13.1",
     "zod": "^3.22.4"
   },
@@ -41,6 +49,7 @@
     "autoprefixer": "^10.4.14",
     "eslint": "^8.47.0",
     "eslint-config-next": "^14.0.0",
+    "i18next-parser": "^8.12.0",
     "jwt-decode": "^4.0.0",
     "postcss": "^8.4.27",
     "prettier": "^3.0.0",
