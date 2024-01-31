@@ -32,8 +32,8 @@ export function ResetPasswordEmailForm() {
                 isFailure && error.validation && error.messages?.email
                   ? "failure"
                   : isSuccess
-                  ? "success"
-                  : undefined
+                    ? "success"
+                    : undefined
               }
             >
               {t("resetPasswordEmail.email")}
@@ -46,8 +46,8 @@ export function ResetPasswordEmailForm() {
                 isFailure && error.validation && error.messages?.email
                   ? "failure"
                   : isSuccess
-                  ? "success"
-                  : undefined
+                    ? "success"
+                    : undefined
               }
               type="text"
               placeholder="hello@net3.app"

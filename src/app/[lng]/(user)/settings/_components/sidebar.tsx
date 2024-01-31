@@ -4,7 +4,7 @@ import {
   SidebarItem,
   SidebarItems,
   SidebarItemGroup,
-} from "@/app/_components/sidebar";
+} from "flowbite-react";
 import { usePathname } from "next/navigation";
 
 export const SettingsSidebar = () => {

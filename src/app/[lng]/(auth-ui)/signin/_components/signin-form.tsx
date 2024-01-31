@@ -31,8 +31,8 @@ export function SignInForm() {
                 isFailure && error.validation && error.messages?.email
                   ? "failure"
                   : isSuccess
-                  ? "success"
-                  : undefined
+                    ? "success"
+                    : undefined
               }
               type="text"
               placeholder="hello@net3.app"
@@ -57,8 +57,8 @@ export function SignInForm() {
                 isFailure && error.validation && error.messages?.password
                   ? "failure"
                   : isSuccess
-                  ? "success"
-                  : undefined
+                    ? "success"
+                    : undefined
               }
               type="password"
               placeholder="Your password"

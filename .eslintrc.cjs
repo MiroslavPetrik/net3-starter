@@ -1,6 +1,7 @@
 /** @type {import("eslint").Linter.Config} */
 const config = {
   parser: "@typescript-eslint/parser",
+  ignorePatterns: ["src/edgeql-js"],
   parserOptions: {
     project: true,
   },

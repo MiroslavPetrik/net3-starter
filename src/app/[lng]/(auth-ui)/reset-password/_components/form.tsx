@@ -32,8 +32,8 @@ export function ResetPasswordForm() {
                 isFailure && error.validation && error.messages?.password
                   ? "failure"
                   : isSuccess
-                  ? "success"
-                  : undefined
+                    ? "success"
+                    : undefined
               }
             >
               {t("resetPassword.newPassword")}
@@ -47,8 +47,8 @@ export function ResetPasswordForm() {
                 isFailure && error.validation && error.messages?.password
                   ? "failure"
                   : isSuccess
-                  ? "success"
-                  : undefined
+                    ? "success"
+                    : undefined
               }
               helperText={error?.messages?.password}
             />

@@ -39,8 +39,8 @@ export function SignUpForm() {
                 isFailure && error.validation && error.messages?.email
                   ? "failure"
                   : isSuccess
-                  ? "success"
-                  : undefined
+                    ? "success"
+                    : undefined
               }
               helperText={error?.messages?.email}
             />
@@ -59,8 +59,8 @@ export function SignUpForm() {
                 isFailure && error.validation && error.messages?.password
                   ? "failure"
                   : isSuccess
-                  ? "success"
-                  : undefined
+                    ? "success"
+                    : undefined
               }
               helperText={error?.messages?.password}
             />
@@ -82,8 +82,8 @@ export function SignUpForm() {
                 isFailure && error.validation && error.messages?.passwordRepeat
                   ? "failure"
                   : isSuccess
-                  ? "success"
-                  : undefined
+                    ? "success"
+                    : undefined
               }
               helperText={error?.messages?.passwordRepeat}
             />
@@ -96,8 +96,8 @@ export function SignUpForm() {
                 isFailure && error.validation && error.messages?.tos
                   ? "failure"
                   : isSuccess
-                  ? "success"
-                  : undefined
+                    ? "success"
+                    : undefined
               }
             />
             <Label
@@ -107,8 +107,8 @@ export function SignUpForm() {
                 isFailure && error.validation && error.messages?.tos
                   ? "failure"
                   : isSuccess
-                  ? "success"
-                  : undefined
+                    ? "success"
+                    : undefined
               }
             >
               <Trans i18nKey="signUp.agreeTOC" t={t}>
