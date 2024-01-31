@@ -7,9 +7,12 @@ import { useTranslation } from "@/i18n";
 
 export default async function Onboarding({ params: { lng } }: Params) {
   const user = await selectCurrentUser();
-  const { t } = await useTranslation("onboarding", lng);
 
-  if (user) redirect("/");
+  if (user) {
+    redirect("/");
+  }
+
+  const { t } = await useTranslation("onboarding", lng);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center ">

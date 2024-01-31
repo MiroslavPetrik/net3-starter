@@ -1,4 +1,3 @@
-import e from "@/edgeql-js";
 import { auth } from ".";
 
 import {
