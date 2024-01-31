@@ -8,9 +8,7 @@ acceptLanguage.languages(languages);
 
 export const config = {
   matcher: [
-    // Skip all internal paths (_next)
-    "/((?!_next).*)",
-    // "/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js).*)",
+    "/((?!api|_next/static|_next/image|auth|assets|favicon.ico|sw.js).*)",
   ],
 };
 
