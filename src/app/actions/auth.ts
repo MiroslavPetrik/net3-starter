@@ -55,16 +55,16 @@ export const signin = createFormAction<string, FormError<SigninDto>>(
             messages: getZodErrorMessages(error),
           });
         } else if (error instanceof Error) {
-          const dbError = readDbError(error);
+          const dbError = readDbError(error, t);
 
           return failure({
             validation: false,
-            message: dbError?.message ?? getErrorMessage(error),
+            message: dbError?.message ?? getErrorMessage(error, t),
           });
         } else {
           return failure({
             validation: false,
-            message: "Something went wrong.",
+            message: t("unexpectedError"),
           });
         }
       }
@@ -123,16 +123,16 @@ export const signup = createFormAction<string, FormError<SignUpDto>>(
             messages: getZodErrorMessages(error),
           });
         } else if (error instanceof Error) {
-          const dbError = readDbError(error);
+          const dbError = readDbError(error, t);
 
           return failure({
             validation: false,
-            message: dbError?.message ?? getErrorMessage(error),
+            message: dbError?.message ?? getErrorMessage(error, t),
           });
         } else {
           return failure({
             validation: false,
-            message: "Something went wrong.",
+            message: t("unexpectedError"),
           });
         }
       }
@@ -167,16 +167,16 @@ export const resetPasswordEmail = createFormAction<
         messages: getZodErrorMessages(error),
       });
     } else if (error instanceof Error) {
-      const dbError = readDbError(error);
+      const dbError = readDbError(error, t);
 
       return failure({
         validation: false,
-        message: dbError?.message ?? getErrorMessage(error),
+        message: dbError?.message ?? getErrorMessage(error, t),
       });
     } else {
       return failure({
         validation: false,
-        message: "Something went wrong.",
+        message: t("unexpectedError"),
       });
     }
   }
@@ -209,16 +209,18 @@ export const resetPassword = createFormAction<string, FormError<SigninDto>>(
             messages: getZodErrorMessages(error),
           });
         } else if (error instanceof Error) {
-          const dbError = readDbError(error);
+          const dbError = readDbError(error, t);
+
+          console.log(dbError);
 
           return failure({
             validation: false,
-            message: dbError?.message ?? getErrorMessage(error),
+            message: dbError?.message ?? getErrorMessage(error, t),
           });
         } else {
           return failure({
             validation: false,
-            message: "Something went wrong.",
+            message: t("unexpectedError"),
           });
         }
       }
@@ -230,18 +232,22 @@ const getZodErrorMessages = (error: ZodError) =>
     return { ...all, [path[0]!]: message };
   }, {});
 
-const getErrorMessage = (error: Error) => {
+const getErrorMessage = (error: Error, t: (key: string) => string) => {
   if (typeof error.cause === "string") {
     return error.cause;
   }
 
-  return `${error.message ?? "Unknown error"}`;
+  return error.message ?? t("auth:unexpectedError");
 };
 
-const readDbError = (originalError: Error) => {
+const readDbError = (originalError: Error, t: (key: string) => string) => {
   try {
     const { error } = stringToDBError.parse(originalError.message);
-    console.log(error);
+
+    if (error.message === "Email verification is required") {
+      return { ...error, message: t("auth:emailVerificationRequired") };
+    }
+
     return error;
   } catch {
     return null;

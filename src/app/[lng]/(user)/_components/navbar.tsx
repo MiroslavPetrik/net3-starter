@@ -1,5 +1,5 @@
 "use client";
-import { LanguageParam } from "@/i18n";
+import { type LanguageParam } from "@/i18n";
 import { useLngPathname } from "@/i18n/client";
 import type { User } from "@/types";
 import {

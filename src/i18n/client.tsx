@@ -7,7 +7,7 @@ import { useCookies } from "react-cookie";
 import resourcesToBackend from "i18next-resources-to-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { getOptions, languages, i18nCookieName } from "./options";
-import { Languages, type LanguageParam } from "./types";
+import type { Languages, LanguageParam } from "./types";
 import { usePathname } from "next/navigation";
 
 const runsOnServerSide = typeof window === "undefined";
