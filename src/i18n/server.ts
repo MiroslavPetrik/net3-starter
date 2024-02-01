@@ -4,6 +4,7 @@ import { initReactI18next } from "react-i18next/initReactI18next";
 import { getOptions, i18nCookieName, fallbackLng } from "./options";
 import { cookies } from "next/headers";
 import { type Languages } from "./types";
+import { setZodErrorMap } from "./zodError";
 
 const initI18next = async (lng: string, ns: string) => {
   const i18n = createInstance();
@@ -27,9 +28,12 @@ export async function useTranslation(
   options: { keyPrefix?: string } = {},
 ) {
   const i18n = await initI18next(lng, ns);
+  const t = i18n.getFixedT(lng, ns, options.keyPrefix);
+
+  setZodErrorMap({ t });
 
   return {
-    t: i18n.getFixedT(lng, ns, options.keyPrefix),
+    t,
     i18n,
   };
 }

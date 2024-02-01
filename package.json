@@ -47,7 +47,8 @@
     "react-form-action": "^0.1.0",
     "react-i18next": "^14.0.1",
     "superjson": "^2.2.1",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "zod-i18n-map": "^2.27.0"
   },
   "devDependencies": {
     "@edgedb/generate": "^0.4.1",

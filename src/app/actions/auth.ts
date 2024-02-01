@@ -3,8 +3,7 @@
 import { auth } from "@/edgedb";
 import { createFormAction } from "react-form-action";
 import { ZodError, z } from "zod";
-import { useTranslation, getLngCookie } from "@/i18n";
-
+import { useTranslation, getLngCookie, t } from "@/i18n";
 const actions = auth.createServerActions();
 
 const signinSchema = z.object({
@@ -83,7 +82,7 @@ const singupSchema = z
       return password === passwordRepeat;
     },
     {
-      message: "Passwords must match.",
+      params: { i18n: t("zodError:passwordsMustMatch") },
       path: ["passwordRepeat"],
     },
   );
