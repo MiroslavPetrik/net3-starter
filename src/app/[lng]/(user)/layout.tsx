@@ -8,9 +8,9 @@ import { selectCurrentUser } from "@/edgedb/user";
 
 export default async function Layout({ children }: PropsWithChildren<Params>) {
   const session = auth.getSession();
-  const loggedIn = await session.isLoggedIn();
+  const isLoggedIn = await session.isLoggedIn();
 
-  if (!loggedIn) {
+  if (!isLoggedIn) {
     redirect("/");
   }
 

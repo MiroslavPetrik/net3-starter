@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
 import acceptLanguage from "accept-language";
-import { fallbackLng, languages, cookieName } from "@/i18n/options";
+import { fallbackLng, languages, i18nCookieName } from "@/i18n/options";
 import type { NextRequest } from "next/server";
 import { cookies, headers } from "next/headers";
+import { getLngCookie } from "./i18n";
 
-acceptLanguage.languages(languages);
+acceptLanguage.languages([...languages]);
 
 export const config = {
   matcher: [
@@ -15,8 +16,7 @@ export const config = {
 export function middleware(req: NextRequest) {
   const cookiesList = cookies();
   let lng;
-  if (cookiesList.has(cookieName))
-    lng = acceptLanguage.get(cookiesList.get(cookieName)?.value);
+  if (cookiesList.has(i18nCookieName)) lng = acceptLanguage.get(getLngCookie());
   if (!lng) lng = acceptLanguage.get(headers().get("Accept-Language"));
   if (!lng) lng = fallbackLng;
 
@@ -40,7 +40,7 @@ export function middleware(req: NextRequest) {
       refererUrl.pathname.startsWith(`/${locale}`),
     );
     const response = NextResponse.next();
-    if (lngInReferer) response.cookies.set(cookieName, lngInReferer);
+    if (lngInReferer) response.cookies.set(i18nCookieName, lngInReferer);
     return response;
   }
 
