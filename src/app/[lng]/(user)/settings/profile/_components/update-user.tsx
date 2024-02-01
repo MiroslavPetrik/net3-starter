@@ -4,8 +4,11 @@ import { SubmitButton } from "@/app/_components/submit-button";
 import { Label, TextInput } from "flowbite-react";
 import { Form } from "react-form-action/client";
 import { type User } from "@/types/user";
+import { useTranslation } from "react-i18next";
 
 export function UpdateUser({ user }: { user: User }) {
+  const { t } = useTranslation("settings");
+
   return (
     <Form action={updateUser} initialData="" className="flex flex-col gap-2">
       {({ error, isFailure, isSuccess, isPending }) => (
@@ -15,7 +18,7 @@ export function UpdateUser({ user }: { user: User }) {
               htmlFor="name"
               color={isFailure ? "failure" : isSuccess ? "success" : undefined}
             >
-              Name
+              {t("editProfile.name")}
             </Label>
             <TextInput
               defaultValue={user.name}
@@ -24,7 +27,7 @@ export function UpdateUser({ user }: { user: User }) {
               disabled={isPending}
               color={isFailure ? "failure" : isSuccess ? "success" : undefined}
               type="text"
-              placeholder="New name"
+              placeholder={t("editProfile.newName")}
               helperText={isFailure ? error : undefined}
             />
           </div>

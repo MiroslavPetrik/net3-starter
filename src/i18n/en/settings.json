@@ -1,0 +1,13 @@
+{
+  "deleteAccount": {
+    "submit": "Delete",
+    "submitting": "Deleting...",
+    "title": "Delete Account",
+    "warningMessage": "Your user data will be removed. This cannot be undone."
+  },
+  "editProfile": {
+    "name": "Name",
+    "newName": "New Name",
+    "title": "Edit Profile"
+  }
+}
