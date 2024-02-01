@@ -1,15 +1,16 @@
 "use client";
+import type { LanguageParam } from "@/i18n";
+import { useLngPathname } from "@/i18n/client";
 import {
   Sidebar,
   SidebarItem,
   SidebarItems,
   SidebarItemGroup,
 } from "flowbite-react";
-import { usePathname } from "next/navigation";
 import { useTranslation } from "react-i18next";
 
-export const SettingsSidebar = () => {
-  const pathname = usePathname();
+export const SettingsSidebar = ({ lng }: LanguageParam) => {
+  const pathname = useLngPathname(lng);
   const { t } = useTranslation("settings");
 
   return (

@@ -29,6 +29,7 @@ export default async function Layout({
   return (
     <>
       <Navbar
+        lng={lng}
         user={user}
         signOutButton={<SignOutButton>{t("signOut")}</SignOutButton>}
       />

@@ -1,4 +1,6 @@
 "use client";
+import { LanguageParam } from "@/i18n";
+import { useLngPathname } from "@/i18n/client";
 import type { User } from "@/types";
 import {
   Avatar,
@@ -9,18 +11,18 @@ import {
   NavbarToggle,
 } from "flowbite-react";
 
-import { usePathname } from "next/navigation";
 import { type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 
 export function Navbar({
+  lng,
   user,
   signOutButton,
 }: {
   user: User;
   signOutButton: ReactNode;
-}) {
-  const pathname = usePathname();
+} & LanguageParam) {
+  const pathname = useLngPathname(lng);
   const { t } = useTranslation("global");
 
   return (
