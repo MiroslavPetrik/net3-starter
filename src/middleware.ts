@@ -20,18 +20,22 @@ export function middleware(req: NextRequest) {
   if (!lng) lng = acceptLanguage.get(headers().get("Accept-Language"));
   if (!lng) lng = fallbackLng;
 
+  const pathnameHasLocale = languages.some(
+    (loc) =>
+      req.nextUrl.pathname.startsWith(`/${loc}/`) ||
+      req.nextUrl.pathname === `/${loc}`,
+  );
+
   // Redirect if lng in path is not supported
-  if (
-    !languages.some(
-      (loc) =>
-        req.nextUrl.pathname.startsWith(`/${loc}/`) ||
-        req.nextUrl.pathname === `/${loc}`,
-    ) &&
-    !req.nextUrl.pathname.startsWith("/_next")
-  ) {
-    return NextResponse.redirect(
-      new URL(`/${lng}${req.nextUrl.pathname}`, req.url),
-    );
+  if (!pathnameHasLocale && !req.nextUrl.pathname.startsWith("/_next")) {
+    // the URL, does not keep searchParams from the url passed as second argument
+    const searchParams = req.nextUrl.searchParams.toString();
+
+    const url =
+      new URL(`/${lng}${req.nextUrl.pathname}`, req.url).toString() +
+      (searchParams.length ? `?${searchParams}` : "");
+
+    return NextResponse.redirect(url);
   }
 
   if (req.headers.has("referer")) {

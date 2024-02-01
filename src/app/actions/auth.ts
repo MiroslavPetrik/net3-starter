@@ -1,9 +1,12 @@
 "use server";
 
 import { auth } from "@/edgedb";
+import { resetTokenFieldName } from "@/edgedb/resetToken";
+
 import { createFormAction } from "react-form-action";
 import { ZodError, z } from "zod";
 import { useTranslation, getLngCookie, t } from "@/i18n";
+
 const actions = auth.createServerActions();
 
 const signinSchema = z.object({
@@ -153,10 +156,7 @@ export const resetPasswordEmail = createFormAction<
       email: formData.get("email"),
     });
 
-    await actions.emailPasswordSendPasswordResetEmail({
-      ...data,
-      resetUrl: "TODO: never-used",
-    });
+    await actions.emailPasswordSendPasswordResetEmail(data);
 
     return success(t("resetPasswordEmail.success"));
   } catch (error) {
@@ -183,6 +183,7 @@ export const resetPasswordEmail = createFormAction<
 
 const resetPasswordSchema = z.object({
   password: z.string().min(1),
+  reset_token: z.string(),
 });
 
 export const resetPassword = createFormAction<string, FormError<SigninDto>>(
@@ -193,12 +194,12 @@ export const resetPassword = createFormAction<string, FormError<SigninDto>>(
       try {
         const data = resetPasswordSchema.parse({
           password: formData.get("password"),
+          [resetTokenFieldName]: formData.get(resetTokenFieldName),
         });
 
-        await actions.emailPasswordResetPassword({
-          resetToken: "???",
-          ...data,
-        });
+        console.log(data);
+
+        await actions.emailPasswordResetPassword(data);
 
         return success(t("resetPassword.success"));
       } catch (error) {
