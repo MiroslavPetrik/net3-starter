@@ -1,11 +1,9 @@
 "use server";
+
 import { auth } from "@/edgedb";
-import { redirect } from "next/navigation";
 import { createFormAction } from "react-form-action";
 import { ZodError, z } from "zod";
 import { useTranslation, getLngCookie } from "@/i18n";
-import { cookies } from "next/headers";
-import { cookieName } from "@/i18n/options";
 
 const actions = auth.createServerActions();
 

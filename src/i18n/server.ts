@@ -1,13 +1,14 @@
 import { createInstance } from "i18next";
 import resourcesToBackend from "i18next-resources-to-backend";
 import { initReactI18next } from "react-i18next/initReactI18next";
-import { getOptions, cookieName, fallbackLng } from "./options";
+import { getOptions, i18nCookieName, fallbackLng } from "./options";
 import { cookies } from "next/headers";
 import { type Languages } from "./types";
 
 const initI18next = async (lng: string, ns: string) => {
-  const i18nInstance = createInstance();
-  await i18nInstance
+  const i18n = createInstance();
+
+  await i18n
     .use(initReactI18next)
     .use(
       resourcesToBackend(
@@ -16,7 +17,8 @@ const initI18next = async (lng: string, ns: string) => {
       ),
     )
     .init(getOptions(ns, lng));
-  return i18nInstance;
+
+  return i18n;
 };
 
 export async function useTranslation(
@@ -33,4 +35,4 @@ export async function useTranslation(
 }
 
 export const getLngCookie = () =>
-  (cookies().get(cookieName)?.value ?? fallbackLng) as Languages;
+  (cookies().get(i18nCookieName)?.value ?? fallbackLng) as Languages;
