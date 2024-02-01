@@ -2,9 +2,10 @@
 import Link from "next/link";
 import { auth } from "@/edgedb/edge";
 import { Button } from "flowbite-react";
+import { type PropsWithChildren } from "react";
 
-export const SignOutButton = () => (
+export const SignOutButton = ({ children = "Sign Out" }: PropsWithChildren) => (
   <Link href={auth.getSignoutUrl()}>
-    <Button>Sign Out</Button>
+    <Button>{children}</Button>
   </Link>
 );

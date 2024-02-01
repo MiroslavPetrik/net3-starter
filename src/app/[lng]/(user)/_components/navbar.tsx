@@ -1,8 +1,8 @@
 "use client";
-import { User } from "@/types/user";
+import type { User } from "@/types";
 import {
   Avatar,
-  Navbar as FlowbiteNavbar,
+  Navbar as BaseNavbar,
   NavbarBrand,
   NavbarCollapse,
   NavbarLink,
@@ -11,6 +11,7 @@ import {
 
 import { usePathname } from "next/navigation";
 import { type ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 
 export function Navbar({
   user,
@@ -20,9 +21,10 @@ export function Navbar({
   signOutButton: ReactNode;
 }) {
   const pathname = usePathname();
+  const { t } = useTranslation("global");
 
   return (
-    <FlowbiteNavbar
+    <BaseNavbar
       fluid
       rounded
       className="sticky start-0 top-0 z-20 w-full border-b border-gray-200 bg-white dark:border-gray-600 dark:bg-gray-900"
@@ -47,12 +49,12 @@ export function Navbar({
           href="/dashboard"
           active={pathname.startsWith("/dashboard")}
         >
-          Dashboard
+          {t("dashboard")}
         </NavbarLink>
         <NavbarLink href="/settings" active={pathname.startsWith("/settings")}>
-          Settings
+          {t("settings")}
         </NavbarLink>
       </NavbarCollapse>
-    </FlowbiteNavbar>
+    </BaseNavbar>
   );
 }
