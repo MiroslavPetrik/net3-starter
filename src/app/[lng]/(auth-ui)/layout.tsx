@@ -4,9 +4,9 @@ import { redirect } from "next/navigation";
 
 export default async function AuthLayout({ children }: PropsWithChildren) {
   const session = auth.getSession();
-  const loggedIn = await session.isLoggedIn();
+  const isLoggedIn = await session.isLoggedIn();
 
-  if (loggedIn) redirect("/dashboard");
+  if (isLoggedIn) redirect("/dashboard");
 
   return (
     <div className="flex flex-1 justify-center bg-gray-200">

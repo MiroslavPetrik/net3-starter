@@ -3,6 +3,9 @@ import { auth } from "@/edgedb";
 import { redirect } from "next/navigation";
 import { createFormAction } from "react-form-action";
 import { ZodError, z } from "zod";
+import { useTranslation, getLngCookie } from "@/i18n";
+import { cookies } from "next/headers";
+import { cookieName } from "@/i18n/options";
 
 const actions = auth.createServerActions();
 
@@ -24,6 +27,8 @@ type FormError<Dto> = {
 export const signin = createFormAction<string, FormError<SigninDto>>(
   ({ success, failure }) =>
     async (_, formData) => {
+      const { t } = await useTranslation("auth", getLngCookie());
+
       try {
         // this is only to display precise validation error
         // better would be client side with form-atoms
@@ -33,9 +38,18 @@ export const signin = createFormAction<string, FormError<SigninDto>>(
           password: formData.get("password"),
         });
 
+        /**
+         * This sets auth cookie, and toggles the session.isLoggedIn().
+         * So the AuthLayout will redirect the user to dashboard.
+         */
         await actions.emailPasswordSignIn(data);
 
-        return success("");
+        /**
+         * The AuthLayout redirect effectivelly makes this message useless,
+         * as there is no time to render it.
+         * Such message can be rendered, by shifting the routing responsibility to the client.
+         */
+        return success(t("signIn.success"));
       } catch (error) {
         if (error instanceof ZodError) {
           return failure({
@@ -81,6 +95,8 @@ type SignUpDto = (typeof singupSchema)["_output"];
 export const signup = createFormAction<string, FormError<SignUpDto>>(
   ({ success, failure }) =>
     async (_, formData) => {
+      const { t } = await useTranslation("auth", getLngCookie());
+
       try {
         const { email, password } = singupSchema.parse({
           email: formData.get("email"),
@@ -94,11 +110,14 @@ export const signup = createFormAction<string, FormError<SignUpDto>>(
           password,
         });
 
-        if (tokenData) {
-          return redirect("/");
+        if (!tokenData) {
+          return success(t("signUp.emailVerificationRequired"));
         }
 
-        return success("Please check you email for a verification link.");
+        /**
+         * Similarly the success has no effect as in the signIn action.
+         */
+        return success(t("signUp.success"));
       } catch (error) {
         if (error instanceof ZodError) {
           return failure({
@@ -130,21 +149,19 @@ export const resetPasswordEmail = createFormAction<
   string,
   FormError<SigninDto>
 >(({ success, failure }) => async (_, formData) => {
+  const { t } = await useTranslation("auth", getLngCookie());
+
   try {
     const data = resetPasswordEmailSchema.parse({
       email: formData.get("email"),
     });
-
-    console.log(auth.options);
 
     await actions.emailPasswordSendPasswordResetEmail({
       ...data,
       resetUrl: "TODO: never-used",
     });
 
-    return success(
-      "We've sent you an email with a link to reset your password.",
-    );
+    return success(t("resetPasswordEmail.success"));
   } catch (error) {
     if (error instanceof ZodError) {
       return failure({
@@ -174,6 +191,8 @@ const resetPasswordSchema = z.object({
 export const resetPassword = createFormAction<string, FormError<SigninDto>>(
   ({ success, failure }) =>
     async (_, formData) => {
+      const { t } = await useTranslation("auth", getLngCookie());
+
       try {
         const data = resetPasswordSchema.parse({
           password: formData.get("password"),
@@ -184,7 +203,7 @@ export const resetPassword = createFormAction<string, FormError<SigninDto>>(
           ...data,
         });
 
-        return success("Success. You can now sign in with the new password.");
+        return success(t("resetPassword.success"));
       } catch (error) {
         if (error instanceof ZodError) {
           return failure({

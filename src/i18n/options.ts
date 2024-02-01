@@ -1,7 +1,7 @@
 import { type InitOptions } from "i18next";
 
 export const fallbackLng = "en";
-export const languages = [fallbackLng]; // add your locales (e.g. "de", "sk") into the list
+export const languages = [fallbackLng] as const; // add your locales (e.g. "de", "sk") into the list
 export const cookieName = "i18next" as const;
 
 export function getOptions(ns: string, lng = fallbackLng) {

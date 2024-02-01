@@ -1,7 +1,14 @@
 "use client";
 
 import { signup } from "@/app/actions/auth";
-import { Alert, Button, Checkbox, Label, TextInput } from "flowbite-react";
+import {
+  Alert,
+  Button,
+  Checkbox,
+  HelperText,
+  Label,
+  TextInput,
+} from "flowbite-react";
 import Link from "next/link";
 import { Trans } from "react-i18next/TransWithoutContext";
 import { Form } from "react-form-action/client";
@@ -100,27 +107,34 @@ export function SignUpForm() {
                     : undefined
               }
             />
-            <Label
-              htmlFor="tos"
-              className="flex"
-              color={
-                isFailure && error.validation && error.messages?.tos
-                  ? "failure"
-                  : isSuccess
-                    ? "success"
-                    : undefined
-              }
-            >
-              <Trans i18nKey="signUp.agreeTOC" t={t}>
-                I agree with the&nbsp;
-                <Link
-                  href="#"
-                  className="text-cyan-600 hover:underline dark:text-cyan-500"
-                >
-                  terms and conditions
-                </Link>
-              </Trans>
-            </Label>
+            <div className="flex flex-col">
+              <Label
+                htmlFor="tos"
+                className="flex"
+                color={
+                  isFailure && error.validation && error.messages?.tos
+                    ? "failure"
+                    : isSuccess
+                      ? "success"
+                      : undefined
+                }
+              >
+                <Trans i18nKey="signUp.agreeTOC" t={t}>
+                  I agree with the&nbsp;
+                  <Link
+                    href="#"
+                    className="text-cyan-600 hover:underline dark:text-cyan-500"
+                  >
+                    terms and conditions
+                  </Link>
+                </Trans>
+              </Label>
+              {error?.messages?.tos && (
+                <HelperText className="mt-0 text-xs" color="failure">
+                  {error.messages.tos}
+                </HelperText>
+              )}
+            </div>
           </div>
           <Button type="submit" disabled={isPending} isProcessing={isPending}>
             {t("signUp.register")}
