@@ -12,7 +12,7 @@ const signinSchema = z.object({
   password: z.string().min(1),
 });
 
-type SigninDto = (typeof signinSchema)["_output"];
+type SigninDto = z.infer<typeof signinSchema>;
 
 type FormError<Dto> = {
   validation: boolean;
@@ -88,7 +88,7 @@ const singupSchema = z
     },
   );
 
-type SignUpDto = (typeof singupSchema)["_output"];
+type SignUpDto = z.infer<typeof singupSchema>;
 
 export const signup = createFormAction<string, FormError<SignUpDto>>(
   ({ success, failure }) =>
