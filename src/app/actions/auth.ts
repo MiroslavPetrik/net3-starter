@@ -244,8 +244,14 @@ const readDbError = (originalError: Error, t: (key: string) => string) => {
   try {
     const { error } = stringToDBError.parse(originalError.message);
 
+    // https://github.com/edgedb/edgedb/blob/6b29802935d71545e242e07db7a4a2074753287c/edb/server/protocol/auth_ext/errors.py#L179
     if (error.message === "Email verification is required") {
       return { ...error, message: t("auth:emailVerificationRequired") };
+    }
+
+    // https://github.com/edgedb/edgedb/blob/639c91e9207275c114828556a1b00c4a3029d8c1/edb/server/protocol/auth_ext/http.py#L169
+    if (error.message === "No identity found") {
+      return { ...error, message: t("auth:noIdentityFound") };
     }
 
     return error;
@@ -258,6 +264,7 @@ const dbAuthError = z.object({
   error: z.object({
     type: z.string(),
     message: z.string(),
+    code: z.number(),
   }),
 });
 
