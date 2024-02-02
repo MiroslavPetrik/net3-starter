@@ -8,7 +8,6 @@ import { useTranslation } from "@/i18n";
 
 export default async function Profile({ params: { lng } }: Params) {
   const user = await api.user.getCurrent.query();
-
   if (!user) {
     redirect("/");
   }

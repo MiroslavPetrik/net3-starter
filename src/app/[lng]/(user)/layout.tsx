@@ -12,9 +12,9 @@ export default async function Layout({
   params: { lng },
 }: PropsWithChildren<Params>) {
   const session = auth.getSession();
-  const isLoggedIn = await session.isLoggedIn();
+  const isSignedIn = await session.isSignedIn();
 
-  if (!isLoggedIn) {
+  if (!isSignedIn) {
     redirect("/");
   }
 

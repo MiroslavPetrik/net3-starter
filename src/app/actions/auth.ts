@@ -39,7 +39,7 @@ export const signin = createFormAction<string, FormError<SigninDto>>(
         });
 
         /**
-         * This sets auth cookie, and toggles the session.isLoggedIn().
+         * This sets auth cookie, and toggles the session.isSignedIn().
          * So the AuthLayout will redirect the user to dashboard.
          */
         await actions.emailPasswordSignIn(data);
@@ -147,7 +147,7 @@ const resetPasswordEmailSchema = z.object({
 
 export const resetPasswordEmail = createFormAction<
   string,
-  FormError<SigninDto>
+  FormError<z.infer<typeof resetPasswordEmailSchema>>
 >(({ success, failure }) => async (_, formData) => {
   const { t } = await useTranslation("auth", getLngCookie());
 
@@ -197,8 +197,6 @@ export const resetPassword = createFormAction<string, FormError<SigninDto>>(
           [resetTokenFieldName]: formData.get(resetTokenFieldName),
         });
 
-        console.log(data);
-
         await actions.emailPasswordResetPassword(data);
 
         return success(t("resetPassword.success"));
@@ -226,6 +224,43 @@ export const resetPassword = createFormAction<string, FormError<SigninDto>>(
       }
     },
 );
+
+export const resendVerificationEmail = createFormAction<
+  string,
+  FormError<z.infer<typeof resetPasswordEmailSchema>>
+>(({ success, failure }) => async (_, formData) => {
+  const { t } = await useTranslation("auth", getLngCookie());
+
+  try {
+    const data = resetPasswordEmailSchema.parse({
+      email: formData.get("email"),
+    });
+
+    await actions.emailPasswordResendVerificationEmail(data);
+
+    return success(t("resendVerificationEmail.success"));
+  } catch (error) {
+    console.log(error);
+    if (error instanceof ZodError) {
+      return failure({
+        validation: true,
+        messages: getZodErrorMessages(error),
+      });
+    } else if (error instanceof Error) {
+      const dbError = readDbError(error, t);
+
+      return failure({
+        validation: false,
+        message: dbError?.message ?? getErrorMessage(error, t),
+      });
+    } else {
+      return failure({
+        validation: false,
+        message: t("unexpectedError"),
+      });
+    }
+  }
+});
 
 const getZodErrorMessages = (error: ZodError) =>
   error.errors.reduce((all, { message, path }) => {

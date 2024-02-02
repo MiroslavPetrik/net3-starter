@@ -24,8 +24,16 @@ export const SettingsSidebar = ({ lng }: LanguageParam) => {
             {t("editProfile.title")}
           </SidebarItem>
           <SidebarItem
+            href="/settings/email"
+            active={pathname.startsWith("/settings/email")}
+          >
+            {t("email.title")}
+          </SidebarItem>
+        </SidebarItemGroup>
+        <SidebarItemGroup>
+          <SidebarItem
             href="/settings/delete-account"
-            active={pathname.startsWith("/settings/delete-accoun")}
+            active={pathname.startsWith("/settings/delete-account")}
           >
             {t("deleteAccount.title")}
           </SidebarItem>

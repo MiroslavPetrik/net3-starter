@@ -9,10 +9,10 @@ import { Footer } from "../_components/footer";
 
 export default async function Home({ params: { lng } }: Params) {
   const session = auth.getSession();
-  const loggedIn = await session.isLoggedIn();
+  const isSignedIn = await session.isSignedIn();
   const { t } = await useTranslation("global", lng);
 
-  if (loggedIn) redirect("/dashboard");
+  if (isSignedIn) redirect("/dashboard");
 
   return (
     <>
