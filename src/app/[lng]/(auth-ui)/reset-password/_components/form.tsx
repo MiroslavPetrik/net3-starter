@@ -7,8 +7,9 @@ import { Alert } from "flowbite-react";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { Trans } from "react-i18next/TransWithoutContext";
+import { type ResetTokenParam, resetTokenFieldName } from "@/edgedb/resetToken";
 
-export function ResetPasswordForm() {
+export function ResetPasswordForm({ reset_token }: ResetTokenParam) {
   const { t } = useTranslation("auth");
 
   return (
@@ -53,6 +54,7 @@ export function ResetPasswordForm() {
               helperText={error?.messages?.password}
             />
           </div>
+          <input name={resetTokenFieldName} defaultValue={reset_token} hidden />
           <SubmitButton />
           <Label>
             <Trans i18nKey="resetPassword.linkToReset" t={t}>

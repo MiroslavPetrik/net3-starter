@@ -1,9 +1,12 @@
 "use server";
 
 import { auth } from "@/edgedb";
+import { resetTokenFieldName } from "@/edgedb/resetToken";
+
 import { createFormAction } from "react-form-action";
 import { ZodError, z } from "zod";
 import { useTranslation, getLngCookie, t } from "@/i18n";
+
 const actions = auth.createServerActions();
 
 const signinSchema = z.object({
@@ -36,7 +39,7 @@ export const signin = createFormAction<string, FormError<SigninDto>>(
         });
 
         /**
-         * This sets auth cookie, and toggles the session.isLoggedIn().
+         * This sets auth cookie, and toggles the session.isSignedIn().
          * So the AuthLayout will redirect the user to dashboard.
          */
         await actions.emailPasswordSignIn(data);
@@ -144,7 +147,7 @@ const resetPasswordEmailSchema = z.object({
 
 export const resetPasswordEmail = createFormAction<
   string,
-  FormError<SigninDto>
+  FormError<z.infer<typeof resetPasswordEmailSchema>>
 >(({ success, failure }) => async (_, formData) => {
   const { t } = await useTranslation("auth", getLngCookie());
 
@@ -153,10 +156,7 @@ export const resetPasswordEmail = createFormAction<
       email: formData.get("email"),
     });
 
-    await actions.emailPasswordSendPasswordResetEmail({
-      ...data,
-      resetUrl: "TODO: never-used",
-    });
+    await actions.emailPasswordSendPasswordResetEmail(data);
 
     return success(t("resetPasswordEmail.success"));
   } catch (error) {
@@ -183,6 +183,7 @@ export const resetPasswordEmail = createFormAction<
 
 const resetPasswordSchema = z.object({
   password: z.string().min(1),
+  reset_token: z.string(),
 });
 
 export const resetPassword = createFormAction<string, FormError<SigninDto>>(
@@ -193,12 +194,10 @@ export const resetPassword = createFormAction<string, FormError<SigninDto>>(
       try {
         const data = resetPasswordSchema.parse({
           password: formData.get("password"),
+          [resetTokenFieldName]: formData.get(resetTokenFieldName),
         });
 
-        await actions.emailPasswordResetPassword({
-          resetToken: "???",
-          ...data,
-        });
+        await actions.emailPasswordResetPassword(data);
 
         return success(t("resetPassword.success"));
       } catch (error) {
@@ -226,6 +225,43 @@ export const resetPassword = createFormAction<string, FormError<SigninDto>>(
     },
 );
 
+export const resendVerificationEmail = createFormAction<
+  string,
+  FormError<z.infer<typeof resetPasswordEmailSchema>>
+>(({ success, failure }) => async (_, formData) => {
+  const { t } = await useTranslation("auth", getLngCookie());
+
+  try {
+    const data = resetPasswordEmailSchema.parse({
+      email: formData.get("email"),
+    });
+
+    await actions.emailPasswordResendVerificationEmail(data);
+
+    return success(t("resendVerificationEmail.success"));
+  } catch (error) {
+    console.log(error);
+    if (error instanceof ZodError) {
+      return failure({
+        validation: true,
+        messages: getZodErrorMessages(error),
+      });
+    } else if (error instanceof Error) {
+      const dbError = readDbError(error, t);
+
+      return failure({
+        validation: false,
+        message: dbError?.message ?? getErrorMessage(error, t),
+      });
+    } else {
+      return failure({
+        validation: false,
+        message: t("unexpectedError"),
+      });
+    }
+  }
+});
+
 const getZodErrorMessages = (error: ZodError) =>
   error.errors.reduce((all, { message, path }) => {
     return { ...all, [path[0]!]: message };
@@ -243,8 +279,19 @@ const readDbError = (originalError: Error, t: (key: string) => string) => {
   try {
     const { error } = stringToDBError.parse(originalError.message);
 
+    // https://github.com/edgedb/edgedb/blob/6b29802935d71545e242e07db7a4a2074753287c/edb/server/protocol/auth_ext/errors.py#L179
     if (error.message === "Email verification is required") {
-      return { ...error, message: t("auth:emailVerificationRequired") };
+      return { ...error, message: t("auth:edgedb.emailVerificationRequired") };
+    }
+
+    // https://github.com/edgedb/edgedb/blob/639c91e9207275c114828556a1b00c4a3029d8c1/edb/server/protocol/auth_ext/http.py#L169
+    if (error.message === "No identity found") {
+      return { ...error, message: t("auth:edgedb.noIdentityFound") };
+    }
+
+    // https://github.com/edgedb/edgedb/blob/6b29802935d71545e242e07db7a4a2074753287c/edb/server/protocol/auth_ext/errors.py#L123
+    if (error.message === "This user has already been registered") {
+      return { ...error, message: t("auth:edgedb.userAlreadyRegistered") };
     }
 
     return error;
@@ -257,6 +304,7 @@ const dbAuthError = z.object({
   error: z.object({
     type: z.string(),
     message: z.string(),
+    code: z.number(),
   }),
 });
 

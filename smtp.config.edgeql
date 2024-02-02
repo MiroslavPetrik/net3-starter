@@ -1,20 +1,20 @@
 CONFIGURE CURRENT DATABASE SET
-ext::auth::SMTPConfig::sender := 'hello@net3.com';
+ext::auth::SMTPConfig::sender := 'starter@net3.app';
 
 CONFIGURE CURRENT DATABASE SET
-ext::auth::SMTPConfig::host := 'localhost';
+ext::auth::SMTPConfig::host := 'sandbox.smtp.mailtrap.io';
 
 CONFIGURE CURRENT DATABASE SET
-ext::auth::SMTPConfig::port := <int32>1025;
+ext::auth::SMTPConfig::port := <int32>2525;
 
 CONFIGURE CURRENT DATABASE SET
-ext::auth::SMTPConfig::username := 'smtpuser';
+ext::auth::SMTPConfig::username := 'youruser';
 
 CONFIGURE CURRENT DATABASE SET
-ext::auth::SMTPConfig::password := 'smtppassword';
+ext::auth::SMTPConfig::password := 'yourpass';
 
 CONFIGURE CURRENT DATABASE SET
-ext::auth::SMTPConfig::security := 'STARTTLS';   # STARTTLS or PlainText
+ext::auth::SMTPConfig::security := 'STARTTLSOrPlainText';
 
 CONFIGURE CURRENT DATABASE SET
-ext::auth::SMTPConfig::validate_certs := false;
+ext::auth::SMTPConfig::validate_certs := true;

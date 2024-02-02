@@ -18,6 +18,7 @@
     "start": "next start",
     "gen:edgeql-js": "npx @edgedb/generate edgeql-js --out ./src/edgeql-js",
     "db:restart": "edgedb instance restart -I net3_starter",
+    "db:logs": "edgedb instance logs -I net3_starter -f",
     "db:dsn": "edgedb instance credentials --insecure-dsn",
     "db:ipv4": "edgedb configure set listen_addresses 127.0.0.1 ::1",
     "db:smtp": "edgedb query --file ./smtp.config.edgeql",
@@ -26,8 +27,14 @@
     "format": "prettier . --write",
     "format:check": "prettier . --check"
   },
+  "overrides": {
+    "@edgedb/auth-nextjs": {
+      "@edgedb/auth-core": "0.1.0-canary.20240202T155402"
+    }
+  },
   "dependencies": {
-    "@edgedb/auth-nextjs": "^0.1.0-alpha.1",
+    "@edgedb/auth-nextjs": "0.1.0-canary.20240202T155409",
+    "@edgedb/auth-core": "0.1.0-canary.20240202T155402",
     "@t3-oss/env-nextjs": "^0.8.0",
     "@tanstack/react-query": "^4.32.6",
     "@trpc/client": "^10.45.0",
