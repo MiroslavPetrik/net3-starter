@@ -68,7 +68,6 @@ const singupSchema = z
   );
 
 export const signup = authAction
-  // @ts-expect-error support refined objects
   .input(singupSchema)
   .run(async ({ input: { email, password }, ctx: { t } }) => {
     const tokenData = await actions.emailPasswordSignUp({
