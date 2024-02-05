@@ -13,14 +13,22 @@ export function ResetPasswordEmailForm() {
 
   return (
     <Form action={resetPasswordEmail} initialData="">
-      {({ error, data, isFailure, isSuccess, isPending }) => (
+      {({
+        error,
+        data,
+        validationError,
+        isFailure,
+        isInvalid,
+        isSuccess,
+        isPending,
+      }) => (
         <div className="flex flex-col gap-4">
           {isSuccess && (
             <div>
               <Alert color="success">{data}</Alert>
             </div>
           )}
-          {isFailure && !error.validation && (
+          {isFailure && (
             <div>
               <Alert color="failure">{error.message}</Alert>
             </div>
@@ -29,7 +37,7 @@ export function ResetPasswordEmailForm() {
             <Label
               htmlFor="email"
               color={
-                isFailure && error.validation && error.messages?.email
+                isInvalid && validationError.fieldErrors.email
                   ? "failure"
                   : isSuccess
                     ? "success"
@@ -43,7 +51,7 @@ export function ResetPasswordEmailForm() {
               name="email"
               disabled={isPending}
               color={
-                isFailure && error.validation && error.messages?.email
+                isInvalid && validationError.fieldErrors.email
                   ? "failure"
                   : isSuccess
                     ? "success"
@@ -51,7 +59,7 @@ export function ResetPasswordEmailForm() {
               }
               type="text"
               placeholder="hello@net3.app"
-              helperText={error?.messages?.email}
+              helperText={validationError?.fieldErrors.email?.[0]}
             />
           </div>
           <SubmitButton />

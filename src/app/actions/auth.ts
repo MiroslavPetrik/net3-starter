@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 "use server";
 
 import { auth } from "@/edgedb";
@@ -53,23 +50,25 @@ export const signin = authAction
     return t("signIn.success");
   });
 
-const singupSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(1),
-  passwordRepeat: z.string().min(1),
-  tos: z.coerce.boolean().pipe(z.literal(true)),
-});
-// .refine(
-//   ({ password, passwordRepeat }) => {
-//     return password === passwordRepeat;
-//   },
-//   {
-//     params: { i18n: t("zodError:passwordsMustMatch") },
-//     path: ["passwordRepeat"],
-//   },
-// );
+const singupSchema = z
+  .object({
+    email: z.string().email(),
+    password: z.string().min(1),
+    passwordRepeat: z.string().min(1),
+    tos: z.coerce.boolean().pipe(z.literal(true)),
+  })
+  .refine(
+    ({ password, passwordRepeat }) => {
+      return password === passwordRepeat;
+    },
+    {
+      params: { i18n: t("zodError:passwordsMustMatch") },
+      path: ["passwordRepeat"],
+    },
+  );
 
 export const signup = authAction
+  // @ts-expect-error support refined objects
   .input(singupSchema)
   .run(async ({ input: { email, password }, ctx: { t } }) => {
     const tokenData = await actions.emailPasswordSignUp({
@@ -101,7 +100,7 @@ export const resetPasswordEmail = authAction
 
 const resetPasswordSchema = z.object({
   password: z.string().min(1),
-  reset_token: z.string(),
+  [resetTokenFieldName]: z.string(),
 });
 
 export const resetPassword = authAction

@@ -14,14 +14,22 @@ export function ResetPasswordForm({ reset_token }: ResetTokenParam) {
 
   return (
     <Form action={resetPassword} initialData="">
-      {({ error, data, isFailure, isSuccess, isPending }) => (
+      {({
+        error,
+        data,
+        validationError,
+        isInvalid,
+        isFailure,
+        isSuccess,
+        isPending,
+      }) => (
         <div className="flex flex-col gap-4">
           {isSuccess && (
             <div>
               <Alert color="success">{data}</Alert>
             </div>
           )}
-          {isFailure && !error.validation && (
+          {isFailure && (
             <div>
               <Alert color="failure">{error.message}</Alert>
             </div>
@@ -30,7 +38,7 @@ export function ResetPasswordForm({ reset_token }: ResetTokenParam) {
             <Label
               htmlFor="password"
               color={
-                isFailure && error.validation && error.messages?.password
+                isInvalid && validationError.fieldErrors.password
                   ? "failure"
                   : isSuccess
                     ? "success"
@@ -45,13 +53,13 @@ export function ResetPasswordForm({ reset_token }: ResetTokenParam) {
               type="password"
               disabled={isPending}
               color={
-                isFailure && error.validation && error.messages?.password
+                isInvalid && validationError.fieldErrors.password
                   ? "failure"
                   : isSuccess
                     ? "success"
                     : undefined
               }
-              helperText={error?.messages?.password}
+              helperText={validationError?.fieldErrors.password?.[0]}
             />
           </div>
           <input name={resetTokenFieldName} defaultValue={reset_token} hidden />
