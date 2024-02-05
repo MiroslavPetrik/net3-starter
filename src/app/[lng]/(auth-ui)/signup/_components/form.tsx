@@ -57,7 +57,7 @@ export function SignUpForm() {
                     ? "success"
                     : undefined
               }
-              helperText={validationError?.fieldErrors.tos?.[0]}
+              helperText={validationError?.fieldErrors.email?.[0]}
             />
           </div>
           <div>
@@ -77,7 +77,7 @@ export function SignUpForm() {
                     ? "success"
                     : undefined
               }
-              helperText={validationError?.fieldErrors.tos?.[0]}
+              helperText={validationError?.fieldErrors.password?.[0]}
             />
           </div>
           <div>
