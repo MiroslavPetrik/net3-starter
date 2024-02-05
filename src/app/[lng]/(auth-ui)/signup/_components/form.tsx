@@ -19,14 +19,22 @@ export function SignUpForm() {
 
   return (
     <Form action={signup} initialData="">
-      {({ isPending, error, data, isFailure, isSuccess }) => (
+      {({
+        isPending,
+        isInvalid,
+        validationError,
+        error,
+        data,
+        isFailure,
+        isSuccess,
+      }) => (
         <div className="flex flex-col gap-4">
           {isSuccess && (
             <div>
               <Alert color="success">{data}</Alert>
             </div>
           )}
-          {isFailure && !error.validation && (
+          {isFailure && (
             <div>
               <Alert color="failure">{error.message}</Alert>
             </div>
@@ -43,13 +51,13 @@ export function SignUpForm() {
               required
               shadow
               color={
-                isFailure && error.validation && error.messages?.email
+                isInvalid && validationError.fieldErrors.email
                   ? "failure"
                   : isSuccess
                     ? "success"
                     : undefined
               }
-              helperText={error?.messages?.email}
+              helperText={validationError?.fieldErrors.email?.[0]}
             />
           </div>
           <div>
@@ -63,13 +71,13 @@ export function SignUpForm() {
               required
               shadow
               color={
-                isFailure && error.validation && error.messages?.password
+                isInvalid && validationError.fieldErrors.password
                   ? "failure"
                   : isSuccess
                     ? "success"
                     : undefined
               }
-              helperText={error?.messages?.password}
+              helperText={validationError?.fieldErrors.password?.[0]}
             />
           </div>
           <div>
@@ -86,13 +94,13 @@ export function SignUpForm() {
               required
               shadow
               color={
-                isFailure && error.validation && error.messages?.passwordRepeat
+                isInvalid && validationError.fieldErrors.passwordRepeat
                   ? "failure"
                   : isSuccess
                     ? "success"
                     : undefined
               }
-              helperText={error?.messages?.passwordRepeat}
+              helperText={validationError?.fieldErrors.passwordRepeat?.[0]}
             />
           </div>
           <div className="flex items-center gap-2">
@@ -100,7 +108,7 @@ export function SignUpForm() {
               id="tos"
               name="tos"
               color={
-                isFailure && error.validation && error.messages?.tos
+                isInvalid && validationError.fieldErrors.tos
                   ? "failure"
                   : isSuccess
                     ? "success"
@@ -112,7 +120,7 @@ export function SignUpForm() {
                 htmlFor="tos"
                 className="flex"
                 color={
-                  isFailure && error.validation && error.messages?.tos
+                  isInvalid && validationError.fieldErrors.tos
                     ? "failure"
                     : isSuccess
                       ? "success"
@@ -129,9 +137,9 @@ export function SignUpForm() {
                   </Link>
                 </Trans>
               </Label>
-              {error?.messages?.tos && (
+              {isInvalid && validationError.fieldErrors.tos && (
                 <HelperText className="mt-0 text-xs" color="failure">
-                  {error.messages.tos}
+                  {validationError.fieldErrors.tos?.[0]}
                 </HelperText>
               )}
             </div>

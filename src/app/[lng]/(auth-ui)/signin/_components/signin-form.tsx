@@ -14,9 +14,16 @@ export function SignInForm() {
 
   return (
     <Form action={signin} initialData="">
-      {({ error, isFailure, isSuccess, isPending }) => (
+      {({
+        error,
+        validationError,
+        isInvalid,
+        isFailure,
+        isSuccess,
+        isPending,
+      }) => (
         <div className="flex flex-col gap-4">
-          {isFailure && !error.validation && (
+          {isFailure && (
             <div>
               <Alert color="failure">{error.message}</Alert>
             </div>
@@ -28,7 +35,7 @@ export function SignInForm() {
               name="email"
               disabled={isPending}
               color={
-                isFailure && error.validation && error.messages?.email
+                isInvalid && validationError.fieldErrors.email
                   ? "failure"
                   : isSuccess
                     ? "success"
@@ -36,7 +43,7 @@ export function SignInForm() {
               }
               type="text"
               placeholder="hello@net3.app"
-              helperText={error?.messages?.email}
+              helperText={validationError?.fieldErrors.email?.[0]}
             />
           </div>
           <div>
@@ -54,7 +61,7 @@ export function SignInForm() {
               name="password"
               disabled={isPending}
               color={
-                isFailure && error.validation && error.messages?.password
+                isInvalid && validationError.fieldErrors.password
                   ? "failure"
                   : isSuccess
                     ? "success"
@@ -62,7 +69,7 @@ export function SignInForm() {
               }
               type="password"
               placeholder="Your password"
-              helperText={error?.messages?.password}
+              helperText={validationError?.fieldErrors.password?.[0]}
             />
           </div>
           <SubmitButton />
