@@ -1,10 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 "use server";
 
 import { auth } from "@/edgedb";
 import { resetTokenFieldName } from "@/edgedb/resetToken";
 
-import { createFormAction } from "react-form-action";
-import { ZodError, z } from "zod";
+import { formAction } from "react-form-action";
+import { z } from "zod";
 import { useTranslation, getLngCookie, t } from "@/i18n";
 
 const actions = auth.createServerActions();
@@ -14,258 +17,108 @@ const signinSchema = z.object({
   password: z.string().min(1),
 });
 
-type SigninDto = z.infer<typeof signinSchema>;
-
-type FormError<Dto> = {
-  validation: boolean;
-  message?: string;
-  messages?: {
-    [k in keyof Dto]?: string;
-  };
-};
-
-export const signin = createFormAction<string, FormError<SigninDto>>(
-  ({ success, failure }) =>
-    async (_, formData) => {
-      const { t } = await useTranslation("auth", getLngCookie());
-
-      try {
-        // this is only to display precise validation error
-        // better would be client side with form-atoms
-        // the auth library validates existence of fields, but provides unspecific error message
-        const data = signinSchema.parse({
-          email: formData.get("email"),
-          password: formData.get("password"),
-        });
-
-        /**
-         * This sets auth cookie, and toggles the session.isSignedIn().
-         * So the AuthLayout will redirect the user to dashboard.
-         */
-        await actions.emailPasswordSignIn(data);
-
-        /**
-         * The AuthLayout redirect effectivelly makes this message useless,
-         * as there is no time to render it.
-         * Such message can be rendered, by shifting the routing responsibility to the client.
-         */
-        return success(t("signIn.success"));
-      } catch (error) {
-        if (error instanceof ZodError) {
-          return failure({
-            validation: true,
-            messages: getZodErrorMessages(error),
-          });
-        } else if (error instanceof Error) {
-          const dbError = readDbError(error, t);
-
-          return failure({
-            validation: false,
-            message: dbError?.message ?? getErrorMessage(error, t),
-          });
-        } else {
-          return failure({
-            validation: false,
-            message: t("unexpectedError"),
-          });
-        }
-      }
-    },
-);
-
-const singupSchema = z
-  .object({
-    email: z.string().email(),
-    password: z.string().min(1),
-    passwordRepeat: z.string().min(1),
-    tos: z.coerce.boolean().pipe(z.literal(true)),
+const authAction = formAction
+  .use(async () => {
+    const { t } = await useTranslation("auth", getLngCookie());
+    return { t };
   })
-  .refine(
-    ({ password, passwordRepeat }) => {
-      return password === passwordRepeat;
-    },
-    {
-      params: { i18n: t("zodError:passwordsMustMatch") },
-      path: ["passwordRepeat"],
-    },
-  );
+  .error(({ error, ctx: { t } }) => {
+    if (error instanceof Error) {
+      const dbError = readDbError(error, t);
 
-type SignUpDto = z.infer<typeof singupSchema>;
+      return {
+        message: dbError?.message ?? getErrorMessage(error, t),
+      };
+    } else {
+      return {
+        message: t("unexpectedError"),
+      };
+    }
+  });
 
-export const signup = createFormAction<string, FormError<SignUpDto>>(
-  ({ success, failure }) =>
-    async (_, formData) => {
-      const { t } = await useTranslation("auth", getLngCookie());
+export const signin = authAction
+  .input(signinSchema)
+  .run(async ({ input, ctx: { t } }) => {
+    /**
+     * This sets auth cookie, and toggles the session.isSignedIn().
+     * So the AuthLayout will redirect the user to dashboard.
+     */
+    await actions.emailPasswordSignIn(input);
 
-      try {
-        const { email, password } = singupSchema.parse({
-          email: formData.get("email"),
-          password: formData.get("password"),
-          passwordRepeat: formData.get("passwordRepeat"),
-          tos: formData.get("tos"),
-        });
+    /**
+     * The AuthLayout redirect effectivelly makes this message useless,
+     * as there is no time to render it.
+     * Such message can be rendered, by shifting the routing responsibility to the client.
+     */
+    return t("signIn.success");
+  });
 
-        const tokenData = await actions.emailPasswordSignUp({
-          email,
-          password,
-        });
+const singupSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(1),
+  passwordRepeat: z.string().min(1),
+  tos: z.coerce.boolean().pipe(z.literal(true)),
+});
+// .refine(
+//   ({ password, passwordRepeat }) => {
+//     return password === passwordRepeat;
+//   },
+//   {
+//     params: { i18n: t("zodError:passwordsMustMatch") },
+//     path: ["passwordRepeat"],
+//   },
+// );
 
-        if (!tokenData) {
-          return success(t("signUp.emailVerificationRequired"));
-        }
+export const signup = authAction
+  .input(singupSchema)
+  .run(async ({ input: { email, password }, ctx: { t } }) => {
+    const tokenData = await actions.emailPasswordSignUp({
+      email,
+      password,
+    });
 
-        /**
-         * Similarly the success has no effect as in the signIn action.
-         */
-        return success(t("signUp.success"));
-      } catch (error) {
-        if (error instanceof ZodError) {
-          return failure({
-            validation: true,
-            messages: getZodErrorMessages(error),
-          });
-        } else if (error instanceof Error) {
-          const dbError = readDbError(error, t);
+    if (!tokenData) {
+      return t("signUp.emailVerificationRequired");
+    }
 
-          return failure({
-            validation: false,
-            message: dbError?.message ?? getErrorMessage(error, t),
-          });
-        } else {
-          return failure({
-            validation: false,
-            message: t("unexpectedError"),
-          });
-        }
-      }
-    },
-);
+    /**
+     * Similarly the success has no effect as in the signIn action.
+     */
+    return t("signUp.success");
+  });
 
 const resetPasswordEmailSchema = z.object({
   email: z.string().email(),
 });
 
-export const resetPasswordEmail = createFormAction<
-  string,
-  FormError<z.infer<typeof resetPasswordEmailSchema>>
->(({ success, failure }) => async (_, formData) => {
-  const { t } = await useTranslation("auth", getLngCookie());
+export const resetPasswordEmail = authAction
+  .input(resetPasswordEmailSchema)
+  .run(async ({ input, ctx: { t } }) => {
+    await actions.emailPasswordSendPasswordResetEmail(input);
 
-  try {
-    const data = resetPasswordEmailSchema.parse({
-      email: formData.get("email"),
-    });
-
-    await actions.emailPasswordSendPasswordResetEmail(data);
-
-    return success(t("resetPasswordEmail.success"));
-  } catch (error) {
-    if (error instanceof ZodError) {
-      return failure({
-        validation: true,
-        messages: getZodErrorMessages(error),
-      });
-    } else if (error instanceof Error) {
-      const dbError = readDbError(error, t);
-
-      return failure({
-        validation: false,
-        message: dbError?.message ?? getErrorMessage(error, t),
-      });
-    } else {
-      return failure({
-        validation: false,
-        message: t("unexpectedError"),
-      });
-    }
-  }
-});
+    return t("resetPasswordEmail.success");
+  });
 
 const resetPasswordSchema = z.object({
   password: z.string().min(1),
   reset_token: z.string(),
 });
 
-export const resetPassword = createFormAction<string, FormError<SigninDto>>(
-  ({ success, failure }) =>
-    async (_, formData) => {
-      const { t } = await useTranslation("auth", getLngCookie());
+export const resetPassword = authAction
+  .input(resetPasswordSchema)
+  .run(async ({ input, ctx: { t } }) => {
+    await actions.emailPasswordResetPassword(input);
 
-      try {
-        const data = resetPasswordSchema.parse({
-          password: formData.get("password"),
-          [resetTokenFieldName]: formData.get(resetTokenFieldName),
-        });
+    return t("resetPassword.success");
+  });
 
-        await actions.emailPasswordResetPassword(data);
+export const resendVerificationEmail = authAction
+  .input(resetPasswordEmailSchema)
+  .run(async ({ input, ctx: { t } }) => {
+    await actions.emailPasswordResendVerificationEmail(input);
 
-        return success(t("resetPassword.success"));
-      } catch (error) {
-        if (error instanceof ZodError) {
-          return failure({
-            validation: true,
-            messages: getZodErrorMessages(error),
-          });
-        } else if (error instanceof Error) {
-          const dbError = readDbError(error, t);
-
-          console.log(dbError);
-
-          return failure({
-            validation: false,
-            message: dbError?.message ?? getErrorMessage(error, t),
-          });
-        } else {
-          return failure({
-            validation: false,
-            message: t("unexpectedError"),
-          });
-        }
-      }
-    },
-);
-
-export const resendVerificationEmail = createFormAction<
-  string,
-  FormError<z.infer<typeof resetPasswordEmailSchema>>
->(({ success, failure }) => async (_, formData) => {
-  const { t } = await useTranslation("auth", getLngCookie());
-
-  try {
-    const data = resetPasswordEmailSchema.parse({
-      email: formData.get("email"),
-    });
-
-    await actions.emailPasswordResendVerificationEmail(data);
-
-    return success(t("resendVerificationEmail.success"));
-  } catch (error) {
-    console.log(error);
-    if (error instanceof ZodError) {
-      return failure({
-        validation: true,
-        messages: getZodErrorMessages(error),
-      });
-    } else if (error instanceof Error) {
-      const dbError = readDbError(error, t);
-
-      return failure({
-        validation: false,
-        message: dbError?.message ?? getErrorMessage(error, t),
-      });
-    } else {
-      return failure({
-        validation: false,
-        message: t("unexpectedError"),
-      });
-    }
-  }
-});
-
-const getZodErrorMessages = (error: ZodError) =>
-  error.errors.reduce((all, { message, path }) => {
-    return { ...all, [path[0]!]: message };
-  }, {});
+    return t("resendVerificationEmail.success");
+  });
 
 const getErrorMessage = (error: Error, t: (key: string) => string) => {
   if (typeof error.cause === "string") {
