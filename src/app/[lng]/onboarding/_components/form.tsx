@@ -6,35 +6,31 @@ import { TextInput } from "flowbite-react";
 import { Form } from "react-form-action/client";
 import { useTranslation } from "react-i18next";
 
-const initialState = {
-  message: "Please insert your name.",
-};
-
-export function CreateUser() {
+export function CreateUserForm() {
   const { t } = useTranslation("onboarding");
 
   return (
     <Form
       action={createUser}
-      initialData={initialState}
+      initialData={undefined}
       className="flex flex-col gap-2"
     >
-      {({ error, isFailure }) => (
+      {({ error, isInvalid, validationError }) => (
         <div className="flex flex-col gap-4">
           <div>
             <Label
               htmlFor="name"
               value={t("name")}
-              color={isFailure ? "failure" : undefined}
+              color={isInvalid ? "failure" : undefined}
             />
             <TextInput
               id="name"
               required
-              color={isFailure ? "failure" : undefined}
+              color={isInvalid ? "failure" : undefined}
               name="name"
               type="text"
               placeholder="Patrick"
-              helperText={error?.message}
+              helperText={validationError?.fieldErrors.name}
             />
           </div>
           <SubmitButton />

@@ -1,4 +1,4 @@
-import { CreateUser } from "./_components/create-user";
+import { CreateUserForm } from "./_components/form";
 
 import { redirect } from "next/navigation";
 import { selectCurrentUser } from "@/edgedb/user";
@@ -21,7 +21,7 @@ export default async function Onboarding({ params: { lng } }: Params) {
       </h1>
       <h2 className="mb-6 text-xl">{t("subtitle")}</h2>
       <div className="w-full max-w-xs">
-        <CreateUser />
+        <CreateUserForm />
       </div>
     </main>
   );

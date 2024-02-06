@@ -5,7 +5,7 @@ import { Form } from "react-form-action/client";
 import { useTranslation } from "react-i18next";
 import { SubmitButton } from "@/app/_components/submit-button";
 
-export function DeleteUser() {
+export function DeleteUserForm() {
   const { t } = useTranslation("settings");
 
   return (
