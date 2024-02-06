@@ -1,19 +1,15 @@
 "use server";
 
-import { deleteCurrentUser } from "@/edgedb/user";
 import { revalidatePath } from "next/cache";
-import { createFormAction } from "react-form-action";
+import { protectedAction } from "./protected";
+import { deleteCurrentUserQuery } from "@/edgedb/queries";
 
-export const deleteUser = createFormAction<string>(
-  ({ success, failure }) =>
-    async () => {
-      try {
-        await deleteCurrentUser();
+export const deleteUser = protectedAction
+  .error(() => "Failed to delete account.")
+  .run(async ({ ctx: { session } }) => {
+    await deleteCurrentUserQuery.run(session.client);
 
-        revalidatePath("/");
-        return success("Your account has been deleted.");
-      } catch {
-        return failure("Failed to delete account.");
-      }
-    },
-);
+    revalidatePath("/");
+
+    return "Your account has been deleted.";
+  });
