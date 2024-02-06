@@ -1,10 +1,10 @@
-import { selectCurrentUser } from "@/edgedb/user";
-import { useTranslation } from "@/i18n";
-import { type Params } from "@/types";
 import { redirect } from "next/navigation";
+import { type Params } from "@/types";
+import { useTranslation } from "@/i18n";
+import { api } from "@/trpc/server";
 
 export default async function Dashboard({ params: { lng } }: Params) {
-  const user = await selectCurrentUser();
+  const user = await api.user.getCurrent.query();
 
   if (!user) {
     redirect("/onboarding");

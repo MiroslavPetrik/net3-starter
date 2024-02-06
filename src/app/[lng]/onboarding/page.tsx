@@ -1,12 +1,12 @@
-import { CreateUserForm } from "./_components/form";
-
 import { redirect } from "next/navigation";
-import { selectCurrentUser } from "@/edgedb/user";
 import { type Params } from "@/types";
 import { useTranslation } from "@/i18n";
+import { api } from "@/trpc/server";
+
+import { CreateUserForm } from "./_components/form";
 
 export default async function Onboarding({ params: { lng } }: Params) {
-  const user = await selectCurrentUser();
+  const user = await api.user.getCurrent.query();
 
   if (user) {
     redirect("/");
