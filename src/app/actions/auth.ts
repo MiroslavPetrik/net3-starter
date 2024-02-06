@@ -9,11 +9,6 @@ import { useTranslation, getLngCookie, t } from "@/i18n";
 
 const actions = auth.createServerActions();
 
-const signinSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(1),
-});
-
 const authAction = formAction
   .use(async () => {
     const { t } = await useTranslation("auth", getLngCookie());
@@ -33,8 +28,13 @@ const authAction = formAction
     }
   });
 
-export const signin = authAction
-  .input(signinSchema)
+const signInSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(1),
+});
+
+export const signIn = authAction
+  .input(signInSchema)
   .run(async ({ input, ctx: { t } }) => {
     /**
      * This sets auth cookie, and toggles the session.isSignedIn().
@@ -50,7 +50,7 @@ export const signin = authAction
     return t("signIn.success");
   });
 
-const singupSchema = z
+const signUpSchema = z
   .object({
     email: z.string().email(),
     password: z.string().min(1),
@@ -68,7 +68,7 @@ const singupSchema = z
   );
 
 export const signUp = authAction
-  .input(singupSchema)
+  .input(signUpSchema)
   .run(async ({ input: { email, password }, ctx: { t } }) => {
     const tokenData = await actions.emailPasswordSignUp({
       email,

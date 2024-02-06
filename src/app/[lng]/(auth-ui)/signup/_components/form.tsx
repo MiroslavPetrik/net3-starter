@@ -1,6 +1,5 @@
 "use client";
 
-import { signUp } from "@/app/actions/auth";
 import {
   Alert,
   Button,
@@ -13,6 +12,7 @@ import Link from "next/link";
 import { Trans } from "react-i18next/TransWithoutContext";
 import { Form } from "react-form-action/client";
 import { useTranslation } from "react-i18next";
+import { signUp } from "@/app/actions/auth";
 
 export function SignUpForm() {
   const { t } = useTranslation("auth");
