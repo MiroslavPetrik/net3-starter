@@ -1,7 +1,7 @@
 "use client";
 import { updateUser } from "@/app/actions/";
 import { SubmitButton } from "@/app/_components/submit-button";
-import { Label, TextInput } from "flowbite-react";
+import { Alert, Label, TextInput } from "flowbite-react";
 import { Form } from "react-form-action/client";
 import { type User } from "@/types/user";
 import { useTranslation } from "react-i18next";
@@ -11,8 +11,9 @@ export function UpdateUserForm({ user }: { user: User }) {
 
   return (
     <Form action={updateUser} initialData="" className="flex flex-col gap-2">
-      {({ validationError, isInvalid, isSuccess, isPending }) => (
+      {({ data, validationError, isInvalid, isSuccess, isPending }) => (
         <div className="flex flex-col gap-4">
+          {isSuccess && <Alert color="success">{data}</Alert>}
           <div>
             <Label
               htmlFor="name"

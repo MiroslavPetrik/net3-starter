@@ -1,19 +1,19 @@
 "use server";
 
 import { z } from "zod";
-import { updateCurrentUser } from "@/edgedb/user";
-import { formAction } from "react-form-action";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { protectedAction } from "./protected";
+import { updateCurrentUserQuery } from "@/edgedb/queries";
 
 const updateUserSchema = z.object({
   name: z.string().min(3),
 });
 
-export const updateUser = formAction
+export const updateUser = protectedAction
   .input(updateUserSchema)
-  .run(async ({ input: { name } }) => {
-    const user = await updateCurrentUser(name);
+  .run(async ({ input, ctx: { session } }) => {
+    const user = await updateCurrentUserQuery.run(session.client, input);
 
     if (!user) {
       redirect("/onboarding");
