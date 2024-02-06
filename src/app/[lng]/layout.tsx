@@ -23,7 +23,7 @@ export const metadata = {
 export default function RootLayout({
   children,
   params: { lng },
-}: PropsWithChildren & Params) {
+}: PropsWithChildren<Params>) {
   return (
     <html lang={lng}>
       <body

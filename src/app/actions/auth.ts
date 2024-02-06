@@ -67,7 +67,7 @@ const singupSchema = z
     },
   );
 
-export const signup = authAction
+export const signUp = authAction
   .input(singupSchema)
   .run(async ({ input: { email, password }, ctx: { t } }) => {
     const tokenData = await actions.emailPasswordSignUp({

@@ -1,6 +1,6 @@
 "use client";
 
-import { signup } from "@/app/actions/auth";
+import { signUp } from "@/app/actions/auth";
 import {
   Alert,
   Button,
@@ -18,7 +18,7 @@ export function SignUpForm() {
   const { t } = useTranslation("auth");
 
   return (
-    <Form action={signup} initialData="">
+    <Form action={signUp} initialData="">
       {({
         isPending,
         isInvalid,
