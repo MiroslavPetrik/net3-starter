@@ -6,7 +6,7 @@ import type { PropsWithChildren } from "react";
 
 import { TRPCReactProvider } from "@/trpc/react";
 import type { Params } from "@/types";
-import { Language } from "../../i18n/client";
+import { Language } from "@/i18n/client";
 
 const inter = Inter({
   subsets: ["latin"],
