@@ -1,10 +1,11 @@
 "use client";
-import { updateUser } from "@/app/actions/";
-import { SubmitButton } from "@/app/_components/submit-button";
+
 import { Alert, Label, TextInput } from "flowbite-react";
 import { Form } from "react-form-action/client";
 import { type User } from "@/types/user";
 import { useTranslation } from "react-i18next";
+import { updateUser } from "@/app/actions/";
+import { SubmitButton } from "@/app/_components/submit-button";
 
 export function UpdateUserForm({ user }: { user: User }) {
   const { t } = useTranslation("settings");

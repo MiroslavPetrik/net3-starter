@@ -5,6 +5,7 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "@/server/api/trpc";
+import { selectCurrentUserQuery } from "@/edgedb/queries";
 
 export const userRouter = createTRPCRouter({
   hello: publicProcedure
@@ -16,20 +17,6 @@ export const userRouter = createTRPCRouter({
     }),
 
   getCurrent: protectedProcedure.query(({ ctx: { e, session } }) => {
-    return e
-      .select(e.global.current_user, (user) => ({
-        ...e.User["*"],
-        email: e.assert_single(
-          e.select(
-            e.ext.auth.EmailFactor,
-            ({ email, verified_at, identity }) => ({
-              address: email,
-              verifiedAt: verified_at,
-              filter: e.op(identity, "=", user.identity),
-            }),
-          ),
-        ),
-      }))
-      .run(session.client);
+    return selectCurrentUserQuery.run(session.client);
   }),
 });
