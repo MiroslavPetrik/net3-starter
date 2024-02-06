@@ -7,7 +7,7 @@ import { Alert } from "flowbite-react";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { Trans } from "react-i18next/TransWithoutContext";
-import { type ResetTokenParam, resetTokenFieldName } from "@/edgedb/resetToken";
+import { type ResetTokenParam, resetTokenFieldName } from "@/edgedb";
 
 export function ResetPasswordForm({ reset_token }: ResetTokenParam) {
   const { t } = useTranslation("auth");
