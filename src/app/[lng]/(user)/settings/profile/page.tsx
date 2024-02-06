@@ -1,5 +1,5 @@
 import { PageHeader } from "@/app/_components/page-header";
-import { UpdateUser } from "./_components/update-user";
+import { UpdateUserForm } from "./_components/form";
 
 import { api } from "@/trpc/server";
 import { redirect } from "next/navigation";
@@ -17,7 +17,7 @@ export default async function Profile({ params: { lng } }: Params) {
     <>
       <PageHeader>{t("editProfile.title")}</PageHeader>
       <div className="w-full max-w-xs">
-        <UpdateUser user={user} />
+        <UpdateUserForm user={user} />
       </div>
     </>
   );
