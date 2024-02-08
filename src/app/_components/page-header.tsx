@@ -1,8 +1,10 @@
 import { type PropsWithChildren } from "react";
+import { Heading } from "./heading";
+import { Separator } from "./separator";
 
 export const PageHeader = ({ children }: PropsWithChildren) => (
   <>
-    <h1 className="text-4xl font-extrabold tracking-tight">{children}</h1>
-    <hr className="mt-4 pb-4" />
+    <Heading>{children}</Heading>
+    <Separator />
   </>
 );
