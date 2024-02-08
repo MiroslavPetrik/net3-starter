@@ -7,6 +7,7 @@ import { resetPasswordEmail } from "@/app/actions/auth";
 import { Alert } from "flowbite-react";
 import { Trans } from "react-i18next/TransWithoutContext";
 import { useTranslation } from "react-i18next";
+import { Stack, FormItem, FormLabel } from "@/app/_components";
 
 export function ResetPasswordEmailForm() {
   const { t } = useTranslation("auth");
@@ -22,7 +23,7 @@ export function ResetPasswordEmailForm() {
         isSuccess,
         isPending,
       }) => (
-        <div className="flex flex-col gap-4">
+        <Stack>
           {isSuccess && (
             <div>
               <Alert color="success">{data}</Alert>
@@ -33,19 +34,21 @@ export function ResetPasswordEmailForm() {
               <Alert color="failure">{error.message}</Alert>
             </div>
           )}
-          <div>
-            <Label
-              htmlFor="email"
-              color={
-                isInvalid && validationError.fieldErrors.email
-                  ? "failure"
-                  : isSuccess
-                    ? "success"
-                    : undefined
-              }
-            >
-              {t("resetPasswordEmail.email")}
-            </Label>
+          <FormItem>
+            <FormLabel>
+              <Label
+                htmlFor="email"
+                color={
+                  isInvalid && validationError.fieldErrors.email
+                    ? "failure"
+                    : isSuccess
+                      ? "success"
+                      : undefined
+                }
+              >
+                {t("resetPasswordEmail.email")}
+              </Label>
+            </FormLabel>
             <TextInput
               id="email"
               name="email"
@@ -61,7 +64,7 @@ export function ResetPasswordEmailForm() {
               placeholder="hello@net3.app"
               helperText={validationError?.fieldErrors.email?.[0]}
             />
-          </div>
+          </FormItem>
           <SubmitButton />
           <Label>
             <Trans i18nKey="resetPasswordEmail.linkToSignIn" t={t}>
@@ -74,7 +77,7 @@ export function ResetPasswordEmailForm() {
               </Link>
             </Trans>
           </Label>
-        </div>
+        </Stack>
       )}
     </Form>
   );

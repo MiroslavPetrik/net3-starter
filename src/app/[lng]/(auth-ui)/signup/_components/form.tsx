@@ -13,6 +13,7 @@ import { Trans } from "react-i18next/TransWithoutContext";
 import { Form } from "react-form-action/client";
 import { useTranslation } from "react-i18next";
 import { signUp } from "@/app/actions/auth";
+import { Stack, FormItem, FormLabel } from "@/app/_components";
 
 export function SignUpForm() {
   const { t } = useTranslation("auth");
@@ -28,7 +29,7 @@ export function SignUpForm() {
         isFailure,
         isSuccess,
       }) => (
-        <div className="flex flex-col gap-4">
+        <Stack>
           {isSuccess && (
             <div>
               <Alert color="success">{data}</Alert>
@@ -39,10 +40,10 @@ export function SignUpForm() {
               <Alert color="failure">{error.message}</Alert>
             </div>
           )}
-          <div>
-            <div className="mb-2 block">
+          <FormItem>
+            <FormLabel>
               <Label htmlFor="email" value={t("signUp.email")} />
-            </div>
+            </FormLabel>
             <TextInput
               id="email"
               name="email"
@@ -59,11 +60,11 @@ export function SignUpForm() {
               }
               helperText={validationError?.fieldErrors.email?.[0]}
             />
-          </div>
-          <div>
-            <div className="mb-2 block">
+          </FormItem>
+          <FormItem>
+            <FormLabel>
               <Label htmlFor="password" value={t("signUp.password")} />
-            </div>
+            </FormLabel>
             <TextInput
               id="password"
               name="password"
@@ -79,14 +80,14 @@ export function SignUpForm() {
               }
               helperText={validationError?.fieldErrors.password?.[0]}
             />
-          </div>
-          <div>
-            <div className="mb-2 block">
+          </FormItem>
+          <FormItem>
+            <FormLabel>
               <Label
                 htmlFor="passwordRepeat"
                 value={t("signUp.passwordRepeat")}
               />
-            </div>
+            </FormLabel>
             <TextInput
               id="passwordRepeat"
               name="passwordRepeat"
@@ -102,8 +103,8 @@ export function SignUpForm() {
               }
               helperText={validationError?.fieldErrors.passwordRepeat?.[0]}
             />
-          </div>
-          <div className="flex items-center gap-2">
+          </FormItem>
+          <FormItem className="flex items-center gap-2">
             <Checkbox
               id="tos"
               name="tos"
@@ -143,7 +144,7 @@ export function SignUpForm() {
                 </HelperText>
               )}
             </div>
-          </div>
+          </FormItem>
           <Button type="submit" disabled={isPending} isProcessing={isPending}>
             {t("signUp.register")}
           </Button>
@@ -158,7 +159,7 @@ export function SignUpForm() {
               </Link>
             </Trans>
           </Label>
-        </div>
+        </Stack>
       )}
     </Form>
   );

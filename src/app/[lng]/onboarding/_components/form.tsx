@@ -5,24 +5,23 @@ import { Label } from "flowbite-react";
 import { TextInput } from "flowbite-react";
 import { Form } from "react-form-action/client";
 import { useTranslation } from "react-i18next";
+import { Stack, FormLabel, FormItem } from "@/app/_components";
 
 export function CreateUserForm() {
   const { t } = useTranslation("onboarding");
 
   return (
-    <Form
-      action={createUser}
-      initialData={undefined}
-      className="flex flex-col gap-2"
-    >
+    <Form action={createUser} initialData={undefined}>
       {({ error, isInvalid, validationError }) => (
-        <div className="flex flex-col gap-4">
-          <div>
-            <Label
-              htmlFor="name"
-              value={t("name")}
-              color={isInvalid ? "failure" : undefined}
-            />
+        <Stack>
+          <FormItem>
+            <FormLabel>
+              <Label
+                htmlFor="name"
+                value={t("name")}
+                color={isInvalid ? "failure" : undefined}
+              />
+            </FormLabel>
             <TextInput
               id="name"
               required
@@ -32,9 +31,9 @@ export function CreateUserForm() {
               placeholder="Patrick"
               helperText={validationError?.fieldErrors.name}
             />
-          </div>
+          </FormItem>
           <SubmitButton />
-        </div>
+        </Stack>
       )}
     </Form>
   );

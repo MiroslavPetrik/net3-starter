@@ -6,6 +6,7 @@ import { Trans, useTranslation } from "react-i18next";
 import { SubmitButton } from "@/app/_components/submit-button";
 import { type UserEmail } from "@/types";
 import { Alert, Label, TextInput } from "flowbite-react";
+import { FormLabel, FormItem, Stack } from "@/app/_components";
 
 export function EmailForm({ email }: { email: UserEmail }) {
   const { t } = useTranslation("settings");
@@ -13,7 +14,7 @@ export function EmailForm({ email }: { email: UserEmail }) {
   return (
     <Form action={resendVerificationEmail} initialData="">
       {({ data, error, isSuccess, isFailure, isPending }) => (
-        <div className="flex flex-col gap-4">
+        <Stack>
           {!email.verifiedAt && (
             <Alert
               color="warning"
@@ -33,13 +34,17 @@ export function EmailForm({ email }: { email: UserEmail }) {
               </Trans>
             </Alert>
           )}
-          <div>
-            <Label
-              htmlFor="email"
-              color={isFailure ? "failure" : isSuccess ? "success" : undefined}
-            >
-              {t("email.yourEmail")}
-            </Label>
+          <FormItem>
+            <FormLabel>
+              <Label
+                htmlFor="email"
+                color={
+                  isFailure ? "failure" : isSuccess ? "success" : undefined
+                }
+              >
+                {t("email.yourEmail")}
+              </Label>
+            </FormLabel>
             <TextInput
               readOnly
               id="email"
@@ -54,8 +59,8 @@ export function EmailForm({ email }: { email: UserEmail }) {
                     : undefined
               }
             />
-          </div>
-        </div>
+          </FormItem>
+        </Stack>
       )}
     </Form>
   );

@@ -1,6 +1,7 @@
 "use server";
 
-import { auth, resetTokenFieldName } from "@/edgedb";
+import { auth } from "@/edgedb";
+import { resetTokenFieldName } from "@/edgedb/shared";
 
 import { formAction } from "react-form-action";
 import { z } from "zod";

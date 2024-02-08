@@ -3,7 +3,7 @@ import { PageHeader } from "@/app/_components/page-header";
 import { ResetPasswordForm } from "./_components/form";
 import { type Params } from "@/types";
 import { useTranslation } from "@/i18n";
-import { type ResetTokenParam } from "@/edgedb";
+import { type ResetTokenParam } from "@/edgedb/shared";
 
 export default async function ResetPassword({
   params: { lng },

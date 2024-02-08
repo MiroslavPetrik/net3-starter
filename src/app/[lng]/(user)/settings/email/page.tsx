@@ -7,6 +7,7 @@ import { useTranslation } from "@/i18n";
 import { api } from "@/trpc/server";
 import { redirect } from "next/navigation";
 import { VerifiedAlert } from "./_components/verified-alert";
+import { Stack } from "@/app/_components";
 
 export default async function Page({ params: { lng } }: Params) {
   const user = await api.user.getCurrent.query();
@@ -18,10 +19,10 @@ export default async function Page({ params: { lng } }: Params) {
   return (
     <>
       <PageHeader>{t("email.title")}</PageHeader>
-      <div className="flex flex-col gap-4">
+      <Stack>
         {user.email?.verifiedAt && <VerifiedAlert lng={lng} />}
         <EmailForm email={user.email!} />
-      </div>
+      </Stack>
     </>
   );
 }

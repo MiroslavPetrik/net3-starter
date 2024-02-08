@@ -6,6 +6,7 @@ import { type User } from "@/types/user";
 import { useTranslation } from "react-i18next";
 import { updateUser } from "@/app/actions/";
 import { SubmitButton } from "@/app/_components/submit-button";
+import { FormItem, FormLabel, Stack } from "@/app/_components";
 
 export function UpdateUserForm({ user }: { user: User }) {
   const { t } = useTranslation("settings");
@@ -13,15 +14,19 @@ export function UpdateUserForm({ user }: { user: User }) {
   return (
     <Form action={updateUser} initialData="" className="flex flex-col gap-2">
       {({ data, validationError, isInvalid, isSuccess, isPending }) => (
-        <div className="flex flex-col gap-4">
+        <Stack>
           {isSuccess && <Alert color="success">{data}</Alert>}
-          <div>
-            <Label
-              htmlFor="name"
-              color={isInvalid ? "failure" : isSuccess ? "success" : undefined}
-            >
-              {t("editProfile.name")}
-            </Label>
+          <FormItem>
+            <FormLabel>
+              <Label
+                htmlFor="name"
+                color={
+                  isInvalid ? "failure" : isSuccess ? "success" : undefined
+                }
+              >
+                {t("editProfile.name")}
+              </Label>
+            </FormLabel>
             <TextInput
               defaultValue={user.name}
               id="name"
@@ -34,9 +39,9 @@ export function UpdateUserForm({ user }: { user: User }) {
                 isInvalid ? validationError.fieldErrors.name : undefined
               }
             />
-          </div>
+          </FormItem>
           <SubmitButton />
-        </div>
+        </Stack>
       )}
     </Form>
   );
