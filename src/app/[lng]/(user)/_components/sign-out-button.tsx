@@ -1,6 +1,6 @@
 "use server";
 import Link from "next/link";
-import { auth } from "@/edgedb/edge";
+import { auth } from "@/edgedb";
 import { Button } from "flowbite-react";
 import { type PropsWithChildren } from "react";
 
