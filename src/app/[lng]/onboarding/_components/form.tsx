@@ -12,7 +12,7 @@ export function CreateUserForm() {
 
   return (
     <Form action={createUser} initialData={undefined}>
-      {({ error, isInvalid, validationError }) => (
+      {({ isInvalid, validationError }) => (
         <Stack>
           <FormItem>
             <FormLabel>

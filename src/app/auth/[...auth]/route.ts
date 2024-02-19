@@ -2,9 +2,9 @@ import { redirect } from "next/navigation";
 import { auth } from "@/edgedb";
 
 const { GET, POST } = auth.createAuthRouteHandlers({
-  onEmailVerify({ error, verificationToken, tokenData }) {
+  onEmailVerify({ error }) {
     if (error) {
-      console.log({ error });
+      // TODO: handle error
       redirect("/");
     } else {
       redirect("/settings/email");

@@ -16,7 +16,7 @@ export const userRouter = createTRPCRouter({
       };
     }),
 
-  getCurrent: protectedProcedure.query(({ ctx: { e, session } }) => {
+  getCurrent: protectedProcedure.query(({ ctx: { session } }) => {
     return selectCurrentUserQuery.run(session.client);
   }),
 });
