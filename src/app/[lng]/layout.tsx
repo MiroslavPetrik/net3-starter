@@ -1,17 +1,12 @@
 import "@/styles/globals.css";
 
-import { Inter } from "next/font/google";
 import { cookies } from "next/headers";
 import type { PropsWithChildren } from "react";
 
 import { TRPCReactProvider } from "@/trpc/react";
 import type { Params } from "@/types";
 import { Language } from "@/i18n/client";
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
+import { font } from "@/styles/font";
 
 export const metadata = {
   title: "NET3 App",
@@ -26,9 +21,7 @@ export default function RootLayout({
 }: PropsWithChildren<Params>) {
   return (
     <html lang={lng}>
-      <body
-        className={`font-sans ${inter.variable} flex min-h-screen flex-col`}
-      >
+      <body className={`font-sans ${font.variable} flex min-h-screen flex-col`}>
         <Language lng={lng}>
           <TRPCReactProvider cookies={cookies().toString()}>
             {children}
