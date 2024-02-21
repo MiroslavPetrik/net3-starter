@@ -33,7 +33,7 @@ jobs:
         run: npm install
 
       - name: Build Storybook
-        run: npm run build-storybook
+        run: SKIP_ENV_VALIDATION=true npm run build-storybook
 
       - name: Upload Storybook
         uses: actions/upload-pages-artifact@v2
