@@ -10,6 +10,7 @@ const config = {
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended-type-checked",
     "plugin:@typescript-eslint/stylistic-type-checked",
+    "plugin:storybook/recommended"
   ],
   rules: {
     // Next.js pages/layouts must be async functions, but not always have something to await

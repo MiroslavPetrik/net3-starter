@@ -48,3 +48,5 @@ yarn-error.log*
 
 # EdgeDB query client
 src/edgeql-js
+
+*storybook.log

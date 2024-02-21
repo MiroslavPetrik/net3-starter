@@ -3,11 +3,12 @@
 This is Next.js + EdgeDB starter project bootstraped on the [T3 Stack](https://create.t3.gg/)
 
 - [Next.js v14](https://nextjs.org) Fullstack React framework using the **app router**
-- [EdgeDB v4](https://www.edgedb.com/) Graph-relational database with a custom query language, Auth extension and more
+- [EdgeDB v4](https://www.edgedb.com) Graph-relational database with a custom query language, Auth extension and more
 - [tRPC](https://trpc.io) typesafe end-2-end API definition & access
 - [Tailwind CSS](https://tailwindcss.com) with [Flowbite React](https://www.flowbite-react.com/) componentss
-- [TypeScript](https://www.typescriptlang.org/) language for JavaScript autocompletion
-- [i18next](https://www.i18next.com/) localization integrated with [zod-i18n](https://github.com/aiji42/zod-i18n/)
+- [TypeScript](https://www.typescriptlang.org) language for JavaScript autocompletion
+- [i18next](https://www.i18next.com) localization integrated with [zod-i18n](https://github.com/aiji42/zod-i18n/)
+- [Storybook](https://storybook.js.org) for building & testing UI in isolation
 
 > [!NOTE]
 > Project uses unstable apis such as the EdgeDB auth extension
