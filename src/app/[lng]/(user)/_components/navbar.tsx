@@ -1,20 +1,17 @@
-"use client";
-import { type LanguageParam } from "@/i18n";
-import { useLngPathname } from "@/i18n/client";
+import { type LanguageParam, useTranslation } from "@/i18n";
 import type { User } from "@/types";
 import {
   Avatar,
   Navbar as BaseNavbar,
   NavbarBrand,
   NavbarCollapse,
-  NavbarLink,
   NavbarToggle,
 } from "flowbite-react";
 
 import { type ReactNode } from "react";
-import { useTranslation } from "react-i18next";
+import { NavbarLinks } from "./navbar-links";
 
-export function Navbar({
+export async function Navbar({
   lng,
   user,
   signOutButton,
@@ -22,8 +19,12 @@ export function Navbar({
   user: User;
   signOutButton: ReactNode;
 } & LanguageParam) {
-  const pathname = useLngPathname(lng);
-  const { t } = useTranslation("global");
+  const { t } = await useTranslation("global", lng);
+
+  const links = [
+    { name: t("link.dashboard"), href: "/dashboard" },
+    { name: t("link.settings"), href: "/settings" },
+  ];
 
   return (
     <BaseNavbar
@@ -47,15 +48,7 @@ export function Navbar({
         <NavbarToggle />
       </div>
       <NavbarCollapse>
-        <NavbarLink
-          href="/dashboard"
-          active={pathname.startsWith("/dashboard")}
-        >
-          {t("dashboard")}
-        </NavbarLink>
-        <NavbarLink href="/settings" active={pathname.startsWith("/settings")}>
-          {t("settings")}
-        </NavbarLink>
+        <NavbarLinks links={links} lng={lng} />
       </NavbarCollapse>
     </BaseNavbar>
   );

@@ -1,7 +1,9 @@
 {
-  "dashboard": "Dashboard",
   "languageSwitcher": "Switch from <1>{{lng}}</1> to: ",
-  "settings": "Settings",
+  "link": {
+    "dashboard": "Dashboard",
+    "settings": "Settings"
+  },
   "signIn": "Sign In",
   "signOut": "Sign Out",
   "signUp": "Sign Up",
