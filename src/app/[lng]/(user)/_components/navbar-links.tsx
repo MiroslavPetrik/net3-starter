@@ -2,7 +2,7 @@
 
 import { NavbarLink } from "flowbite-react";
 import Link from "next/link";
-import { LanguageParam } from "@/i18n";
+import { type LanguageParam } from "@/i18n";
 import { useLngPathname } from "@/i18n/client";
 
 export type NavLink = {

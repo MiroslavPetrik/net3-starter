@@ -4,8 +4,7 @@ import { cache } from "react";
 import { observable } from "@trpc/server/observable";
 import { type AppRouter, appRouter } from "@/server/api/root";
 import { createTRPCContext } from "@/server/api/trpc";
-// TODO: callTRPCProcedure has any type
-import { callProcedure } from "@trpc/server";
+import { callTRPCProcedure } from "@trpc/server";
 import { type TRPCErrorResponse } from "@trpc/server/rpc";
 
 /**
@@ -37,7 +36,7 @@ export const api = createTRPCClient<AppRouter>({
         observable((observer) => {
           createContext()
             .then((ctx) => {
-              return callProcedure({
+              return callTRPCProcedure({
                 procedures: appRouter._def.procedures,
                 path: op.path,
                 getRawInput: async () => op.input,
