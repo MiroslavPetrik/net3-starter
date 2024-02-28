@@ -10,8 +10,11 @@ export const env = createEnv({
    */
   server: {
     NODE_ENV: z.enum(["development", "test", "production"]),
-    PORT: z.coerce.number(), // From `next dev -p $PORT`
-    EDGEDB_DSN: z.string(),
+    /**
+     * The port obtained from `next dev -p $PORT`
+     * @optional - only supplied in local development (automatically by next.js)
+     */
+    PORT: z.coerce.number().optional(),
   },
 
   /**
@@ -30,7 +33,6 @@ export const env = createEnv({
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
     PORT: process.env.PORT,
-    EDGEDB_DSN: process.env.EDGEDB_DSN,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**
