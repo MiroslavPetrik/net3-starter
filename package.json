@@ -16,7 +16,7 @@
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start",
-    "gen:edgeql-js": "npx @edgedb/generate edgeql-js --out ./src/edgeql-js",
+    "db:edgeql-js": "npx @edgedb/generate edgeql-js --out ./src/edgeql-js",
     "db:restart": "edgedb instance restart -I net3_starter",
     "db:logs": "edgedb instance logs -I net3_starter -f",
     "db:dsn": "edgedb instance credentials --insecure-dsn",
@@ -28,7 +28,8 @@
     "format:check": "prettier . --check",
     "sb": "npm run storybook",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "postinstall": "npm run db:edgeql-js"
   },
   "dependencies": {
     "@edgedb/auth-nextjs": "0.2.0-beta.0",
