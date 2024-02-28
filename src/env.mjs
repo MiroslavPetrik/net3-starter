@@ -1,13 +1,16 @@
 import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
+import { vercel } from "@t3-oss/env-nextjs/presets";
 
 export const env = createEnv({
+  extends: [vercel],
   /**
    * Specify your server-side environment variables schema here. This way you can ensure the app
    * isn't built with invalid env vars.
    */
   server: {
     NODE_ENV: z.enum(["development", "test", "production"]),
+    PORT: z.coerce.number(), // From `next dev -p $PORT`
     EDGEDB_DSN: z.string(),
   },
 
@@ -26,6 +29,7 @@ export const env = createEnv({
    */
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
+    PORT: process.env.PORT,
     EDGEDB_DSN: process.env.EDGEDB_DSN,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
