@@ -29,7 +29,8 @@
     "sb": "npm run storybook",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "postinstall": "npm run db:edgeql-js"
+    "postinstall": "npm run db:edgeql-js",
+    "tele:dis": "next telemetry disable"
   },
   "dependencies": {
     "@edgedb/auth-nextjs": "0.2.0-beta.0",
