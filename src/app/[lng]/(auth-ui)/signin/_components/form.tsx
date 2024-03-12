@@ -54,6 +54,7 @@ export function SignInForm() {
               <Label htmlFor="password" className="flex justify-between">
                 <span>{t("signIn.password")}</span>
                 <Link
+                  tabIndex={-1}
                   href="/reset-password-email"
                   className="text-cyan-600 hover:underline dark:text-cyan-500"
                 >
