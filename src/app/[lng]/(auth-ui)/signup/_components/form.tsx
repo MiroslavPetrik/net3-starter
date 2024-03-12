@@ -119,7 +119,7 @@ export function SignUpForm() {
             <div className="flex flex-col">
               <Label
                 htmlFor="tos"
-                className="flex"
+                className="flex whitespace-pre-wrap"
                 color={
                   isInvalid && validationError.fieldErrors.tos
                     ? "failure"
