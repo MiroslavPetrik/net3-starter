@@ -1,0 +1,21 @@
+{
+  "deleteAccount": {
+    "submit": "Vymazať",
+    "submitting": "Vymazávam...",
+    "title": "Vymazať účet",
+    "warningMessage": "Tvoje údaje budú vymazané. Túto akciu nie je možné vrátiť späť."
+  },
+  "editProfile": {
+    "name": "Meno",
+    "newName": "Nové meno",
+    "title": "Upraviť profil"
+  },
+  "email": {
+    "alreadyVerified": "<0>Tvoja emailová adresa bola overená.</0> Teraz je možné bezpečne požiadať o resetovanie hesla v prípade ak to budeš potrebovať.",
+    "pleaseVerifyEmail": "<0>Tvoj emailová adresa nie je overená!</0> Prosím over svoju emailovú adresu, aby bolo možné obnoviť tvoj prístup k účtu, v prípade že zabudneš svoje heslo.",
+    "sendingVerificationLink": "Odosielam odkaz...",
+    "sendVerificationLink": "Odoslať odkaz na overenie",
+    "title": "Email",
+    "yourEmail": "Tvoj email"
+  }
+}

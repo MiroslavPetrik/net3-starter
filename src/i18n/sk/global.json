@@ -1,0 +1,12 @@
+{
+  "languageSwitcher": "Prepnúť jazyk z <1>{{lng}}</1> na: ",
+  "link": {
+    "dashboard": "Domov",
+    "settings": "Nastavenia"
+  },
+  "signIn": "Prihlásiť",
+  "signOut": "Odhlásiť",
+  "signUp": "Registrovať",
+  "submit": "Odoslať",
+  "submitting": "Odosielam..."
+}
