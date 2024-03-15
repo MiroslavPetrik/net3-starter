@@ -31,6 +31,10 @@ jobs:
 
       - name: Install
         run: npm install
+        env:
+          EDGEDB_SECRET_KEY: ${{ secrets.EDGEDB_SECRET_KEY }}
+          EDGEDE_INSTANCE: ${{ secrets.EDGEDE_INSTANCE }}
+          EDGEDB_DATABASE: ${{ secrets.EDGEDB_DATABASE }}
 
       - name: Build Storybook
         run: SKIP_ENV_VALIDATION=true npm run sb:build
