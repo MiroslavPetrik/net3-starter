@@ -1,4 +1,4 @@
-name: storybook
+name: 🎨 Storybook
 
 on:
   push:
@@ -24,7 +24,7 @@ jobs:
 
       - name: Cache node_modules
         id: cache-node-modules
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: node_modules
           key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
@@ -33,14 +33,14 @@ jobs:
         run: npm install
 
       - name: Build Storybook
-        run: SKIP_ENV_VALIDATION=true npm run build-storybook
+        run: SKIP_ENV_VALIDATION=true npm run sb:build
 
       - name: Upload Storybook
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with:
           path: storybook-static
 
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
         with:
           token: ${{ github.token }}
