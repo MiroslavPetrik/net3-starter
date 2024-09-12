@@ -155,7 +155,6 @@ const dbAuthError = z.object({
   error: z.object({
     type: z.string(),
     message: z.string(),
-    code: z.number(),
   }),
 });
 
