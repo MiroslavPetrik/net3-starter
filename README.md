@@ -153,7 +153,14 @@ In development, the library automatically detects the linked edgedb project. In 
 
 TBD
 
-## Database Connection refused (often on Windows 11)
+## Database Connection refused when generating `edgeql-js`
+
+This is related to ipv6 in Node18 (often on Windows 11).
+
+0. Make sure your `node -v` is equal to the one in `.nvmrc`
+
+Run `nvm use` to apply the project node version.
+Run `nvm alias default node` to make it default.
 
 1.  Configure EdgeDB. See [Source](https://github.com/edgedb/edgedb-js/issues/376#issuecomment-1173840632).
 
@@ -162,11 +169,3 @@ edgedb configure set listen_addresses 127.0.0.1 ::1
 ```
 
 2. or [Update operating system routing](https://github.com/nodejs/node/issues/40537#issuecomment-1706257550)
-
-3. or configure the app (not recommended)
-
-```ts
-// env.mjs or elsewhere where it suits you
-import dns from "node:dns";
-dns.setDefaultResultOrder("ipv4first");
-```
