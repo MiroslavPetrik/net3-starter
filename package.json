@@ -44,7 +44,7 @@
     "@trpc/server": "^11.0.0-next-beta.289",
     "accept-language": "^3.0.20",
     "edgedb": "^1.5.12",
-    "flowbite-react": "^0.7.2",
+    "flowbite-react": "^0.10.1",
     "i18next": "^23.15.1",
     "i18next-browser-languagedetector": "^8.0.0",
     "i18next-resources-to-backend": "^1.2.1",
