@@ -1,4 +1,4 @@
-CREATE MIGRATION m13zlu3fuebhaiim3jlkwqoumhsv3ocr3wr243w7rhjilkal6sedlq
+CREATE MIGRATION m16pkcwkhyurt3a7hncqzocgtiovzl5qhecpxrmepezvuqttrghyea
     ONTO initial
 {
   CREATE EXTENSION pgcrypto VERSION '1.3';
@@ -10,9 +10,7 @@ CREATE MIGRATION m13zlu3fuebhaiim3jlkwqoumhsv3ocr3wr243w7rhjilkal6sedlq
       CREATE REQUIRED PROPERTY name: std::str;
   };
   CREATE GLOBAL default::current_user := (std::assert_single((SELECT
-      default::User {
-          *
-      }
+      default::User
   FILTER
       (.identity = GLOBAL ext::auth::ClientTokenIdentity)
   )));

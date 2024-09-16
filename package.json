@@ -60,7 +60,7 @@
     "zod-i18n-map": "^2.27.0"
   },
   "devDependencies": {
-    "@edgedb/generate": "^0.4.1",
+    "@edgedb/generate": "^0.5.6",
     "@storybook/addon-essentials": "^8.3.0",
     "@storybook/addon-interactions": "^8.3.0",
     "@storybook/addon-links": "^8.3.0",
