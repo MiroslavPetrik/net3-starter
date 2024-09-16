@@ -83,7 +83,7 @@
     "jwt-decode": "^4.0.0",
     "npm-check-updates": "^17.1.1",
     "postcss": "^8.4.47",
-    "prettier": "^3.2.5",
+    "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.6",
     "react-render-prop-type": "^0.1.0",
     "storybook": "^8.3.0",

@@ -16,8 +16,8 @@ export default async function Home({ params: { lng } }: Params) {
 
   return (
     <>
-      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-r  from-green-400 to-cyan-600  text-white">
-        <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
+      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-r from-green-400 to-cyan-600 text-white">
+        <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
             <span>NET3</span> Starter
           </h1>
@@ -29,7 +29,7 @@ export default async function Home({ params: { lng } }: Params) {
               <h3 className="text-2xl font-bold">{t("signIn")}</h3>
             </Link>
             <Link
-              className=" rounded-xl bg-white/10 p-4 text-center hover:bg-white/20"
+              className="rounded-xl bg-white/10 p-4 text-center hover:bg-white/20"
               href="/signup"
             >
               <h3 className="text-2xl font-bold">{t("signUp")}</h3>

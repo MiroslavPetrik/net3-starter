@@ -34,7 +34,7 @@ export default async function Layout({
         user={user}
         signOutButton={<SignOutButton>{t("signOut")}</SignOutButton>}
       />
-      <main className="container mx-auto flex flex-1 ">{children}</main>
+      <main className="container mx-auto flex flex-1">{children}</main>
     </>
   );
 }

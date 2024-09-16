@@ -15,7 +15,7 @@ export default async function Onboarding({ params: { lng } }: Params) {
   const { t } = await useTranslation("onboarding", lng);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center ">
+    <main className="flex min-h-screen flex-col items-center justify-center">
       <h1 className="mb-4 text-6xl font-extrabold tracking-tight">
         {t("title")}
       </h1>
