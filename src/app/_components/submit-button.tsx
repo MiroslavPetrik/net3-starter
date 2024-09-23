@@ -1,7 +1,7 @@
 "use client";
 
 import { useFormStatus } from "react-dom";
-import { Button, type ButtonProps } from "flowbite-react";
+import { Button, type ButtonProps } from "flowbite-react/components/Button";
 import { useTranslation } from "react-i18next";
 
 export function SubmitButton({ children, ...props }: ButtonProps) {

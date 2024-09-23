@@ -1,8 +1,8 @@
 "use client";
 import { createUser } from "@/app/actions";
 import { SubmitButton } from "@/app/_components/submit-button";
-import { Label } from "flowbite-react";
-import { TextInput } from "flowbite-react";
+import { Label } from "flowbite-react/components/Label";
+import { TextInput } from "flowbite-react/components/TextInput";
 import { Form } from "react-form-action/client";
 import { useTranslation } from "react-i18next";
 import { Stack, FormLabel, FormItem } from "@/app/_components";
