@@ -1,5 +1,5 @@
-import { CustomFlowbiteTheme, Flowbite } from "flowbite-react";
-import { PropsWithChildren } from "react";
+import { type CustomFlowbiteTheme, Flowbite } from "flowbite-react";
+import { type PropsWithChildren } from "react";
 
 // Set custom styles for flowbite components
 const theme: CustomFlowbiteTheme = {};

@@ -1,5 +1,5 @@
 import { Inter } from "next/font/google";
-import { variable } from "./variable";
+import { type variable } from "./variable";
 
 export const font = Inter({
   subsets: ["latin"],
