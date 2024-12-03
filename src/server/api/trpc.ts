@@ -54,7 +54,7 @@ export const createInnerTRPCContext = (opts: CreateContextOptions) => {
 export const createTRPCContext = async (opts: { headers: Headers }) => {
   // Fetch stuff that depends on the request
 
-  const session = auth.getSession();
+  const session = await auth.getSession();
 
   return createInnerTRPCContext({
     headers: opts.headers,
