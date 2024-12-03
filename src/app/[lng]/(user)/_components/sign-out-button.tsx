@@ -4,7 +4,9 @@ import { auth } from "@/edgedb";
 import { Button } from "flowbite-react";
 import { type PropsWithChildren } from "react";
 
-export const SignOutButton = ({ children = "Sign Out" }: PropsWithChildren) => (
+export const SignOutButton = async ({
+  children = "Sign Out",
+}: PropsWithChildren) => (
   <Link href={auth.getSignoutUrl()}>
     <Button>{children}</Button>
   </Link>

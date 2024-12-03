@@ -11,7 +11,7 @@ const createUserSchema = z.object({
 
 export const createUser = protectedAction
   .input(createUserSchema)
-  .error(() => ({ message: "Failed to create user" }))
+  .error(async () => ({ message: "Failed to create user" }))
   .run(async ({ input, ctx: { session } }) => {
     await insertUserQuery.run(session.client, input);
 
