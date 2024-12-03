@@ -12,7 +12,7 @@ export default async function Layout({
   children,
   params,
 }: PropsWithChildren<Params>) {
-  const session = auth.getSession();
+  const session = await auth.getSession();
   const isSignedIn = await session.isSignedIn();
 
   if (!isSignedIn) {

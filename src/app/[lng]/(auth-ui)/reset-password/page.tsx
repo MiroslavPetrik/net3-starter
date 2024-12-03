@@ -7,9 +7,10 @@ import { type ResetTokenParam } from "@/edgedb/shared";
 
 export default async function ResetPassword({
   params,
-  searchParams: { reset_token },
-}: Params & { searchParams: ResetTokenParam }) {
+  searchParams,
+}: Params & { searchParams: Promise<ResetTokenParam> }) {
   const { lng } = await params;
+  const { reset_token } = await searchParams;
   const { t } = await translate("auth", lng);
 
   return (
