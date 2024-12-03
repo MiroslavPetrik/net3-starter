@@ -61,7 +61,8 @@ import { Params } from "@/types";
  */
 import { useTranslation } from "@/i18n";
 
-export default async function Page({ params: { lng } }: Params) {
+export default async function Page({ params }: Params) {
+  const { lng } = await params;
   // Specify the feature name as your namespace.
   // Use the "global" namespace for reusable components like Button.
   const { t } = await useTranslation("feature", lng);

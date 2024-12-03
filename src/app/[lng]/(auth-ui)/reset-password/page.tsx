@@ -2,14 +2,16 @@
 import { PageHeader } from "@/app/_components/page-header";
 import { ResetPasswordForm } from "./_components/form";
 import { type Params } from "@/types";
-import { useTranslation } from "@/i18n";
+import { translate } from "@/i18n";
 import { type ResetTokenParam } from "@/edgedb/shared";
 
 export default async function ResetPassword({
-  params: { lng },
-  searchParams: { reset_token },
-}: Params & { searchParams: ResetTokenParam }) {
-  const { t } = await useTranslation("auth", lng);
+  params,
+  searchParams,
+}: Params & { searchParams: Promise<ResetTokenParam> }) {
+  const { lng } = await params;
+  const { reset_token } = await searchParams;
+  const { t } = await translate("auth", lng);
 
   return (
     <>

@@ -29,7 +29,7 @@ export function CreateUserForm() {
               name="name"
               type="text"
               placeholder="Patrick"
-              helperText={validationError?.fieldErrors.name}
+              helperText={validationError?.name?._errors[0]}
             />
           </FormItem>
           <SubmitButton />

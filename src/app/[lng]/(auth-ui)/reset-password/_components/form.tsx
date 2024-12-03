@@ -40,7 +40,7 @@ export function ResetPasswordForm({ reset_token }: ResetTokenParam) {
               <Label
                 htmlFor="password"
                 color={
-                  isInvalid && validationError.fieldErrors.password
+                  isInvalid && validationError.password
                     ? "failure"
                     : isSuccess
                       ? "success"
@@ -56,13 +56,13 @@ export function ResetPasswordForm({ reset_token }: ResetTokenParam) {
               type="password"
               disabled={isPending}
               color={
-                isInvalid && validationError.fieldErrors.password
+                isInvalid && validationError.password
                   ? "failure"
                   : isSuccess
                     ? "success"
                     : undefined
               }
-              helperText={validationError?.fieldErrors.password?.[0]}
+              helperText={validationError?.password?._errors[0]}
             />
           </FormItem>
           <input name={resetTokenFieldName} defaultValue={reset_token} hidden />

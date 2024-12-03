@@ -5,13 +5,13 @@ import { resetTokenFieldName } from "@/edgedb/shared";
 
 import { formAction } from "react-form-action";
 import { z } from "zod";
-import { useTranslation, getLngCookie, t } from "@/i18n";
+import { translate, getLngCookie, t } from "@/i18n";
 
 const actions = auth.createServerActions();
 
 const authAction = formAction
   .use(async () => {
-    const { t } = await useTranslation("auth", getLngCookie());
+    const { t } = await translate("auth", await getLngCookie());
     return { t };
   })
   .error(({ error, ctx: { t } }) => {
@@ -56,6 +56,10 @@ const signUpSchema = z
     password: z.string().min(1),
     passwordRepeat: z.string().min(1),
     tos: z.coerce.boolean().pipe(z.literal(true)),
+    name: z.object({
+      first: z.string().min(3),
+      last: z.string().min(3),
+    }),
   })
   .refine(
     ({ password, passwordRepeat }) => {

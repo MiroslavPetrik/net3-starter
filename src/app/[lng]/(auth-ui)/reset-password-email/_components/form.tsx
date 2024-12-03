@@ -39,7 +39,7 @@ export function ResetPasswordEmailForm() {
               <Label
                 htmlFor="email"
                 color={
-                  isInvalid && validationError.fieldErrors.email
+                  isInvalid && validationError.email
                     ? "failure"
                     : isSuccess
                       ? "success"
@@ -54,7 +54,7 @@ export function ResetPasswordEmailForm() {
               name="email"
               disabled={isPending}
               color={
-                isInvalid && validationError.fieldErrors.email
+                isInvalid && validationError.email
                   ? "failure"
                   : isSuccess
                     ? "success"
@@ -62,7 +62,7 @@ export function ResetPasswordEmailForm() {
               }
               type="text"
               placeholder="hello@net3.app"
-              helperText={validationError?.fieldErrors.email?.[0]}
+              helperText={validationError?.email?._errors[0]}
             />
           </FormItem>
           <SubmitButton />

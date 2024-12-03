@@ -3,10 +3,11 @@
 import { PageHeader } from "@/app/_components/page-header";
 import { DeleteUserForm } from "./_components/form";
 import { type Params } from "@/types";
-import { useTranslation } from "@/i18n";
+import { translate } from "@/i18n";
 
-export default async function DeleteAccount({ params: { lng } }: Params) {
-  const { t } = await useTranslation("settings", lng);
+export default async function DeleteAccount({ params }: Params) {
+  const { lng } = await params;
+  const { t } = await translate("settings", lng);
 
   return (
     <>

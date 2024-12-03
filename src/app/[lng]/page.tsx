@@ -2,15 +2,16 @@ import Link from "next/link";
 
 import { auth } from "@/edgedb";
 import { redirect } from "next/navigation";
-import { useTranslation } from "@/i18n";
+import { translate } from "@/i18n";
 import { type Params } from "@/types";
 
 import { Footer } from "../_components/footer";
 
-export default async function Home({ params: { lng } }: Params) {
-  const session = auth.getSession();
+export default async function Home({ params }: Params) {
+  const { lng } = await params;
+  const session = await auth.getSession();
   const isSignedIn = await session.isSignedIn();
-  const { t } = await useTranslation("global", lng);
+  const { t } = await translate("global", lng);
 
   if (isSignedIn) redirect("/dashboard");
 

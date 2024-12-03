@@ -36,7 +36,7 @@ export function UpdateUserForm({ user }: { user: User }) {
               type="text"
               placeholder={t("editProfile.newName")}
               helperText={
-                isInvalid ? validationError.fieldErrors.name : undefined
+                isInvalid ? validationError.name?._errors[0] : undefined
               }
             />
           </FormItem>

@@ -1,18 +1,19 @@
 import { redirect } from "next/navigation";
 import { type Params } from "@/types";
-import { useTranslation } from "@/i18n";
+import { translate } from "@/i18n";
 import { api } from "@/trpc/server";
 
 import { CreateUserForm } from "./_components/form";
 
-export default async function Onboarding({ params: { lng } }: Params) {
+export default async function Onboarding({ params }: Params) {
+  const { lng } = await params;
   const user = await api.user.getCurrent.query();
 
   if (user) {
     redirect("/");
   }
 
-  const { t } = await useTranslation("onboarding", lng);
+  const { t } = await translate("onboarding", lng);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center">

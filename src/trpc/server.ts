@@ -11,10 +11,12 @@ import { type TRPCErrorResponse } from "@trpc/server/rpc";
  * This wraps the `createTRPCContext` helper and provides the required context for the tRPC API when
  * handling a tRPC call from a React Server Component.
  */
-const createContext = cache(() => {
+const createContext = cache(async () => {
+  const cookie = await cookies();
+
   return createTRPCContext({
     headers: new Headers({
-      cookie: cookies().toString(),
+      cookie: cookie.toString(),
       "x-trpc-source": "rsc",
     }),
   });
@@ -42,9 +44,10 @@ export const api = createTRPCClient<AppRouter>({
                 getRawInput: async () => op.input,
                 ctx,
                 type: op.type,
+                signal: op.signal ?? undefined, // TODO typehack
               });
             })
-            .then((data) => {
+            .then((data: unknown) => {
               observer.next({ result: { data } });
               observer.complete();
             })

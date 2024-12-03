@@ -3,18 +3,19 @@
 import { PageHeader } from "@/app/_components/page-header";
 import { EmailForm } from "./_components/form";
 import { type Params } from "@/types";
-import { useTranslation } from "@/i18n";
+import { translate } from "@/i18n";
 import { api } from "@/trpc/server";
 import { redirect } from "next/navigation";
 import { VerifiedAlert } from "./_components/verified-alert";
 import { Stack } from "@/app/_components";
 
-export default async function Page({ params: { lng } }: Params) {
+export default async function Page({ params }: Params) {
+  const { lng } = await params;
   const user = await api.user.getCurrent.query();
   if (!user) {
     redirect("/");
   }
-  const { t } = await useTranslation("settings", lng);
+  const { t } = await translate("settings", lng);
 
   return (
     <>

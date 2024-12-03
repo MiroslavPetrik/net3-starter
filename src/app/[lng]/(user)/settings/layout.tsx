@@ -5,8 +5,9 @@ import { type Params } from "@/types";
 
 export default async function Profile({
   children,
-  params: { lng },
+  params,
 }: PropsWithChildren<Params>) {
+  const { lng } = await params;
   return (
     <div className="flex flex-1">
       <div className="w-auto flex-none">
