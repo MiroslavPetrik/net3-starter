@@ -13,11 +13,14 @@ export const config = {
   ],
 };
 
-export function middleware(req: NextRequest) {
-  const cookiesList = cookies();
+export async function middleware(req: NextRequest) {
+  const cookiesList = await cookies();
+  const headersList = await headers();
+
   let lng;
-  if (cookiesList.has(i18nCookieName)) lng = acceptLanguage.get(getLngCookie());
-  if (!lng) lng = acceptLanguage.get(headers().get("Accept-Language"));
+  if (cookiesList.has(i18nCookieName))
+    lng = acceptLanguage.get(await getLngCookie());
+  if (!lng) lng = acceptLanguage.get(headersList.get("Accept-Language"));
   if (!lng) lng = fallbackLng;
 
   const pathnameHasLocale = languages.some(
@@ -39,7 +42,7 @@ export function middleware(req: NextRequest) {
   }
 
   if (req.headers.has("referer")) {
-    const refererUrl = new URL(headers().get("referer")!);
+    const refererUrl = new URL(headersList.get("referer")!);
     const lngInReferer = languages.find((locale) =>
       refererUrl.pathname.startsWith(`/${locale}`),
     );

@@ -52,13 +52,13 @@ export function SignUpForm() {
               required
               shadow
               color={
-                isInvalid && validationError.fieldErrors.email
+                isInvalid && validationError.email
                   ? "failure"
                   : isSuccess
                     ? "success"
                     : undefined
               }
-              helperText={validationError?.fieldErrors.email?.[0]}
+              helperText={validationError?.email?._errors[0]}
             />
           </FormItem>
           <FormItem>
@@ -72,13 +72,13 @@ export function SignUpForm() {
               required
               shadow
               color={
-                isInvalid && validationError.fieldErrors.password
+                isInvalid && validationError.password
                   ? "failure"
                   : isSuccess
                     ? "success"
                     : undefined
               }
-              helperText={validationError?.fieldErrors.password?.[0]}
+              helperText={validationError?.password?._errors[0]}
             />
           </FormItem>
           <FormItem>
@@ -95,13 +95,13 @@ export function SignUpForm() {
               required
               shadow
               color={
-                isInvalid && validationError.fieldErrors.passwordRepeat
+                isInvalid && validationError.passwordRepeat
                   ? "failure"
                   : isSuccess
                     ? "success"
                     : undefined
               }
-              helperText={validationError?.fieldErrors.passwordRepeat?.[0]}
+              helperText={validationError?.passwordRepeat?._errors[0]}
             />
           </FormItem>
           <FormItem className="flex items-center gap-2">
@@ -109,7 +109,7 @@ export function SignUpForm() {
               id="tos"
               name="tos"
               color={
-                isInvalid && validationError.fieldErrors.tos
+                isInvalid && validationError.tos
                   ? "failure"
                   : isSuccess
                     ? "success"
@@ -121,7 +121,7 @@ export function SignUpForm() {
                 htmlFor="tos"
                 className="flex whitespace-pre-wrap"
                 color={
-                  isInvalid && validationError.fieldErrors.tos
+                  isInvalid && validationError.tos
                     ? "failure"
                     : isSuccess
                       ? "success"
@@ -138,9 +138,9 @@ export function SignUpForm() {
                   </Link>
                 </Trans>
               </Label>
-              {isInvalid && validationError.fieldErrors.tos && (
+              {isInvalid && validationError.tos && (
                 <HelperText className="mt-0 text-xs" color="failure">
-                  {validationError.fieldErrors.tos?.[0]}
+                  {validationError.tos?._errors[0]}
                 </HelperText>
               )}
             </div>

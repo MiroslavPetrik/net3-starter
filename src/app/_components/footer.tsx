@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { Trans } from "react-i18next/TransWithoutContext";
 import { languages } from "@/i18n/options";
-import { type LanguageParam, useTranslation, castString } from "@/i18n/";
+import { type LanguageParam, translate, castString } from "@/i18n/";
 
 export const Footer = async ({ lng }: LanguageParam) => {
-  const { t } = await useTranslation("global", lng);
+  const { t } = await translate("global", lng);
 
   return (
     <footer style={{ marginTop: 50 }}>

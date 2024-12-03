@@ -3,7 +3,7 @@ import { auth } from "@/edgedb";
 import { redirect } from "next/navigation";
 
 export default async function AuthLayout({ children }: PropsWithChildren) {
-  const session = auth.getSession();
+  const session = await auth.getSession();
   const isSignedIn = await session.isSignedIn();
 
   if (isSignedIn) redirect("/dashboard");

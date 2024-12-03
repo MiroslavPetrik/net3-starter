@@ -2,11 +2,12 @@
 
 import { PageHeader } from "@/app/_components/page-header";
 import { SignUpForm } from "./_components/form";
-import { useTranslation } from "@/i18n";
+import { translate } from "@/i18n";
 import { type Params } from "@/types";
 
-export default async function SignUp({ params: { lng } }: Params) {
-  const { t } = await useTranslation("auth", lng);
+export default async function SignUp({ params }: Params) {
+  const { lng } = await params;
+  const { t } = await translate("auth", lng);
 
   return (
     <>

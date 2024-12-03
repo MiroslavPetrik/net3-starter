@@ -1,4 +1,4 @@
-import { type LanguageParam, useTranslation } from "@/i18n";
+import { type LanguageParam, translate } from "@/i18n";
 import type { User } from "@/types";
 import {
   Avatar,
@@ -19,7 +19,7 @@ export async function Navbar({
   user: User;
   signOutButton: ReactNode;
 } & LanguageParam) {
-  const { t } = await useTranslation("global", lng);
+  const { t } = await translate("global", lng);
 
   const links = [
     { name: t("link.dashboard"), href: "/dashboard" },

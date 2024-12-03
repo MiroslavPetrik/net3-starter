@@ -22,7 +22,7 @@ const initI18next = async (lng: string, ns: string) => {
   return i18n;
 };
 
-export async function useTranslation(
+export async function translate(
   ns: string,
   lng: string,
   options: { keyPrefix?: string } = {},
@@ -38,5 +38,8 @@ export async function useTranslation(
   };
 }
 
-export const getLngCookie = () =>
-  (cookies().get(i18nCookieName)?.value ?? fallbackLng) as Languages;
+export async function getLngCookie() {
+  const cookie = await cookies();
+
+  return (cookie.get(i18nCookieName)?.value ?? fallbackLng) as Languages;
+}

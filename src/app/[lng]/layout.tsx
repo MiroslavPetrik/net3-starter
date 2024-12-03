@@ -15,15 +15,18 @@ export const metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
-  params: { lng },
+  params,
 }: PropsWithChildren<Params>) {
+  const { lng } = await params;
+  // eslint-disable-next-line @typescript-eslint/await-thenable
+  const cookie = await cookies();
   return (
     <html lang={lng}>
       <body className={`font-sans ${font.variable} flex min-h-screen flex-col`}>
         <Language lng={lng}>
-          <TRPCReactProvider cookies={cookies().toString()}>
+          <TRPCReactProvider cookies={cookie.toString()}>
             {children}
           </TRPCReactProvider>
         </Language>
