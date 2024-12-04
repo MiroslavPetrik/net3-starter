@@ -15,7 +15,11 @@ This is Next.js + EdgeDB starter project bootstraped on the [T3 Stack](https://c
 
 # Installation Steps
 
-TBD
+force install (while the react RC version is used)
+
+```
+npm i -f
+```
 
 ## EdgeDB
 
