@@ -3,7 +3,7 @@ import { z } from "zod";
 import { vercel } from "@t3-oss/env-nextjs/presets";
 
 export const env = createEnv({
-  extends: [vercel],
+  extends: [vercel()],
   /**
    * Specify your server-side environment variables schema here. This way you can ensure the app
    * isn't built with invalid env vars.
