@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Label, TextInput } from "flowbite-react";
-import { Form } from "react-form-action/client";
+import { Form, ZodFieldError } from "react-form-action/client";
 import { Alert } from "flowbite-react";
 import { useTranslation } from "react-i18next";
 import { Trans } from "react-i18next/TransWithoutContext";
@@ -47,7 +47,11 @@ export function SignInForm() {
                 }
                 type="text"
                 placeholder="hello@net3.app"
-                helperText={validationError?.email?._errors[0]}
+                helperText={
+                  isInvalid && (
+                    <ZodFieldError errors={validationError} name="email" />
+                  )
+                }
               />
             </FormItem>
             <FormItem>
@@ -76,7 +80,11 @@ export function SignInForm() {
                 }
                 type="password"
                 placeholder="Your password"
-                helperText={validationError?.password?._errors?.[0]}
+                helperText={
+                  isInvalid && (
+                    <ZodFieldError errors={validationError} name="password" />
+                  )
+                }
               />
             </FormItem>
             <SubmitButton />

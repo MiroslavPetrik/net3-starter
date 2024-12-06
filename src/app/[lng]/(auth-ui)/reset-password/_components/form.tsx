@@ -1,7 +1,7 @@
 "use client";
 import { SubmitButton } from "@/app/_components/submit-button";
 import { Label, TextInput } from "flowbite-react";
-import { Form } from "react-form-action/client";
+import { Form, ZodFieldError } from "react-form-action/client";
 import { resetPassword } from "@/app/actions/auth";
 import { Alert } from "flowbite-react";
 import Link from "next/link";
@@ -62,7 +62,11 @@ export function ResetPasswordForm({ reset_token }: ResetTokenParam) {
                     ? "success"
                     : undefined
               }
-              helperText={validationError?.password?._errors[0]}
+              helperText={
+                isInvalid && (
+                  <ZodFieldError errors={validationError} name="password" />
+                )
+              }
             />
           </FormItem>
           <input name={resetTokenFieldName} defaultValue={reset_token} hidden />

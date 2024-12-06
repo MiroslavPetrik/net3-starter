@@ -10,7 +10,7 @@ import {
 } from "flowbite-react";
 import Link from "next/link";
 import { Trans } from "react-i18next/TransWithoutContext";
-import { Form } from "react-form-action/client";
+import { Form, ZodFieldError } from "react-form-action/client";
 import { useTranslation } from "react-i18next";
 import { signUp } from "@/app/actions/auth";
 import { Stack, FormItem, FormLabel } from "@/app/_components";
@@ -58,7 +58,11 @@ export function SignUpForm() {
                     ? "success"
                     : undefined
               }
-              helperText={validationError?.email?._errors[0]}
+              helperText={
+                isInvalid && (
+                  <ZodFieldError errors={validationError} name="email" />
+                )
+              }
             />
           </FormItem>
           <FormItem>
@@ -78,7 +82,11 @@ export function SignUpForm() {
                     ? "success"
                     : undefined
               }
-              helperText={validationError?.password?._errors[0]}
+              helperText={
+                isInvalid && (
+                  <ZodFieldError errors={validationError} name="password" />
+                )
+              }
             />
           </FormItem>
           <FormItem>
@@ -101,7 +109,14 @@ export function SignUpForm() {
                     ? "success"
                     : undefined
               }
-              helperText={validationError?.passwordRepeat?._errors[0]}
+              helperText={
+                isInvalid && (
+                  <ZodFieldError
+                    errors={validationError}
+                    name="passwordRepeat"
+                  />
+                )
+              }
             />
           </FormItem>
           <FormItem className="flex items-center gap-2">
@@ -139,9 +154,13 @@ export function SignUpForm() {
                 </Trans>
               </Label>
               {isInvalid && validationError.tos && (
-                <HelperText className="mt-0 text-xs" color="failure">
-                  {validationError.tos?._errors[0]}
-                </HelperText>
+                <ZodFieldError errors={validationError} name="tos">
+                  {({ errors }) => (
+                    <HelperText className="mt-0 text-xs" color="failure">
+                      {errors[0]}
+                    </HelperText>
+                  )}
+                </ZodFieldError>
               )}
             </div>
           </FormItem>

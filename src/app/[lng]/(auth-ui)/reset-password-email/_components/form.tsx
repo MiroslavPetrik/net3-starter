@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { SubmitButton } from "@/app/_components/submit-button";
 import { Label, TextInput } from "flowbite-react";
-import { Form } from "react-form-action/client";
+import { Form, ZodFieldError } from "react-form-action/client";
 import { resetPasswordEmail } from "@/app/actions/auth";
 import { Alert } from "flowbite-react";
 import { Trans } from "react-i18next/TransWithoutContext";
@@ -62,7 +62,11 @@ export function ResetPasswordEmailForm() {
               }
               type="text"
               placeholder="hello@net3.app"
-              helperText={validationError?.email?._errors[0]}
+              helperText={
+                isInvalid && (
+                  <ZodFieldError errors={validationError} name="email" />
+                )
+              }
             />
           </FormItem>
           <SubmitButton />
