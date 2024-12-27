@@ -4,6 +4,8 @@ import { translate } from "@/i18n";
 import { api } from "@/trpc/server";
 
 import { CreateUserForm } from "./_components/form";
+import { Action } from "react-form-action/client";
+import { createUser } from "@/app/actions";
 
 export default async function Onboarding({ params }: Params) {
   const { lng } = await params;
@@ -22,7 +24,9 @@ export default async function Onboarding({ params }: Params) {
       </h1>
       <h2 className="mb-6 text-xl">{t("subtitle")}</h2>
       <div className="w-full max-w-xs">
-        <CreateUserForm />
+        <Action action={createUser} initialData={undefined}>
+          <CreateUserForm />
+        </Action>
       </div>
     </main>
   );

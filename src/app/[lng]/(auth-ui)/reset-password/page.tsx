@@ -1,9 +1,11 @@
 "use server";
+import { Action } from "react-form-action/client";
 import { PageHeader } from "@/app/_components/page-header";
 import { ResetPasswordForm } from "./_components/form";
 import { type Params } from "@/types";
 import { translate } from "@/i18n";
 import { type ResetTokenParam } from "@/edgedb/shared";
+import { resetPassword } from "@/app/actions/auth";
 
 export default async function ResetPassword({
   params,
@@ -16,7 +18,9 @@ export default async function ResetPassword({
   return (
     <>
       <PageHeader>{t("resetPassword.title")}</PageHeader>
-      <ResetPasswordForm reset_token={reset_token} />
+      <Action action={resetPassword} initialData="">
+        <ResetPasswordForm reset_token={reset_token} />
+      </Action>
     </>
   );
 }

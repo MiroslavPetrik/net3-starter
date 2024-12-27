@@ -1,5 +1,6 @@
 "use server";
 
+import { Action } from "react-form-action/client";
 import { PageHeader } from "@/app/_components/page-header";
 import { EmailForm } from "./_components/form";
 import { type Params } from "@/types";
@@ -8,6 +9,7 @@ import { api } from "@/trpc/server";
 import { redirect } from "next/navigation";
 import { VerifiedAlert } from "./_components/verified-alert";
 import { Stack } from "@/app/_components";
+import { resendVerificationEmail } from "@/app/actions/auth";
 
 export default async function Page({ params }: Params) {
   const { lng } = await params;
@@ -22,7 +24,9 @@ export default async function Page({ params }: Params) {
       <PageHeader>{t("email.title")}</PageHeader>
       <Stack>
         {user.email?.verifiedAt && <VerifiedAlert lng={lng} />}
-        <EmailForm email={user.email!} />
+        <Action action={resendVerificationEmail} initialData="">
+          <EmailForm email={user.email!} />
+        </Action>
       </Stack>
     </>
   );
