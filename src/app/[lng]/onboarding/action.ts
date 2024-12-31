@@ -3,13 +3,13 @@
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { insertUserQuery } from "@/edgedb/queries";
-import { protectedAction } from "../../actions/protected";
+import { authorizedAction } from "../../actions/authorized";
 
 const createUserSchema = z.object({
   name: z.string().min(3),
 });
 
-export const createUser = protectedAction
+export const createUser = authorizedAction
   .input(createUserSchema)
   .error(async () => ({ message: "Failed to create user" }))
   .run(async ({ input, ctx: { session } }) => {

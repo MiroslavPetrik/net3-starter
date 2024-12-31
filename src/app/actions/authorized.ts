@@ -1,7 +1,7 @@
 import { formAction } from "react-form-action";
 import { auth } from "@/edgedb";
 
-export const protectedAction = formAction.use(async () => {
+export const authorizedAction = formAction.use(async () => {
   const session = await auth.getSession();
   const isSignedIn = await session.isSignedIn();
 
