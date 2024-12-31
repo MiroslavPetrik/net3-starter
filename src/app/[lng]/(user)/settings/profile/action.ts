@@ -3,7 +3,7 @@
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { protectedAction } from "./protected";
+import { protectedAction } from "../../../../actions/protected";
 import { updateCurrentUserQuery } from "@/edgedb/queries";
 
 const updateUserSchema = z.object({

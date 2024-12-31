@@ -5,8 +5,8 @@ import { type Params } from "@/types";
 import { translate } from "@/i18n";
 
 import { PageHeader } from "@/app/_components/page-header";
-import { UpdateUserForm } from "./_components/form";
-import { updateUser } from "@/app/actions";
+import { UpdateUserForm } from "./form";
+import { updateUser } from "./action";
 
 export default async function Profile({ params }: Params) {
   const user = await api.user.getCurrent.query();
