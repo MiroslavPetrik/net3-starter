@@ -3,9 +3,9 @@ import { type Params } from "@/types";
 import { translate } from "@/i18n";
 import { api } from "@/trpc/server";
 
-import { CreateUserForm } from "./_components/form";
 import { Action } from "react-form-action/client";
-import { createUser } from "@/app/actions";
+import { createUser } from "./action";
+import { CreateUserForm } from "./form";
 
 export default async function Onboarding({ params }: Params) {
   const { lng } = await params;
