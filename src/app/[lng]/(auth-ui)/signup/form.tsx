@@ -44,15 +44,19 @@ export function SignUpForm() {
             <Alert color="failure">{error.message}</Alert>
           </div>
         )}
-        <FieldError>
-          {({ error }) => (
+        <FieldError name="email">
+          {({ error, name }) => (
             <FormItem>
               <FormLabel>
-                <Label htmlFor="email" value={t("signUp.email")} />
+                <Label
+                  htmlFor={name}
+                  color={getColor(error)}
+                  value={t("signUp.email")}
+                />
               </FormLabel>
               <TextInput
-                id="email"
-                name="email"
+                id={name}
+                name={name}
                 type="email"
                 placeholder="name@net3.com"
                 required
@@ -67,7 +71,11 @@ export function SignUpForm() {
           {({ error, name }) => (
             <FormItem>
               <FormLabel>
-                <Label htmlFor={name} value={t("signUp.password")} />
+                <Label
+                  htmlFor={name}
+                  color={getColor(error)}
+                  value={t("signUp.password")}
+                />
               </FormLabel>
               <TextInput
                 id={name}
@@ -85,7 +93,11 @@ export function SignUpForm() {
           {({ error, name }) => (
             <FormItem>
               <FormLabel>
-                <Label htmlFor={name} value={t("signUp.passwordRepeat")} />
+                <Label
+                  htmlFor={name}
+                  color={getColor(error)}
+                  value={t("signUp.passwordRepeat")}
+                />
               </FormLabel>
               <TextInput
                 id={name}
@@ -99,13 +111,13 @@ export function SignUpForm() {
             </FormItem>
           )}
         </FieldError>
-        <FieldError>
-          {({ error }) => (
+        <FieldError name="tos">
+          {({ error, name }) => (
             <FormItem className="flex items-center gap-2">
-              <Checkbox id="tos" name="tos" color={getColor(error)} />
+              <Checkbox id={name} name={name} color={getColor(error)} />
               <div className="flex flex-col">
                 <Label
-                  htmlFor="tos"
+                  htmlFor={name}
                   className="flex whitespace-pre-wrap"
                   color={getColor(error)}
                 >

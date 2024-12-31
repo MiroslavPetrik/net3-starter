@@ -38,7 +38,9 @@ export function SignInForm() {
           {({ error, name }) => (
             <FormItem>
               <FormLabel>
-                <Label htmlFor={name}>{t("signIn.email")}</Label>
+                <Label htmlFor={name} color={getColor(error)}>
+                  {t("signIn.email")}
+                </Label>
               </FormLabel>
               <TextInput
                 id={name}
@@ -56,7 +58,11 @@ export function SignInForm() {
           {({ error, name }) => (
             <FormItem>
               <FormLabel>
-                <Label htmlFor={name} className="flex justify-between">
+                <Label
+                  htmlFor={name}
+                  color={getColor(error)}
+                  className="flex justify-between"
+                >
                   <span>{t("signIn.password")}</span>
                   <Link
                     tabIndex={-1}

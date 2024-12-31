@@ -56,10 +56,6 @@ const signUpSchema = z
     password: z.string().min(1),
     passwordRepeat: z.string().min(1),
     tos: z.coerce.boolean().pipe(z.literal(true)),
-    name: z.object({
-      first: z.string().min(3),
-      last: z.string().min(3),
-    }),
   })
   .refine(
     ({ password, passwordRepeat }) => {
