@@ -40,7 +40,7 @@ export function ResetPasswordEmailForm() {
             <Alert color="failure">{error.message}</Alert>
           </div>
         )}
-        <FieldError>
+        <FieldError name="email">
           {({ error, name }) => (
             <FormItem>
               <FormLabel>
