@@ -2,7 +2,7 @@
 
 import { Action } from "react-form-action/client";
 import { PageHeader } from "@/app/_components/page-header";
-import { ResetPasswordEmailForm } from "./_components/form";
+import { ResetPasswordEmailForm } from "./form";
 import { translate } from "@/i18n";
 import { type Params } from "@/types";
 import { resetPasswordEmail } from "@/app/actions/auth";

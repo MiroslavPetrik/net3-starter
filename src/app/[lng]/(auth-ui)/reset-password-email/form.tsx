@@ -20,15 +20,12 @@ const { FieldError } = createComponents(resetPasswordEmail);
 export function ResetPasswordEmailForm() {
   const { t } = useTranslation("auth");
 
-  const {
-    isPending,
-    isFailure,
-    isSuccess,
-    isInvalid,
-    error,
-    validationError,
-    data,
-  } = useActionContext(resetPasswordEmail);
+  const { isPending, isFailure, isSuccess, isInvalid, error, data } =
+    useActionContext(resetPasswordEmail);
+
+  function getColor(error?: string) {
+    return isInvalid && error ? "failure" : isSuccess ? "success" : undefined;
+  }
 
   return (
     <Form>
@@ -43,37 +40,26 @@ export function ResetPasswordEmailForm() {
             <Alert color="failure">{error.message}</Alert>
           </div>
         )}
-        <FormItem>
-          <FormLabel>
-            <Label
-              htmlFor="email"
-              color={
-                isInvalid && validationError.email
-                  ? "failure"
-                  : isSuccess
-                    ? "success"
-                    : undefined
-              }
-            >
-              {t("resetPasswordEmail.email")}
-            </Label>
-          </FormLabel>
-          <TextInput
-            id="email"
-            name="email"
-            disabled={isPending}
-            color={
-              isInvalid && validationError.email
-                ? "failure"
-                : isSuccess
-                  ? "success"
-                  : undefined
-            }
-            type="text"
-            placeholder="hello@net3.app"
-            helperText={<FieldError name="email" />}
-          />
-        </FormItem>
+        <FieldError>
+          {({ error, name }) => (
+            <FormItem>
+              <FormLabel>
+                <Label htmlFor={name} color={getColor(error)}>
+                  {t("resetPasswordEmail.email")}
+                </Label>
+              </FormLabel>
+              <TextInput
+                id={name}
+                name={name}
+                disabled={isPending}
+                color={getColor(error)}
+                type="text"
+                placeholder="hello@net3.app"
+                helperText={error}
+              />
+            </FormItem>
+          )}
+        </FieldError>
         <SubmitButton />
         <Label>
           <Trans i18nKey="resetPasswordEmail.linkToSignIn" t={t}>

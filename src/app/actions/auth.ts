@@ -14,7 +14,7 @@ const authAction = formAction
     const { t } = await translate("auth", await getLngCookie());
     return { t };
   })
-  .error(({ error, ctx: { t } }) => {
+  .error(async ({ error, ctx: { t } }) => {
     if (error instanceof Error) {
       const dbError = readDbError(error, t);
 

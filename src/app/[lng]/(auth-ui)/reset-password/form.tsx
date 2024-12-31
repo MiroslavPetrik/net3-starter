@@ -20,15 +20,12 @@ const { FieldError } = createComponents(resetPassword);
 export function ResetPasswordForm({ reset_token }: ResetTokenParam) {
   const { t } = useTranslation("auth");
 
-  const {
-    isPending,
-    isFailure,
-    isSuccess,
-    isInvalid,
-    error,
-    validationError,
-    data,
-  } = useActionContext(resetPassword);
+  const { isPending, isFailure, isSuccess, isInvalid, error, data } =
+    useActionContext(resetPassword);
+
+  function getColor(error?: string) {
+    return isInvalid && error ? "failure" : isSuccess ? "success" : undefined;
+  }
 
   return (
     <Form>
@@ -43,36 +40,26 @@ export function ResetPasswordForm({ reset_token }: ResetTokenParam) {
             <Alert color="failure">{error.message}</Alert>
           </div>
         )}
-        <FormItem>
-          <FormLabel>
-            <Label
-              htmlFor="password"
-              color={
-                isInvalid && validationError.password
-                  ? "failure"
-                  : isSuccess
-                    ? "success"
-                    : undefined
-              }
-            >
-              {t("resetPassword.newPassword")}
-            </Label>
-          </FormLabel>
-          <TextInput
-            id="password"
-            name="password"
-            type="password"
-            disabled={isPending}
-            color={
-              isInvalid && validationError.password
-                ? "failure"
-                : isSuccess
-                  ? "success"
-                  : undefined
-            }
-            helperText={<FieldError name="password" />}
-          />
-        </FormItem>
+
+        <FieldError name="password">
+          {({ error, name }) => (
+            <FormItem>
+              <FormLabel>
+                <Label htmlFor={name} color={getColor(error)}>
+                  {t("resetPassword.newPassword")}
+                </Label>
+              </FormLabel>
+              <TextInput
+                id={name}
+                name={name}
+                type="password"
+                disabled={isPending}
+                color={getColor(error)}
+                helperText={error}
+              />
+            </FormItem>
+          )}
+        </FieldError>
         <input name={resetTokenFieldName} defaultValue={reset_token} hidden />
         <SubmitButton />
         <Label>
