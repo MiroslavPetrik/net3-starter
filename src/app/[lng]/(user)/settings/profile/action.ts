@@ -20,6 +20,4 @@ export const updateUser = authorizedAction
     }
 
     revalidatePath("/settings/profile");
-
-    return "Your profile has been updated.";
   });

@@ -12,13 +12,12 @@ import { SubmitButton } from "@/app/_components/submit-button";
 import { FormItem, FormLabel, Stack } from "@/app/_components";
 import { updateUser } from "./action";
 
-const { FieldError } = createComponents(updateUser);
+const { FieldError, Success } = createComponents(updateUser);
 
 export function UpdateUserForm({ user }: { user: User }) {
   const { t } = useTranslation("settings");
 
-  const { isPending, isSuccess, isInvalid, data } =
-    useActionContext(updateUser);
+  const { isPending, isSuccess, isInvalid } = useActionContext(updateUser);
 
   function getColor(error?: string) {
     return isInvalid && error ? "failure" : isSuccess ? "success" : undefined;
@@ -27,7 +26,9 @@ export function UpdateUserForm({ user }: { user: User }) {
   return (
     <Form className="flex flex-col gap-2">
       <Stack>
-        {isSuccess && <Alert color="success">{data}</Alert>}
+        <Success>
+          <Alert color="success">{t("editProfile.success")}</Alert>
+        </Success>
         <FieldError name="name">
           {({ name, error }) => (
             <FormItem>
