@@ -22,5 +22,5 @@ export const signIn = authAction
      * as there is no time to render it.
      * Such message can be rendered, by shifting the routing responsibility to the client.
      */
-    return t("signIn.success");
+    return t("auth:signIn.success");
   });

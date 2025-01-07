@@ -60,16 +60,16 @@ configure current database set ext::auth::AuthConfig::allowed_redirect_urls := {
  */
 import { Params } from "@/types";
 /**
- * Import the SSR translations hook from a local `i18n` folder.
- * NOTE: the SSR hook is awaited!
+ * Import the SSR translation helper from a local `i18n` folder.
+ * NOTE: the SSR helper is awaited!
  */
-import { useTranslation } from "@/i18n";
+import { translate } from "@/i18n";
 
 export default async function Page({ params }: Params) {
   const { lng } = await params;
   // Specify the feature name as your namespace.
   // Use the "global" namespace for reusable components like Button.
-  const { t } = await useTranslation("feature", lng);
+  const { t } = await translate("feature", lng);
 
   return <h1>{t("title")}</h1>;
 }

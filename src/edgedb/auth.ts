@@ -27,7 +27,7 @@ export const authAction = formAction
       };
     } else {
       return {
-        message: t("unexpectedError"),
+        message: t("auth:unexpectedError"),
       };
     }
   });

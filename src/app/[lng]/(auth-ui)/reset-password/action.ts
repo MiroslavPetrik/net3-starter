@@ -15,5 +15,5 @@ export const resetPassword = authAction
   .run(async ({ input, ctx: { actions, t } }) => {
     await actions.emailPasswordResetPassword(input);
 
-    return t("resetPassword.success");
+    return t("auth:resetPassword.success");
   });

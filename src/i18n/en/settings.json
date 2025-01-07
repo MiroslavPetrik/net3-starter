@@ -8,8 +8,8 @@
   "editProfile": {
     "name": "Name",
     "newName": "New Name",
-    "title": "Edit Profile",
-    "success": "Profile updated successfully."
+    "success": "Profile updated successfully.",
+    "title": "Edit Profile"
   },
   "email": {
     "alreadyVerified": "<0>Your email is verified.</0> You can safely request a password reset email in case you need it.",

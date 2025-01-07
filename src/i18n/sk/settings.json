@@ -8,8 +8,8 @@
   "editProfile": {
     "name": "Meno",
     "newName": "Nové meno",
-    "title": "Upraviť profil",
-    "success": "Profil bol úspešne aktualizovaný."
+    "success": "Profil bol úspešne aktualizovaný.",
+    "title": "Upraviť profil"
   },
   "email": {
     "alreadyVerified": "<0>Tvoja emailová adresa bola overená.</0> Teraz je možné bezpečne požiadať o resetovanie hesla v prípade ak to budeš potrebovať.",

@@ -12,5 +12,5 @@ export const resendVerificationEmail = authAction
   .run(async ({ input, ctx: { actions, t } }) => {
     await actions.emailPasswordResendVerificationEmail(input);
 
-    return t("resendVerificationEmail.success");
+    return t("auth:resendVerificationEmail.success");
   });

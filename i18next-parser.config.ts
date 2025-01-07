@@ -13,6 +13,7 @@ export default {
         lexer: "JsxLexer",
         // See file /src/i18n/castString.ts
         transIdentityFunctionsToIgnore: ["castString"],
+        namespaceFunctions: ["useTranslation", "translate"],
       },
     ],
   },
