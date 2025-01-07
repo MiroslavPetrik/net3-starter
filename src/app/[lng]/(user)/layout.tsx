@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from "react";
 import { redirect } from "next/navigation";
 import { type Params } from "@/types";
-import { auth } from "@/edgedb";
+import { authorizedSession } from "@/edgedb";
 import { translate } from "@/i18n";
 import { api } from "@/trpc/server";
 
@@ -12,10 +12,7 @@ export default async function Layout({
   children,
   params,
 }: PropsWithChildren<Params>) {
-  const session = await auth.getSession();
-  const isSignedIn = await session.isSignedIn();
-
-  if (!isSignedIn) {
+  if (!(await authorizedSession())) {
     redirect("/");
   }
 

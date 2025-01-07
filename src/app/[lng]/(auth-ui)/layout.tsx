@@ -1,12 +1,11 @@
 import type { PropsWithChildren } from "react";
-import { auth } from "@/edgedb";
+import { authorizedSession } from "@/edgedb";
 import { redirect } from "next/navigation";
 
 export default async function AuthLayout({ children }: PropsWithChildren) {
-  const session = await auth.getSession();
-  const isSignedIn = await session.isSignedIn();
-
-  if (isSignedIn) redirect("/dashboard");
+  if (await authorizedSession()) {
+    redirect("/dashboard");
+  }
 
   return (
     <div className="flex flex-1 justify-center bg-gray-200">

@@ -3,7 +3,7 @@
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { insertUserQuery } from "@/edgedb/queries";
-import { authorizedAction } from "../../actions/authorized";
+import { authorizedAction } from "@/edgedb";
 
 const createUserSchema = z.object({
   name: z.string().min(3),

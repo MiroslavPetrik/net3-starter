@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { authorizedAction } from "@/app/actions/authorized";
+import { authorizedAction } from "@/edgedb";
 import { deleteCurrentUserQuery } from "@/edgedb/queries";
 
 export const deleteUser = authorizedAction

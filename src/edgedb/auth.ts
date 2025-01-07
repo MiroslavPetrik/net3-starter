@@ -10,8 +10,39 @@ export const auth = createAuth(client, {
   passwordResetPath: "/reset-password",
 });
 
+/**
+ * A helper function to get the current session if the user is signed in.
+ * @returns The current session if the user is signed in, otherwise null.
+ */
+export async function authorizedSession() {
+  const session = await auth.getSession();
+
+  if (await session.isSignedIn()) {
+    return session;
+  }
+
+  return null;
+}
+
 const actions = auth.createServerActions();
 
+/**
+ * An action with authorized edgedb session in the context.
+ * Use it to make queries with the current user: e.select(e.global.current_user).run(session.client)
+ */
+export const authorizedAction = formAction.use(async () => {
+  const session = await authorizedSession();
+
+  if (!session) {
+    throw new Error("Unauthorized");
+  }
+
+  return { session };
+});
+
+/**
+ * A wrapper around the edgedb auth actions that provides error handling and translation.
+ */
 export const authAction = formAction
   .use(async () => ({ actions }))
   .use(async () => {
