@@ -1,6 +1,6 @@
 "use server";
 
-import { authAction, actions } from "@/edgedb";
+import { authAction } from "@/edgedb";
 import { z } from "zod";
 
 const resetPasswordEmailSchema = z.object({
@@ -9,7 +9,7 @@ const resetPasswordEmailSchema = z.object({
 
 export const resetPasswordEmail = authAction
   .input(resetPasswordEmailSchema)
-  .run(async ({ input, ctx: { t } }) => {
+  .run(async ({ input, ctx: { actions, t } }) => {
     await actions.emailPasswordSendPasswordResetEmail(input);
 
     return t("resetPasswordEmail.success");

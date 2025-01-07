@@ -1,6 +1,6 @@
 "use server";
 
-import { authAction, actions } from "@/edgedb";
+import { authAction } from "@/edgedb";
 import { z } from "zod";
 
 const signInSchema = z.object({
@@ -10,7 +10,7 @@ const signInSchema = z.object({
 
 export const signIn = authAction
   .input(signInSchema)
-  .run(async ({ input, ctx: { t } }) => {
+  .run(async ({ input, ctx: { actions, t } }) => {
     /**
      * This sets auth cookie, and toggles the session.isSignedIn().
      * So the AuthLayout will redirect the user to dashboard.

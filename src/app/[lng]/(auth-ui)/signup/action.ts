@@ -1,6 +1,6 @@
 "use server";
 
-import { authAction, actions } from "@/edgedb";
+import { authAction } from "@/edgedb";
 import { z } from "zod";
 import { t } from "@/i18n";
 
@@ -23,7 +23,7 @@ const signUpSchema = z
 
 export const signUp = authAction
   .input(signUpSchema)
-  .run(async ({ input: { email, password }, ctx: { t } }) => {
+  .run(async ({ input: { email, password }, ctx: { actions, t } }) => {
     const tokenData = await actions.emailPasswordSignUp({
       email,
       password,

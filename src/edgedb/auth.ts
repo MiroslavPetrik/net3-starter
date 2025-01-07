@@ -10,9 +10,10 @@ export const auth = createAuth(client, {
   passwordResetPath: "/reset-password",
 });
 
-export const actions = auth.createServerActions();
+const actions = auth.createServerActions();
 
 export const authAction = formAction
+  .use(async () => ({ actions }))
   .use(async () => {
     const { t } = await translate("auth", await getLngCookie());
     return { t };
