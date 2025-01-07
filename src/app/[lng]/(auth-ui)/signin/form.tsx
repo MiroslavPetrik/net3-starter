@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 import { Trans } from "react-i18next/TransWithoutContext";
 import { SubmitButton } from "@/app/_components/submit-button";
 import { FormLabel, FormItem, Stack } from "@/app/_components";
-import { signIn } from "@/app/actions/auth";
+import { signIn } from "./action";
 
 const { FieldError } = createComponents(signIn);
 

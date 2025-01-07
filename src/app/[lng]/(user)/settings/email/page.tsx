@@ -2,14 +2,14 @@
 
 import { Action } from "react-form-action/client";
 import { PageHeader } from "@/app/_components/page-header";
-import { EmailForm } from "./_components/form";
 import { type Params } from "@/types";
 import { translate } from "@/i18n";
 import { api } from "@/trpc/server";
 import { redirect } from "next/navigation";
 import { VerifiedAlert } from "./_components/verified-alert";
 import { Stack } from "@/app/_components";
-import { resendVerificationEmail } from "@/app/actions/auth";
+import { resendVerificationEmail } from "./action";
+import { EmailForm } from "./form";
 
 export default async function Page({ params }: Params) {
   const { lng } = await params;

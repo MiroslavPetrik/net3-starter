@@ -4,8 +4,8 @@ import { PageHeader } from "@/app/_components/page-header";
 import { type Params } from "@/types";
 import { translate } from "@/i18n";
 import { type ResetTokenParam } from "@/edgedb/shared";
-import { resetPassword } from "@/app/actions/auth";
 import { ResetPasswordForm } from "./form";
+import { resetPassword } from "./action";
 
 export default async function ResetPassword({
   params,

@@ -6,7 +6,7 @@ import { SubmitButton } from "@/app/_components/submit-button";
 import { type UserEmail } from "@/types";
 import { Alert, Label, TextInput } from "flowbite-react";
 import { FormLabel, FormItem, Stack } from "@/app/_components";
-import { resendVerificationEmail } from "@/app/actions/auth";
+import { resendVerificationEmail } from "./action";
 
 export function EmailForm({ email }: { email: UserEmail }) {
   const { t } = useTranslation("settings");

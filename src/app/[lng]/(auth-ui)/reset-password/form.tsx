@@ -13,7 +13,7 @@ import { Trans } from "react-i18next/TransWithoutContext";
 import { SubmitButton } from "@/app/_components/submit-button";
 import { type ResetTokenParam, resetTokenFieldName } from "@/edgedb/shared";
 import { Stack, FormItem, FormLabel } from "@/app/_components";
-import { resetPassword } from "@/app/actions/auth";
+import { resetPassword } from "./action";
 
 const { FieldError } = createComponents(resetPassword);
 

@@ -4,7 +4,7 @@ import { Action } from "react-form-action/client";
 import { PageHeader } from "@/app/_components/page-header";
 import { translate } from "@/i18n";
 import { type Params } from "@/types";
-import { signIn } from "@/app/actions/auth";
+import { signIn } from "./action";
 import { SignInForm } from "./form";
 
 export default async function SignIn({ params }: Params) {
