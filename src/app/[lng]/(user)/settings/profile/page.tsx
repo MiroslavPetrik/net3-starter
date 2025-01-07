@@ -20,7 +20,7 @@ export default async function Profile({ params }: Params) {
     <>
       <PageHeader>{t("editProfile.title")}</PageHeader>
       <div className="w-full max-w-xs">
-        <Action action={updateUser} initialData="">
+        <Action action={updateUser} initialData={undefined}>
           <UpdateUserForm user={user} />
         </Action>
       </div>
