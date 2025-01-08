@@ -1,16 +1,29 @@
 "use client";
 
-import { useFormStatus } from "react-dom";
 import { Button, type ButtonProps } from "flowbite-react/components/Button";
 import { useTranslation } from "react-i18next";
+import { useActionContext } from "react-form-action/client";
+import type { RP } from "react-render-prop-type";
 
-export function SubmitButton({ children, ...props }: ButtonProps) {
-  const { pending } = useFormStatus();
+type SubmitButtonProps = Omit<ButtonProps, "children"> &
+  Partial<RP<{ isPending: boolean }>>;
+
+export function SubmitButton({ children, ...props }: SubmitButtonProps) {
+  const { isPending } = useActionContext();
   const { t } = useTranslation("global");
 
+  const render =
+    children ??
+    (({ isPending }) => (isPending ? t("submitting") : t("submit")));
+
   return (
-    <Button {...props} type="submit" isProcessing={pending} disabled={pending}>
-      {children ?? (pending ? t("submitting") : t("submit"))}
+    <Button
+      {...props}
+      type="submit"
+      isProcessing={isPending}
+      disabled={isPending}
+    >
+      {render({ isPending })}
     </Button>
   );
 }
