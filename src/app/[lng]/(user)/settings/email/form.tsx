@@ -11,7 +11,7 @@ import { resendVerificationEmail } from "./action";
 export function EmailForm({ email }: { email: UserEmail }) {
   const { t } = useTranslation("settings");
 
-  const { isPending, isSuccess, isFailure, data, error } = useActionContext(
+  const { isSuccess, isFailure, data, error } = useActionContext(
     resendVerificationEmail,
   );
 
@@ -24,9 +24,11 @@ export function EmailForm({ email }: { email: UserEmail }) {
             rounded
             additionalContent={
               <SubmitButton color="warning">
-                {isPending
-                  ? t("email.sendingVerificationLink")
-                  : t("email.sendVerificationLink")}
+                {({ isPending }) =>
+                  isPending
+                    ? t("email.sendingVerificationLink")
+                    : t("email.sendVerificationLink")
+                }
               </SubmitButton>
             }
           >
