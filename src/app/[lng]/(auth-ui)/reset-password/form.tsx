@@ -11,13 +11,17 @@ import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { Trans } from "react-i18next/TransWithoutContext";
 import { SubmitButton } from "@/app/_components/submit-button";
-import { type ResetTokenParam, resetTokenFieldName } from "@/edgedb/shared";
+import { resetTokenFieldName } from "@/edgedb/shared";
 import { Stack, FormItem, FormLabel } from "@/app/_components";
 import { resetPassword } from "./action";
 
 const { FieldError } = createComponents(resetPassword);
 
-export function ResetPasswordForm({ reset_token }: ResetTokenParam) {
+type Props = {
+  [resetTokenFieldName]: string;
+};
+
+export function ResetPasswordForm({ reset_token }: Props) {
   const { t } = useTranslation("auth");
 
   const { isPending, isFailure, isSuccess, isInvalid, error, data } =

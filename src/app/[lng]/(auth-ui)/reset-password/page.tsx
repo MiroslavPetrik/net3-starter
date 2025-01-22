@@ -2,19 +2,24 @@
 
 import { Action } from "react-form-action/client";
 import { PageHeader } from "@/app/_components/page-header";
-import { type Params } from "@/types";
+import { type SearchParams, type Params, getSearchParam } from "@/types";
 import { translate } from "@/i18n";
-import { type ResetTokenParam } from "@/edgedb/shared";
+import { resetTokenFieldName } from "@/edgedb/shared";
 
 import { resetPassword } from "./action";
 import { ResetPasswordForm } from "./form";
 
+type ResetPasswordSearchParams = SearchParams<typeof resetTokenFieldName>;
+
 export default async function ResetPassword({
   params,
   searchParams,
-}: Params & { searchParams: Promise<ResetTokenParam> }) {
+}: Params & ResetPasswordSearchParams) {
   const { lng } = await params;
-  const { reset_token } = await searchParams;
+  const { reset_token = "" } = getSearchParam(
+    await searchParams,
+    resetTokenFieldName,
+  );
   const { t } = await translate("auth", lng);
 
   return (
