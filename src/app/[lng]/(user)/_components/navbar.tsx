@@ -11,14 +11,12 @@ import {
 import { type ReactNode } from "react";
 import { NavbarLinks } from "./navbar-links";
 
-export async function Navbar({
-  lng,
-  user,
-  signOutButton,
-}: {
+type Props = {
   user: User;
   signOutButton: ReactNode;
-} & LanguageParam) {
+} & LanguageParam;
+
+export async function Navbar({ lng, user, signOutButton }: Props) {
   const { t } = await translate("global", lng);
 
   const links = [

@@ -101,13 +101,13 @@ with a functionality to strip the prefix away, so you can check for active path 
 /**
  * Import useLngPathname instead of the usePathname
  */
-import { useLngPathname } from "@/i18n";
+import { useLngPathname } from "@/i18n/use-lng-pathname";
 /**
  * Get the type for prop which will be passed from the server component params.
  */
 import { type LanguageParam } from "@/i18n";
 
-export function Navbar({ lng }: LanguageParam) {
+export function NavbarLinks({ lng }: LanguageParam) {
   // pathname no longer contains the lng prefix!
   const pathname = useLngPathname(lng);
   const { t } = useTranslation("global");
@@ -115,15 +115,18 @@ export function Navbar({ lng }: LanguageParam) {
   // we can check if the path is active without worrying about the language:
   return (
     <nav>
+      <NavbarLink href="/" active={pathname === "/"}>
+        {t("link.home")}
+      </NavbarLink>
       <NavbarLink href="/dashboard" active={pathname.startsWith("/dashboard")}>
-        {t("dashboard")}
+        {t("link.dashboard")}
       </NavbarLink>
     </nav>
   );
 }
 ```
 
-See [full code of the `<Navbar />`](<./src/app/[lng]/(user)/_components/navbar.tsx>).
+See [full code of the `<NavbarLinks />`](<./src/app/[lng]/(user)/_components/navbar-links.tsx>).
 
 #### Custom Zod Errors
 
