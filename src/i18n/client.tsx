@@ -7,8 +7,7 @@ import { useCookies } from "react-cookie";
 import resourcesToBackend from "i18next-resources-to-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { getOptions, languages, i18nCookieName } from "./options";
-import type { Languages, LanguageParam } from "./types";
-import { usePathname } from "next/navigation";
+import type { LanguageParam } from "./types";
 
 const runsOnServerSide = typeof window === "undefined";
 
@@ -52,14 +51,4 @@ export function Language({ lng, children }: PropsWithChildren<LanguageParam>) {
   }
 
   return <>{children}</>;
-}
-
-export function useLngPathname(lng: Languages) {
-  const pathname = usePathname();
-
-  const prefix = `/${lng}/`;
-
-  return pathname.startsWith(prefix)
-    ? pathname.slice(prefix.length - 1)
-    : pathname;
 }

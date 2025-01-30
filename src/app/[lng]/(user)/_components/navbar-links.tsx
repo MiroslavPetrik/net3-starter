@@ -3,17 +3,16 @@
 import { NavbarLink } from "flowbite-react";
 import Link from "next/link";
 import { type LanguageParam } from "@/i18n";
-import { useLngPathname } from "@/i18n/client";
+import { useLngPathname } from "@/i18n/use-lng-pathname";
 
 export type NavLink = {
   name: string;
   href: string;
 };
 
-export const NavbarLinks = ({
-  links,
-  lng,
-}: { links: NavLink[] } & LanguageParam) => {
+type Props = { links: NavLink[] } & LanguageParam;
+
+export const NavbarLinks = ({ links, lng }: Props) => {
   const pathname = useLngPathname(lng);
 
   return (
@@ -23,7 +22,7 @@ export const NavbarLinks = ({
           key={href}
           as={Link}
           href={href}
-          active={pathname?.startsWith(href)}
+          active={pathname.startsWith(href)}
         >
           {name}
         </NavbarLink>
