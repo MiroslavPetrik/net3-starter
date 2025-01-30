@@ -8,6 +8,7 @@ import resourcesToBackend from "i18next-resources-to-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { getOptions, languages, i18nCookieName } from "./options";
 import type { LanguageParam } from "./types";
+import { setZodErrorMap } from "./zodError";
 
 const runsOnServerSide = typeof window === "undefined";
 
@@ -20,14 +21,21 @@ void i18next
         import(`./${language}/${namespace}.json`),
     ),
   )
-  .init({
-    ...getOptions("global"),
-    lng: undefined, // detect the language on client side
-    detection: {
-      order: ["path", "htmlTag", "cookie", "navigator"],
+  .init(
+    {
+      ...getOptions("global"),
+      lng: undefined, // detect the language on client side
+      detection: {
+        order: ["path", "htmlTag", "cookie", "navigator"],
+      },
+      preload: runsOnServerSide ? languages : [],
     },
-    preload: runsOnServerSide ? languages : [],
-  });
+    (_err, t) => {
+      {
+        setZodErrorMap({ t });
+      }
+    },
+  );
 
 export function Language({ lng, children }: PropsWithChildren<LanguageParam>) {
   const [cookies, setCookie] = useCookies([i18nCookieName]);

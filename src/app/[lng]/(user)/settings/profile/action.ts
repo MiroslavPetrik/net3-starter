@@ -1,14 +1,11 @@
 "use server";
 
-import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { authorizedAction } from "@/edgedb";
 import { updateCurrentUserQuery } from "@/edgedb/queries";
 
-const updateUserSchema = z.object({
-  name: z.string().min(3),
-});
+import { updateUserSchema } from "./schema";
 
 export const updateUser = authorizedAction
   .input(updateUserSchema)
