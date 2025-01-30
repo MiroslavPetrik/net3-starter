@@ -31,9 +31,7 @@ void i18next
       preload: runsOnServerSide ? languages : [],
     },
     (_err, t) => {
-      {
-        setZodErrorMap({ t });
-      }
+      setZodErrorMap({ t });
     },
   );
 
