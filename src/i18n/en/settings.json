@@ -18,5 +18,14 @@
     "sendVerificationLink": "Send verification link",
     "title": "Email",
     "yourEmail": "Your Email"
+  },
+  "password": {
+    "message": "After clicking the button, we will send a link to your email address {{email}} to create a new password.",
+    "sendEmail": {
+      "pending": "Sending email...",
+      "submit": "Send email",
+      "success": "We've sent you an email with a link to reset your password."
+    },
+    "title": "Password"
   }
 }

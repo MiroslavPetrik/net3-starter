@@ -34,6 +34,13 @@ export const SettingsSidebar = ({ lng }: LanguageParam) => {
           >
             {t("email.title")}
           </SidebarItem>
+          <SidebarItem
+            as={Link}
+            href="/settings/password"
+            active={pathname.startsWith("/settings/password")}
+          >
+            {t("password.title")}
+          </SidebarItem>
         </SidebarItemGroup>
         <SidebarItemGroup>
           <SidebarItem

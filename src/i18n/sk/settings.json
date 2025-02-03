@@ -18,5 +18,14 @@
     "sendVerificationLink": "Odoslať odkaz na overenie",
     "title": "Email",
     "yourEmail": "Tvoj email"
+  },
+  "password": {
+    "message": "Po kliknutí na tlačidlo ti na tvoju emailovú adresu {{email}} pošleme odkaz na vytvorenie nového hesla.",
+    "sendEmail": {
+      "pending": "Posielam email...",
+      "submit": "Poslať email",
+      "success": "Poslali sme ti email s odkazom na resetovanie hesla."
+    },
+    "title": "Heslo"
   }
 }

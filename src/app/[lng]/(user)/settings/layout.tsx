@@ -1,7 +1,8 @@
 "use server";
+
 import type { PropsWithChildren } from "react";
-import { SettingsSidebar } from "./_components/sidebar";
 import { type Params } from "@/types";
+import { SettingsSidebar } from "./_components/sidebar";
 
 export default async function Profile({
   children,

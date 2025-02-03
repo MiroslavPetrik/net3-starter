@@ -6,16 +6,16 @@ import { type Params } from "@/types";
 import { translate } from "@/i18n";
 import { api } from "@/trpc/server";
 import { redirect } from "next/navigation";
-import { VerifiedAlert } from "./_components/verified-alert";
 import { Stack } from "@/app/_components";
 
 import { resendVerificationEmail } from "./action";
 import { EmailForm } from "./form";
+import { VerifiedAlert } from "./components/verified-alert";
 
 export default async function Page({ params }: Params) {
   const { lng } = await params;
   const user = await api.user.getCurrent.query();
-  if (!user) {
+  if (!user?.email) {
     redirect("/");
   }
   const { t } = await translate("settings", lng);
@@ -24,8 +24,8 @@ export default async function Page({ params }: Params) {
     <Action action={resendVerificationEmail} initialData="">
       <PageHeader>{t("email.title")}</PageHeader>
       <Stack>
-        {user.email?.verifiedAt && <VerifiedAlert lng={lng} />}
-        <EmailForm email={user.email!} />
+        {user.email.verifiedAt && <VerifiedAlert lng={lng} />}
+        <EmailForm email={user.email} />
       </Stack>
     </Action>
   );
