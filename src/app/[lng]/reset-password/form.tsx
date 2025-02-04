@@ -70,7 +70,7 @@ export function ResetPasswordForm({ reset_token }: Props) {
           <Trans i18nKey="resetPassword.linkToReset" t={t}>
             Link expired?&nbsp;
             <Link
-              href="/reset-password-email"
+              href="/reset-password/email"
               className="text-cyan-600 hover:underline dark:text-cyan-500"
             >
               Get another.

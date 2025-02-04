@@ -66,7 +66,7 @@ export function SignInForm() {
                   <span>{t("signIn.password")}</span>
                   <Link
                     tabIndex={-1}
-                    href="/reset-password-email"
+                    href="/reset-password/email"
                     className="text-cyan-600 hover:underline dark:text-cyan-500"
                   >
                     {t("signIn.forgotPassword")}
