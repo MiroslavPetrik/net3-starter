@@ -31,7 +31,8 @@
     "sb": "npm run storybook",
     "sb:build": "storybook build",
     "sb:up": "npx storybook@latest upgrade",
-    "next:tel:dis": "next telemetry disable"
+    "next:tel:dis": "next telemetry disable",
+    "staging:db:migrate": "edgedb migrate -I MiroslavPetrik/net3"
   },
   "dependencies": {
     "@edgedb/auth-nextjs": "^0.4.0-canary.20241202T173112",
