@@ -1,5 +1,5 @@
 {
-  "languageSwitcher": "Prepnúť jazyk z <1>{{lng}}</1> na: ",
+  "languageSwitcher": "Jazyk: <1>{{lng}}</1>",
   "link": {
     "dashboard": "Domov",
     "settings": "Nastavenia"

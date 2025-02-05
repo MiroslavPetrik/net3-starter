@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { translate } from "@/i18n";
 import { type Params } from "@/types";
 
-import { Footer } from "../_components/footer";
+import { LanguageSwitcher } from "../_components/language-switcher";
 
 export default async function Home({ params }: Params) {
   const { lng } = await params;
@@ -37,7 +37,7 @@ export default async function Home({ params }: Params) {
             </Link>
           </div>
         </div>
-        <Footer lng={lng} />
+        <LanguageSwitcher lng={lng} />
       </main>
     </>
   );

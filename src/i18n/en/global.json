@@ -1,5 +1,5 @@
 {
-  "languageSwitcher": "Switch from <1>{{lng}}</1> to: ",
+  "languageSwitcher": "Language: <1>{{lng}}</1>",
   "link": {
     "dashboard": "Dashboard",
     "settings": "Settings"
