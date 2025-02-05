@@ -3,10 +3,10 @@
 import { type PropsWithChildren, useEffect } from "react";
 import i18next from "i18next";
 import { initReactI18next, useTranslation } from "react-i18next";
-import { useCookies } from "react-cookie";
 import resourcesToBackend from "i18next-resources-to-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
-import { getOptions, languages, i18nCookieName } from "./options";
+import { getOptions, languages } from "./options";
+import { useLngCookie } from "./cookie";
 import type { LanguageParam } from "./types";
 import { setZodErrorMap } from "./zodError";
 
@@ -36,10 +36,8 @@ void i18next
   );
 
 export function Language({ lng, children }: PropsWithChildren<LanguageParam>) {
-  const [cookies, setCookie] = useCookies([i18nCookieName]);
+  const [cookie, setLngCookie] = useLngCookie();
   const { i18n } = useTranslation();
-
-  const cookie = cookies[i18nCookieName] as string;
 
   if (runsOnServerSide && lng && i18n.resolvedLanguage !== lng) {
     void i18n.changeLanguage(lng);
@@ -52,8 +50,8 @@ export function Language({ lng, children }: PropsWithChildren<LanguageParam>) {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
       if (cookie === lng) return;
-      setCookie(i18nCookieName, lng, { path: "/" });
-    }, [lng, cookie, setCookie]);
+      setLngCookie(lng);
+    }, [lng, cookie, setLngCookie]);
   }
 
   return <>{children}</>;
