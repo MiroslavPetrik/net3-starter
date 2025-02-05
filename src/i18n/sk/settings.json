@@ -12,7 +12,7 @@
     "title": "Upraviť profil"
   },
   "email": {
-    "alreadyVerified": "<0>Tvoja emailová adresa bola overená.</0> Teraz je možné bezpečne požiadať o resetovanie hesla v prípade ak to budeš potrebovať.",
+    "alreadyVerified": "<0>Tvoja emailová adresa je overená.</0> Teraz je možné bezpečne požiadať o zmenu hesla v prípade ak to budeš potrebovať.",
     "pleaseVerifyEmail": "<0>Tvoj emailová adresa nie je overená!</0> Prosím over svoju emailovú adresu, aby bolo možné obnoviť tvoj prístup k účtu, v prípade že zabudneš svoje heslo.",
     "sendingVerificationLink": "Odosielam odkaz...",
     "sendVerificationLink": "Odoslať odkaz na overenie",
@@ -24,7 +24,7 @@
     "sendEmail": {
       "pending": "Posielam email...",
       "submit": "Poslať email",
-      "success": "Poslali sme ti email s odkazom na resetovanie hesla."
+      "success": "Poslali sme ti email s odkazom na zmenu hesla."
     },
     "title": "Heslo"
   }

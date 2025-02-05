@@ -11,6 +11,7 @@ import { Stack } from "@/app/_components";
 import { resendVerificationEmail } from "./action";
 import { EmailForm } from "./form";
 import { VerifiedAlert } from "./components/verified-alert";
+import { NotVerifiedAlert } from "./components/not-verified-alert";
 
 export default async function Page({ params }: Params) {
   const { lng } = await params;
@@ -24,7 +25,11 @@ export default async function Page({ params }: Params) {
     <Action action={resendVerificationEmail} initialData="">
       <PageHeader>{t("email.title")}</PageHeader>
       <Stack>
-        {user.email.verifiedAt && <VerifiedAlert lng={lng} />}
+        {user.email.verifiedAt ? (
+          <VerifiedAlert lng={lng} />
+        ) : (
+          <NotVerifiedAlert lng={lng} />
+        )}
         <EmailForm email={user.email} />
       </Stack>
     </Action>

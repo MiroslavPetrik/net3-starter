@@ -12,7 +12,7 @@
     "title": "Edit Profile"
   },
   "email": {
-    "alreadyVerified": "<0>Your email is verified.</0> You can safely request a password reset email in case you need it.",
+    "alreadyVerified": "<0>Your email is verified.</0> You can safely request a password change email in case you need it.",
     "pleaseVerifyEmail": "<0>Email is not verified!</0> Please verify your email address, so you can access your account in case you forget your password.",
     "sendingVerificationLink": "Sending verification link...",
     "sendVerificationLink": "Send verification link",
@@ -24,7 +24,7 @@
     "sendEmail": {
       "pending": "Sending email...",
       "submit": "Send email",
-      "success": "We've sent you an email with a link to reset your password."
+      "success": "We've sent you an email with a link to change your password."
     },
     "title": "Password"
   }

@@ -1,14 +1,16 @@
 "use client";
 
 import { Form, useActionContext } from "react-form-action/client";
-import { Trans, useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { SubmitButton } from "@/app/_components/submit-button";
 import { type UserEmail } from "@/types";
-import { Alert, Label, TextInput } from "flowbite-react";
+import { Label, TextInput } from "flowbite-react";
 import { FormLabel, FormItem, Stack } from "@/app/_components";
 import { resendVerificationEmail } from "./action";
 
-export function EmailForm({ email }: { email: UserEmail }) {
+type Props = { email: UserEmail };
+
+export function EmailForm({ email }: Props) {
   const { t } = useTranslation("settings");
 
   const { isSuccess, isFailure, data, error } = useActionContext(
@@ -18,27 +20,6 @@ export function EmailForm({ email }: { email: UserEmail }) {
   return (
     <Form>
       <Stack>
-        {!email.verifiedAt && (
-          <Alert
-            color="warning"
-            rounded
-            additionalContent={
-              <SubmitButton color="warning">
-                {({ isPending }) =>
-                  isPending
-                    ? t("email.sendingVerificationLink")
-                    : t("email.sendVerificationLink")
-                }
-              </SubmitButton>
-            }
-          >
-            <Trans i18nKey="email.pleaseVerifyEmail" t={t}>
-              <span className="font-medium">Email is not verified!</span> Please
-              verify your email address, so you can access your account in case
-              you forget your password.
-            </Trans>
-          </Alert>
-        )}
         <FormItem>
           <FormLabel>
             <Label
@@ -63,6 +44,17 @@ export function EmailForm({ email }: { email: UserEmail }) {
             }
           />
         </FormItem>
+        {!email.verifiedAt && (
+          <div>
+            <SubmitButton color="warning">
+              {({ isPending }) =>
+                isPending
+                  ? t("email.sendingVerificationLink")
+                  : t("email.sendVerificationLink")
+              }
+            </SubmitButton>
+          </div>
+        )}
       </Stack>
     </Form>
   );
