@@ -6,7 +6,7 @@ import { initReactI18next, useTranslation } from "react-i18next";
 import resourcesToBackend from "i18next-resources-to-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { getOptions, languages } from "./options";
-import { useLngCookie } from "./cookie";
+import { useLngCookie } from "./use-lng-cookie";
 import type { LanguageParam } from "./types";
 import { setZodErrorMap } from "./zodError";
 
