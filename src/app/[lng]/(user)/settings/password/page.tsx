@@ -10,7 +10,7 @@ import { PasswordResetEmailForm } from "./form";
 
 export default async function Page({ params }: Params) {
   const { lng } = await params;
-  const user = await api.user.getCurrent.query();
+  const user = await api.user.getCurrentUser.query();
 
   if (!user?.email) {
     redirect("/");

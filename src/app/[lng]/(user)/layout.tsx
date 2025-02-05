@@ -16,7 +16,7 @@ export default async function Layout({
     redirect("/");
   }
 
-  const user = await api.user.getCurrent.query();
+  const user = await api.user.getCurrentUser.query();
 
   if (!user) {
     redirect("/onboarding");
