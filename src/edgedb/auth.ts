@@ -1,4 +1,4 @@
-import createAuth from "@edgedb/auth-nextjs/app";
+import createAuth from "@gel/auth-nextjs/app";
 import { client } from "./client";
 import { getBaseUrl } from "@/server/baseUrl";
 import { formAction } from "react-form-action";
