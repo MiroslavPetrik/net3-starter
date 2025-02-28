@@ -2,7 +2,7 @@
   "name": "net3-starter",
   "version": "0.1.0",
   "private": true,
-  "description": "Next.js application starter with EdgeDB & TypeScript",
+  "description": "Next.js application starter with Gel & TypeScript",
   "bugs": {
     "url": "https://github.com/MiroslavPetrik/net3-starter/issues"
   },
@@ -17,12 +17,12 @@
     "dev": "next dev --turbopack",
     "lint": "next lint",
     "start": "next start",
-    "db:edgeql-js": "npx @edgedb/generate edgeql-js --out ./src/edgeql-js",
-    "db:restart": "edgedb instance restart -I net3_starter",
-    "db:logs": "edgedb instance logs --follow -I net3_starter",
-    "db:dsn": "edgedb instance credentials --insecure-dsn",
-    "db:ipv4": "edgedb configure set listen_addresses 127.0.0.1 ::1",
-    "db:smtp": "edgedb query --file ./smtp.config.edgeql",
+    "db:edgeql-js": "npx @gel/generate edgeql-js",
+    "db:restart": "gel instance restart -I net3_starter",
+    "db:logs": "gel instance logs --follow -I net3_starter",
+    "db:dsn": "gel instance credentials --insecure-dsn",
+    "db:ipv4": "gel configure set listen_addresses 127.0.0.1 ::1",
+    "db:smtp": "gel query --file ./smtp.config.edgeql",
     "i18n": "i18next",
     "ncu": "ncu --interactive --format group",
     "format": "prettier . --write",
@@ -32,10 +32,9 @@
     "sb:build": "storybook build",
     "sb:up": "npx storybook@latest upgrade",
     "next:tel:dis": "next telemetry disable",
-    "staging:db:migrate": "edgedb migrate -I MiroslavPetrik/net3"
+    "staging:db:migrate": "gel migrate -I MiroslavPetrik/net3"
   },
   "dependencies": {
-    "@edgedb/auth-nextjs": "^0.4.0-canary.20241202T173112",
     "@t3-oss/env-nextjs": "^0.11.1",
     "@tanstack/react-query": "^5.62.2",
     "@tanstack/react-query-devtools": "^5.62.2",
@@ -44,7 +43,6 @@
     "@trpc/react-query": "^11.0.0-rc.648",
     "@trpc/server": "^11.0.0-rc.648",
     "accept-language": "^3.0.20",
-    "edgedb": "^1.5.12",
     "flowbite-react": "^0.10.2",
     "i18next": "^24.2.1",
     "i18next-browser-languagedetector": "^8.0.2",
@@ -58,10 +56,11 @@
     "superjson": "^2.2.2",
     "zod": "^3.23.8",
     "zod-form-data": "^2.0.2",
-    "zod-i18n-map": "^2.27.0"
+    "zod-i18n-map": "^2.27.0",
+    "gel": "^2.0.0",
+    "@gel/auth-nextjs": "^0.4.0"
   },
   "devDependencies": {
-    "@edgedb/generate": "^0.5.6",
     "@storybook/addon-essentials": "^8.5.3",
     "@storybook/addon-interactions": "^8.5.3",
     "@storybook/addon-links": "^8.5.3",
@@ -88,7 +87,8 @@
     "react-render-prop-type": "^1.0.0",
     "storybook": "^8.5.3",
     "tailwindcss": "^3.4.16",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "@gel/generate": "^0.6.0"
   },
   "packageManager": "npm@10.9.2"
 }

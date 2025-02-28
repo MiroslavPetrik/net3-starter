@@ -11,7 +11,7 @@ import superjson from "superjson";
 import { ZodError } from "zod";
 import { auth } from "@/edgedb";
 import e from "@/edgeql-js";
-import { type NextAuthSession } from "@edgedb/auth-nextjs/app";
+import { type NextAuthSession } from "@gel/auth-nextjs/app";
 
 /**
  * 1. CONTEXT
