@@ -5,11 +5,6 @@
 await import("./src/env.mjs");
 
 /** @type {import("next").NextConfig} */
-const config = {
-  typescript: {
-    // TODO(./dbschema/edgeql-js/hydrate.ts:119:15)
-    ignoreBuildErrors: true,
-  },
-};
+const config = {};
 
 export default config;
