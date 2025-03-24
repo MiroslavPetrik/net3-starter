@@ -4,7 +4,7 @@ import { translate } from "@/i18n";
 import { api } from "@/trpc/server";
 
 export default async function Dashboard({ params }: Params) {
-  const user = await api.user.getCurrentUser.query();
+  const user = await api.user.getCurrentUser();
 
   if (!user) {
     redirect("/onboarding");

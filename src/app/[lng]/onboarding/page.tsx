@@ -9,7 +9,7 @@ import { CreateUserForm } from "./form";
 
 export default async function Onboarding({ params }: Params) {
   const { lng } = await params;
-  const user = await api.user.getCurrentUser.query();
+  const user = await api.user.getCurrentUser();
 
   if (user) {
     redirect("/");

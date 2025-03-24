@@ -15,7 +15,7 @@ import { NotVerifiedAlert } from "./components/not-verified-alert";
 
 export default async function Page({ params }: Params) {
   const { lng } = await params;
-  const user = await api.user.getCurrentUser.query();
+  const user = await api.user.getCurrentUser();
   if (!user?.email) {
     redirect("/");
   }

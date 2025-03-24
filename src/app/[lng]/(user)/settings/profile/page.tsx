@@ -9,7 +9,7 @@ import { UpdateUserForm } from "./form";
 import { updateUser } from "./action";
 
 export default async function Profile({ params }: Params) {
-  const user = await api.user.getCurrentUser.query();
+  const user = await api.user.getCurrentUser();
   if (!user) {
     redirect("/");
   }
