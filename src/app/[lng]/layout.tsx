@@ -7,6 +7,7 @@ import { TRPCReactProvider } from "@/trpc/react";
 import type { Params } from "@/types";
 import { Language } from "@/i18n/client";
 import { font } from "@/styles/font";
+import { CookiesProvider } from "../_components/cookies-provider";
 
 export const metadata = {
   title: "NET3 App",
@@ -20,16 +21,16 @@ export default async function RootLayout({
   params,
 }: PropsWithChildren<Params>) {
   const { lng } = await params;
-  // eslint-disable-next-line @typescript-eslint/await-thenable
-  const cookie = await cookies();
+  const cookie = (await cookies()).toString();
+
   return (
     <html lang={lng}>
       <body className={`font-sans ${font.variable} flex min-h-screen flex-col`}>
-        <Language lng={lng}>
-          <TRPCReactProvider cookies={cookie.toString()}>
-            {children}
-          </TRPCReactProvider>
-        </Language>
+        <CookiesProvider cookies={cookie}>
+          <Language lng={lng}>
+            <TRPCReactProvider cookies={cookie}>{children}</TRPCReactProvider>
+          </Language>
+        </CookiesProvider>
       </body>
     </html>
   );

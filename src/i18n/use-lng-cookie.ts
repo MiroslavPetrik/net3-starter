@@ -5,10 +5,16 @@ import { useCallback } from "react";
 import type { Languages } from "./types";
 import { i18nCookieName } from "./options";
 
-export function useLngCookie() {
-  const [cookies, setCookie] = useCookies([i18nCookieName]);
+type i18nCookies = {
+  [i18nCookieName]?: string;
+};
 
-  const cookie = cookies[i18nCookieName] as string | undefined;
+export function useLngCookie() {
+  const [cookies, setCookie] = useCookies<typeof i18nCookieName, i18nCookies>([
+    i18nCookieName,
+  ]);
+
+  const i18nCookie = cookies[i18nCookieName];
 
   const setLngCookie = useCallback(
     (lng: Languages) => {
@@ -17,5 +23,5 @@ export function useLngCookie() {
     [setCookie],
   );
 
-  return [cookie, setLngCookie] as const;
+  return [i18nCookie, setLngCookie] as const;
 }
