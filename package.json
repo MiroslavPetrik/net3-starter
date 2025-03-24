@@ -21,7 +21,7 @@
     "db:logs": "gel instance logs --follow -I net3_starter",
     "db:dsn": "gel instance credentials --insecure-dsn",
     "db:ipv4": "gel configure set listen_addresses 127.0.0.1 ::1",
-    "db:smtp": "gel query --file ./smtp.config.edgeql",
+    "db:smtp": "gel query --file ./sandbox-mailtrap.smtp.config.edgeql",
     "i18n": "i18next",
     "ncu": "ncu --interactive --format group",
     "format": "prettier . --write",

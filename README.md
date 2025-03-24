@@ -1,17 +1,14 @@
-# NET3 = Next.js + EdgeDB + T3 (Tailwind, TypeScript, tRPC)
+# GNT = Gel + Next.js + T3 (Tailwind, TypeScript, tRPC)
 
-This is Next.js + EdgeDB starter project bootstraped on the [T3 Stack](https://create.t3.gg/)
+This is Next.js + Gel starter project bootstraped on the [T3 Stack](https://create.t3.gg/)
 
 - [Next.js](https://nextjs.org) Fullstack React framework using the **app router**
-- [EdgeDB](https://www.edgedb.com) Graph-relational database with a custom query language, Auth extension and more
+- [Gel](https://www.geldata.com/) Graph-relational database with a custom query language, Auth extension and more
 - [tRPC](https://trpc.io) typesafe end-2-end API definition & access
 - [Tailwind CSS](https://tailwindcss.com) with [Flowbite React](https://www.flowbite-react.com/) componentss
 - [TypeScript](https://www.typescriptlang.org) language for JavaScript autocompletion
 - [i18next](https://www.i18next.com) localization integrated with [zod-i18n](https://github.com/aiji42/zod-i18n/)
 - [Storybook](https://storybook.js.org) for building & testing UI in isolation
-
-> [!NOTE]
-> Project uses unstable apis such as the EdgeDB auth extension
 
 # Installation Steps
 
@@ -27,6 +24,8 @@ npm i -f
 
 ### 2. Instatiate & Migrate
 
+`gel migrate`
+
 ### 3. Configure the Auth extension
 
 Set the allowed redirect url via the REPL (run `edgedb`):
@@ -34,6 +33,12 @@ Set the allowed redirect url via the REPL (run `edgedb`):
 ```
 configure current database set ext::auth::AuthConfig::allowed_redirect_urls := {"http://localhost:3000/"}
 ```
+
+#### Configure SMTP Provider
+
+Required for `ext::auth` to work.
+Edit the `sandbox.smtp.config.edgeql` with your provider (the default is Mailtrap) and variables.
+Run `npm run db:smtp`.
 
 ## Docs
 
@@ -149,19 +154,19 @@ See the translation of the [`passwordsMustMatch` refinement](./src/app/actions/a
 
 # FAQ
 
-## How does the query client connect to the EdgeDB?
+## How does the query client connect to the Gel?
 
-In development, the library automatically detects the linked edgedb project. In production `EDGEDB_DSN` [env variable is recommended.](https://www.edgedb.com/docs/intro/clients#connection)
+In development, the library automatically detects the linked Gel project. In production `GEL_DSN` [env variable is recommended.](https://www.edgedb.com/docs/intro/clients#connection)
 
-## How does Next.js communicate with the EdgeDB Auth extension?
+## How does Next.js communicate with the Gel Auth extension?
 
-[Using the `@edgedb/auth-nextjs`](https://github.com/edgedb/edgedb-js/tree/master/packages/auth-nextjs)
+[Using the `@gel/auth-nextjs`](https://github.com/edgedb/edgedb-js/tree/master/packages/auth-nextjs)
 
-## How do I deploy this?
+# Troubleshooting
 
-TBD
+## Gel
 
-## Database Connection refused when generating `edgeql-js`
+### Database Connection refused when generating `edgeql-js`
 
 This is related to ipv6 in Node18 (often on Windows 11).
 
@@ -170,7 +175,7 @@ This is related to ipv6 in Node18 (often on Windows 11).
 Run `nvm use` to apply the project node version.
 Run `nvm alias default node` to make it default.
 
-1.  Configure EdgeDB. See [Source](https://github.com/edgedb/edgedb-js/issues/376#issuecomment-1173840632).
+1.  Configure Gel. See [Source](https://github.com/edgedb/edgedb-js/issues/376#issuecomment-1173840632).
 
 ```
 edgedb configure set listen_addresses 127.0.0.1 ::1
