@@ -5,7 +5,7 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "@/server/api/trpc";
-import { selectCurrentUserQuery } from "@/edgedb/queries";
+import { selectCurrentUserQuery } from "@/gel/queries";
 
 export const userRouter = createTRPCRouter({
   hello: publicProcedure

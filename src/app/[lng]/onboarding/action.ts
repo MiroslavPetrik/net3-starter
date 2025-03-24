@@ -2,8 +2,8 @@
 
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
-import { insertUserQuery } from "@/edgedb/queries";
-import { authorizedAction } from "@/edgedb";
+import { insertUserQuery } from "@/gel/queries";
+import { authorizedAction } from "@/gel";
 
 const createUserSchema = z.object({
   name: z.string().min(3),

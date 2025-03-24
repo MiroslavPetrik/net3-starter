@@ -1,8 +1,8 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { authorizedAction } from "@/edgedb";
-import { deleteCurrentUserQuery } from "@/edgedb/queries";
+import { authorizedAction } from "@/gel";
+import { deleteCurrentUserQuery } from "@/gel/queries";
 
 export const deleteUser = authorizedAction
   .error(async () => "Failed to delete account.")

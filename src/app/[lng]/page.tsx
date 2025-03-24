@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { authorizedSession } from "@/edgedb";
+import { authorizedSession } from "@/gel";
 import { redirect } from "next/navigation";
 import { translate } from "@/i18n";
 import { type Params } from "@/types";

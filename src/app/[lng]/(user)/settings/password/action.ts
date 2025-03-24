@@ -1,6 +1,6 @@
 "use server";
 
-import { authAction } from "@/edgedb";
+import { authAction } from "@/gel";
 import { z } from "zod";
 
 export const sendPasswordResetEmail = authAction

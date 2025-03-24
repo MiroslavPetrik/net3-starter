@@ -4,7 +4,7 @@ import { Action } from "react-form-action/client";
 import { PageHeader } from "@/app/_components/page-header";
 import { type SearchParams, type Params, getSearchParam } from "@/types";
 import { translate } from "@/i18n";
-import { resetTokenFieldName } from "@/edgedb/shared";
+import { resetTokenFieldName } from "@/gel/shared";
 
 import { resetPassword } from "./action";
 import { ResetPasswordForm } from "./form";

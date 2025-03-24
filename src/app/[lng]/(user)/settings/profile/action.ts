@@ -2,8 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { authorizedAction } from "@/edgedb";
-import { updateCurrentUserQuery } from "@/edgedb/queries";
+import { authorizedAction } from "@/gel";
+import { updateCurrentUserQuery } from "@/gel/queries";
 
 import { updateUserSchema } from "./schema";
 

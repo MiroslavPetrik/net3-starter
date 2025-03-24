@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from "react";
 import { redirect } from "next/navigation";
 import { type Params } from "@/types";
-import { authorizedSession } from "@/edgedb";
+import { authorizedSession } from "@/gel";
 import { translate } from "@/i18n";
 import { api } from "@/trpc/server";
 

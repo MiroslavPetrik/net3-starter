@@ -11,7 +11,7 @@ import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { Trans } from "react-i18next/TransWithoutContext";
 import { SubmitButton } from "@/app/_components/submit-button";
-import { resetTokenFieldName } from "@/edgedb/shared";
+import { resetTokenFieldName } from "@/gel/shared";
 import { Stack, FormItem, FormLabel } from "@/app/_components";
 import { resetPassword } from "./action";
 

@@ -9,7 +9,7 @@
 import { TRPCError, initTRPC } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
-import { auth } from "@/edgedb";
+import { auth } from "@/gel";
 import e from "@/edgeql-js";
 import { type NextAuthSession } from "@gel/auth-nextjs/app";
 
