@@ -15,9 +15,7 @@ const config: StorybookConfig = {
     // https://storybook.js.org/blog/storybook-react-server-components/#getting-async-with-it
     experimentalRSC: true,
   },
-  docs: {
-    autodocs: "tag",
-  },
+  docs: {},
   staticDirs: ["../public"],
   core: {
     disableTelemetry: true,
