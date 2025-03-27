@@ -8,9 +8,7 @@ import { getLngCookie } from "./i18n";
 acceptLanguage.languages([...languages]);
 
 export const config = {
-  matcher: [
-    "/((?!api|_next/static|_next/image|auth|assets|favicon.ico|sw.js).*)",
-  ],
+  matcher: ["/((?!api|_next/static|_next/image|auth|assets|.*\\.).*)"],
 };
 
 export async function middleware(req: NextRequest) {
