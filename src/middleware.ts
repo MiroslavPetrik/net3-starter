@@ -36,6 +36,10 @@ export async function middleware(req: NextRequest) {
       new URL(`/${lng}${req.nextUrl.pathname}`, req.url).toString() +
       (searchParams.length ? `?${searchParams}` : "");
 
+    if (lng === fallbackLng) {
+      return NextResponse.rewrite(url);
+    }
+
     return NextResponse.redirect(url);
   }
 
