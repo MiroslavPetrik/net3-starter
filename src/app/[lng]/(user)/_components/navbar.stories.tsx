@@ -17,7 +17,7 @@ export const Primary: Story = {
       id: "1",
       name: "Demo",
       email: {
-        address: "demo@net3-app.com",
+        address: "demo@gnt.app",
         verifiedAt: null,
       },
     },

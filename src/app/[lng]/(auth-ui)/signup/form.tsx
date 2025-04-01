@@ -58,7 +58,7 @@ export function SignUpForm() {
                 id={name}
                 name={name}
                 type="email"
-                placeholder="name@net3.com"
+                placeholder="name@gnt.app"
                 required
                 shadow
                 color={getColor(error)}

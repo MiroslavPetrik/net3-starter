@@ -18,23 +18,21 @@ force install (while the react RC version is used)
 npm i -f
 ```
 
-## EdgeDB
+## Gel
 
-### 1. Install
+### 1. Initiate
 
-### 2. Instatiate & Migrate
+`gel project init`
 
-`gel migrate`
+### 2. Configure the Auth extension
 
-### 3. Configure the Auth extension
+Set the allowed redirect url via the REPL (run `gel`):
 
-Set the allowed redirect url via the REPL (run `edgedb`):
-
-```
-configure current database set ext::auth::AuthConfig::allowed_redirect_urls := {"http://localhost:3000/"}
+```edgeql
+configure current database set ext::auth::AuthConfig::allowed_redirect_urls := {"http://localhost:3000/"};
 ```
 
-#### Configure SMTP Provider
+### 3. Configure SMTP Provider
 
 Required for `ext::auth` to work.
 Edit the `sandbox.smtp.config.edgeql` with your provider (the default is Mailtrap) and variables.
@@ -178,7 +176,7 @@ Run `nvm alias default node` to make it default.
 1.  Configure Gel. See [Source](https://github.com/edgedb/edgedb-js/issues/376#issuecomment-1173840632).
 
 ```
-edgedb configure set listen_addresses 127.0.0.1 ::1
+gel configure set listen_addresses 127.0.0.1 ::1
 ```
 
 2. or [Update operating system routing](https://github.com/nodejs/node/issues/40537#issuecomment-1706257550)

@@ -10,9 +10,9 @@ import { font } from "@/styles/font";
 import { CookiesProvider } from "../_components/cookies-provider";
 
 export const metadata = {
-  title: "NET3 App",
+  title: "GNT Starter App",
   description:
-    "NET3 stands for Next.js + EdgeDB + T3 (Tailwind + TypeScript + tRPC)",
+    "GNT stands for Gel + Next.js + T3 (Tailwind + TypeScript + tRPC)",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 

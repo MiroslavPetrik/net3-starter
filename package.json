@@ -1,14 +1,14 @@
 {
-  "name": "net3-starter",
+  "name": "gnt-starter",
   "version": "0.1.0",
   "private": true,
   "description": "Next.js application starter with Gel & TypeScript",
   "bugs": {
-    "url": "https://github.com/MiroslavPetrik/net3-starter/issues"
+    "url": "https://github.com/MiroslavPetrik/gnt-starter/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MiroslavPetrik/net3-starter.git"
+    "url": "git+https://github.com/MiroslavPetrik/gnt-starter.git"
   },
   "license": "MIT",
   "scripts": {
@@ -17,8 +17,8 @@
     "lint": "next lint",
     "start": "next start",
     "db:edgeql-js": "npx @gel/generate edgeql-js",
-    "db:restart": "gel instance restart -I net3_starter",
-    "db:logs": "gel instance logs --follow -I net3_starter",
+    "db:restart": "gel instance restart -I gnt_starter",
+    "db:logs": "gel instance logs --follow -I gnt_starter",
     "db:dsn": "gel instance credentials --insecure-dsn",
     "db:ipv4": "gel configure set listen_addresses 127.0.0.1 ::1",
     "db:smtp": "gel query --file ./sandbox-mailtrap.smtp.config.edgeql",
@@ -30,7 +30,7 @@
     "sb:build": "storybook build",
     "sb:up": "npx storybook@latest upgrade",
     "next:tel:dis": "next telemetry disable",
-    "staging:db:migrate": "gel migrate -I MiroslavPetrik/net3"
+    "staging:db:migrate": "gel migrate -I MiroslavPetrik/gnt"
   },
   "dependencies": {
     "@t3-oss/env-nextjs": "^0.11.1",

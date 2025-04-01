@@ -32,7 +32,7 @@ export async function Navbar({ lng, user, signOutButton }: Props) {
     >
       <NavbarBrand href="/">
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-          NET3 Starter
+          GNT Starter
         </span>
       </NavbarBrand>
       <div className="flex space-x-4 md:order-2">

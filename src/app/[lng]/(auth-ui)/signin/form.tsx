@@ -48,7 +48,7 @@ export function SignInForm() {
                 disabled={isPending}
                 color={getColor(error)}
                 type="text"
-                placeholder="hello@net3.app"
+                placeholder="hello@gnt.app"
                 helperText={error}
               />
             </FormItem>
