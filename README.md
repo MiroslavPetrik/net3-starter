@@ -26,13 +26,17 @@ npm i -f
 
 ### 2. Configure the Auth extension
 
-Set the allowed redirect url via the REPL (run `gel`):
+#### Set the allowed redirect url via the REPL (run `gel`):
 
 ```edgeql
 configure current database set ext::auth::AuthConfig::allowed_redirect_urls := {"http://localhost:3000/"};
 ```
 
-### 3. Configure SMTP Provider
+#### Configure email-password Provider
+
+Via `gel ui`
+
+#### Configure SMTP Provider
 
 Required for `ext::auth` to work.
 Edit the `sandbox.smtp.config.edgeql` with your provider (the default is Mailtrap) and variables.
@@ -151,10 +155,6 @@ const customError = z.string().refine((val) => val, {
 See the translation of the [`passwordsMustMatch` refinement](./src/app/actions/auth.ts#L85) .
 
 # FAQ
-
-## How does the query client connect to the Gel?
-
-In development, the library automatically detects the linked Gel project. In production `GEL_DSN` [env variable is recommended.](https://www.edgedb.com/docs/intro/clients#connection)
 
 ## How does Next.js communicate with the Gel Auth extension?
 
