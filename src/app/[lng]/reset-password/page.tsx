@@ -23,7 +23,7 @@ export default async function ResetPassword({
   const { t } = await translate("auth", lng);
 
   return (
-    <Action action={resetPassword} initialData="">
+    <Action action={resetPassword} initialData={undefined}>
       <PageHeader>{t("resetPassword.title")}</PageHeader>
       <ResetPasswordForm reset_token={reset_token} />
     </Action>

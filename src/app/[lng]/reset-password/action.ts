@@ -1,9 +1,9 @@
 "use server";
 
-import { authAction } from "@/edgedb";
+import { authAction } from "@/gel";
 import { z } from "zod";
 
-import { resetTokenFieldName } from "@/edgedb/shared";
+import { resetTokenFieldName } from "@/gel/shared";
 
 const resetPasswordSchema = z.object({
   password: z.string().min(1),
@@ -12,8 +12,6 @@ const resetPasswordSchema = z.object({
 
 export const resetPassword = authAction
   .input(resetPasswordSchema)
-  .run(async ({ input, ctx: { actions, t } }) => {
+  .run(async ({ input, ctx: { actions } }) => {
     await actions.emailPasswordResetPassword(input);
-
-    return t("auth:resetPassword.success");
   });
